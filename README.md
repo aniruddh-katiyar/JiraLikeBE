@@ -22,7 +22,7 @@ The application is structured using **Clean Architecture**, ensuring:
 The solution follows **Clean Architecture** and is divided into the following layers:
 
 JiraLikeBE
-│
+|
 ├── JiraLike.Api
 ├── JiraLike.Application
 ├── JiraLike.Application.Abstraction
@@ -118,9 +118,9 @@ JiraLikeBE
    dotnet run
 
 **Future Enhancements**
-1.Unit and Integration Testing
-2.Swagger API Documentation
-3.Redis Caching
-4.Docker Support
-5.CI/CD Pipeline
-6.Microservices-based scaling
+1. Unit and Integration Testing
+2. Swagger API Documentation
+3. Redis Caching
+4. Docker Support
+5. CI/CD Pipeline
+6. Microservices-based scaling
