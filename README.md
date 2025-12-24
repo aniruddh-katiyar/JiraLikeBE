@@ -21,15 +21,14 @@ The application is structured using **Clean Architecture**, ensuring:
 
 The solution follows **Clean Architecture** and is divided into the following layers:
 
-JiraLikeBE
-|
-├── JiraLike.Api
-├── JiraLike.Application
-├── JiraLike.Application.Abstraction
-├── JiraLike.Domain
-├── JiraLike.Infrastructure
-├── JiraLike.sln
-├── README.md
+JiraLikeBE/
+├─ JiraLike.Api/
+├─ JiraLike.Application/
+├─ JiraLike.Application.Abstraction/
+├─ JiraLike.Domain/
+├─ JiraLike.Infrastructure/
+├─ JiraLike.sln
+└─ README.md
 
 
 ### Layer Responsibilities
