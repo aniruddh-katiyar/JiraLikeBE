@@ -2,7 +2,7 @@
 
 namespace JiraLike.Domain.Entities
 {
-    public class ProjectUserEntity : BaseEntity
+    public class ProjectUserEntity 
     {
         public Guid ProjectId { get; set; }
         public ProjectEntity Project { get; set; } = null!;
