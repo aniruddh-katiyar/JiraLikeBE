@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace JiraLike.Infrastructure.Configurations
+namespace JiraLike.Domain.Dtos
 {
-    internal class CommentEntrityConfiguration
+    internal class ProjectRequestDto
     {
     }
 }

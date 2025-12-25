@@ -11,5 +11,6 @@ namespace JiraLike.Domain.Entities
 
         public ICollection<ProjectUserEntity> ProjectUsers { get; set; } = null!;
         public ICollection<TaskItemEntity> AssignedTasks { get; set; } = null!;
+        public ICollection<CommentEntity> Comments { get; set; } = null!;
     }
 }
