@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace JiraLike.Domain.Dtos
 {
-    internal class UsertResponseDto
+    public class UserResponseDto
     {
     }
 }

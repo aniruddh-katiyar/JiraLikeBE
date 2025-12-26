@@ -7,9 +7,19 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Handler\" />
     <Folder Include="Helper\" />
     <Folder Include="Services\" />
   </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="MediatR" Version="14.0.0" />
+  </ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\JiraLike.Domain\JiraLike.Domain.csproj" />
+	</ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\JiraLike.Application.Abstraction\JiraLike.Application.Abstraction.csproj" />
+	</ItemGroup>
 
 </Project>
