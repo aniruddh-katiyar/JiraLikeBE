@@ -6,8 +6,4 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\JiraLike.Application\JiraLike.Application.csproj" />
-  </ItemGroup>
-
 </Project>

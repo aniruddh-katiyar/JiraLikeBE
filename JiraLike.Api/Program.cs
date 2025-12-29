@@ -1,4 +1,9 @@
+using JiraLike.Application.Abstraction.Services;
+using JiraLike.Application.Handler.Users;
+using JiraLike.Domain.Entities;
 using JiraLike.Infrastructure.DbContexts;
+using JiraLike.Infrastructure.Repository;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -17,7 +22,11 @@ builder.Services.AddSwaggerGen(options =>
         Version = "v1"
     });
 });
-
+// For .NET 6+ minimal hosting model (Program.cs)
+builder.Services.AddScoped<IPasswordHasher<UserEntity>, PasswordHasher<UserEntity>>();
+builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
+builder.Services.AddMediatR(cfg =>
+    cfg.RegisterServicesFromAssembly(typeof(CreateUserHandler).Assembly));
 builder.Services.AddDbContext<JiraLikeDbContext>(options => options.UseSqlServer(
     builder.Configuration.GetConnectionString("DbConnection")));
 
@@ -28,6 +37,7 @@ if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
+    app.UseDeveloperExceptionPage();
 }
 
 app.UseHttpsRedirection();
