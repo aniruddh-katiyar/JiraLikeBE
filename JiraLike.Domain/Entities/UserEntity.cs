@@ -6,7 +6,7 @@ namespace JiraLike.Domain.Entities
     {
         public required string Name { get; set; }
         public required string Email { get; set; }
-        public required string PasswordHash { get; set; }
+        public string PasswordHash { get; set; } = null!;
         public required string Role { get; set; }
 
         public ICollection<ProjectUserEntity> ProjectUsers { get; set; } = null!;

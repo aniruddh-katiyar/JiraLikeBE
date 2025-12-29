@@ -1,9 +1,11 @@
-﻿using JiraLike.Application.Abstraction.Services;
-using JiraLike.Infrastructure.DbContexts;
-using Microsoft.EntityFrameworkCore;
-
+﻿
 namespace JiraLike.Infrastructure.Repository
 {
+    using JiraLike.Application.Abstraction.Services;
+    using JiraLike.Infrastructure.DbContexts;
+    using Microsoft.EntityFrameworkCore;
+    using System.Linq.Expressions;
+
     public class Repository<T> : IRepository<T> where T : class
     {
         //DbContext 
@@ -13,11 +15,14 @@ namespace JiraLike.Infrastructure.Repository
         {
             _dbContext = dbContext;
         }
-
-        public async Task AddAsync(T entity)
+        public async Task AddAsync(T entity, CancellationToken token)
         {
-            await _dbContext.Set<T>().AddAsync(entity);
-            await _dbContext.SaveChangesAsync();
+            await _dbContext.Set<T>().AddAsync(entity, token);
+        }
+
+        public async Task SaveChangesAsync(CancellationToken token)
+        {
+            await _dbContext.SaveChangesAsync(token);
         }
 
         public async Task<IReadOnlyList<T>> GetAllAsync()
@@ -44,6 +49,11 @@ namespace JiraLike.Infrastructure.Repository
 
             _dbContext.Set<T>().Remove(entity);
             await _dbContext.SaveChangesAsync();
+        }
+
+        public async Task<T?> FirstOrDefaultAsync(Expression<Func<T, bool>> predicate, CancellationToken token)
+        {
+            return await _dbContext.Set<T>().FirstOrDefaultAsync(predicate, token);
         }
     }
 }

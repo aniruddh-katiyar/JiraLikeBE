@@ -29,6 +29,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\JiraLike.Application\JiraLike.Application.csproj" />
     <ProjectReference Include="..\JiraLike.Infrastructure\JiraLike.Infrastructure.csproj" />
   </ItemGroup>
 

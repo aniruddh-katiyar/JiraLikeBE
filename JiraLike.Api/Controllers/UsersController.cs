@@ -1,12 +1,12 @@
-﻿using JiraLike.Application.Abstraction.Command;
-using JiraLike.Domain.Dtos;
-using MediatR;
-using Microsoft.AspNetCore.Mvc;
-
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-
+﻿
 namespace JiraLike.Api.Controllers
 {
+    using JiraLike.Application.Abstraction.Command;
+    using JiraLike.Application.Abstraction.Query;
+    using JiraLike.Domain.Dtos;
+    using MediatR;
+    using Microsoft.AspNetCore.Mvc;
+
     [Route("api/[controller]")]
     [ApiController]
     public class UsersController : ControllerBase
@@ -16,11 +16,51 @@ namespace JiraLike.Api.Controllers
         {
             _mediator = mediator;
         }
+
+        /// <summary>
+        /// Creates a new user.
+        /// </summary>
+        /// <param name="userRequestDto">User creation request payload</param>
+        /// <param name="token">Cancellation token</param>
+        /// <returns>Returns the created user identifier</returns>
         [HttpPost]
-        public async Task<IActionResult> AddUserAsync([FromBody] UserRequestDto userRequestDto, CancellationToken token )
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<IActionResult> CreateUserAsync([FromBody] UserRequestDto userRequestDto, CancellationToken token)
         {
-            var result = await _mediator.Send(new AddUserCommand(userRequestDto), token);
-            return Created(result);
+            var result = await _mediator.Send(new CreateUserCommand(userRequestDto), token);
+            return Created(
+           $"api/users/{result.UserId}",
+           result);
+        }
+
+        [HttpPut]
+        public async Task<IActionResult> UpdateUserAsync([FromBody] UserRequestDto userRequestDto, [FromRoute] Guid userId, CancellationToken token)
+        {
+            var result = await _mediator.Send(new UpdateUserCommand(userRequestDto, userId), token);
+            return Ok(result);
+        }
+
+        [HttpDelete]
+        public async Task<IActionResult> DeleteUserAsync([FromRoute] Guid userId, CancellationToken token)
+        {
+            await _mediator.Send(new DeleteUserCommand(userId), token);
+            return NoContent();
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GetAllUsersAsync(CancellationToken token)
+        {
+            var result = await _mediator.Send(new GetAllUserQuery(), token);
+            return Ok(result);
+        }
+
+        [HttpGet("{userId}")]
+        public async Task<IActionResult> GetUserById([FromRoute] Guid userId, CancellationToken token)
+        {
+            var result = await _mediator.Send(new GetUserByIdQuery(userId), token);
+            return Ok(result);
         }
     }
 }
