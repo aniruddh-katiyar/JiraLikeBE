@@ -15,6 +15,8 @@ namespace JiraLike.Infrastructure.Repository
         {
             _dbContext = dbContext;
         }
+
+        //
         public async Task AddAsync(T entity, CancellationToken token)
         {
             await _dbContext.Set<T>().AddAsync(entity, token);

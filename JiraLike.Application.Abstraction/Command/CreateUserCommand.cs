@@ -1,5 +1,4 @@
-﻿
-/// <summary>
+﻿/// <summary>
 /// Represents a command to create a new user.
 /// </summary>
 
