@@ -21,6 +21,7 @@
                 ?? throw new EntityNotFoundException<UserEntity>(request.UserId);
 
             await _repository.SoftDeleteAsync(userEntity, cancellationToken);
+            await _repository.SaveChangesAsync(cancellationToken);
 
             return Unit.Value;
         }
