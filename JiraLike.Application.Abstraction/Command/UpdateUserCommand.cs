@@ -1,13 +1,16 @@
-﻿using JiraLike.Domain.Dtos;
-using MediatR;
-
+﻿/// <summary>
+/// Represents a command to update a existing user.
+/// </summary>
+/// 
 namespace JiraLike.Application.Abstraction.Command
 {
-    public class UpdateUserCommand : IRequest<UserResponseDto>
+    using JiraLike.Domain.Dtos;
+    using MediatR;
+    public sealed class UpdateUserCommand : IRequest<UserResponseDto>
     {
-        public UserRequestDto UserRequest { get; set; }
-        public Guid UserId { get; set; }
-        public UpdateUserCommand(UserRequestDto userRequestDto, Guid userId)
+        public UpdateUserRequestDto UserRequest { get; }
+        public Guid UserId { get; }
+        public UpdateUserCommand(UpdateUserRequestDto userRequestDto, Guid userId)
         {
             UserRequest = userRequestDto;
             UserId = userId;

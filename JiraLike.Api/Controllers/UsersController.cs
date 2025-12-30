@@ -30,13 +30,20 @@ namespace JiraLike.Api.Controllers
         public async Task<IActionResult> CreateUserAsync([FromBody] UserRequestDto userRequestDto, CancellationToken token)
         {
             var result = await _mediator.Send(new CreateUserCommand(userRequestDto), token);
-            return Created(
-           $"api/users/{result.UserId}",
-           result);
+            return Created($"api/users/{result.UserId}", result);
         }
 
-        [HttpPut]
-        public async Task<IActionResult> UpdateUserAsync([FromBody] UserRequestDto userRequestDto, [FromRoute] Guid userId, CancellationToken token)
+        /// <summary>
+        /// Update User : Partial Updates.
+        /// </summary>
+        /// <param name="userRequestDto">User creation request payload</param>
+        /// <param name="token">Cancellation token</param>
+        /// <returns>Returns the updated user identifier</returns>
+        [HttpPatch("{userId}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<IActionResult> UpdateUserAsync([FromBody] UpdateUserRequestDto userRequestDto, [FromRoute] Guid userId, CancellationToken token)
         {
             var result = await _mediator.Send(new UpdateUserCommand(userRequestDto, userId), token);
             return Ok(result);
