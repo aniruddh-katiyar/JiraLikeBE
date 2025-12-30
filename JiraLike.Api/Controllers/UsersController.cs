@@ -1,4 +1,7 @@
-﻿
+﻿/// <summary>
+/// UsersController provides RESTful endpoints for managing user accounts in the JiraLike application.
+/// </summary>
+
 namespace JiraLike.Api.Controllers
 {
     using JiraLike.Application.Abstraction.Command;
@@ -24,7 +27,7 @@ namespace JiraLike.Api.Controllers
         /// <param name="token">Cancellation token</param>
         /// <returns>Returns the created user identifier</returns>
         [HttpPost]
-        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(typeof(UserResponseDto), StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> CreateUserAsync([FromBody] UserRequestDto userRequestDto, CancellationToken token)
@@ -39,9 +42,10 @@ namespace JiraLike.Api.Controllers
         /// <param name="userRequestDto">User creation request payload</param>
         /// <param name="token">Cancellation token</param>
         /// <returns>Returns the updated user identifier</returns>
-        [HttpPatch("{userId}")]
+        [HttpPatch("{userId:guid}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> UpdateUserAsync([FromBody] UpdateUserRequestDto userRequestDto, [FromRoute] Guid userId, CancellationToken token)
         {
@@ -49,21 +53,51 @@ namespace JiraLike.Api.Controllers
             return Ok(result);
         }
 
-        [HttpDelete]
+
+        /// <summary>
+        /// Delete User.
+        /// </summary>
+        /// <param name="userId">UserId</param>
+        /// <param name="token">Cancellation token</param>
+        /// <returns>Returns nothing</returns>
+        [HttpDelete("{userId:guid}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> DeleteUserAsync([FromRoute] Guid userId, CancellationToken token)
         {
             await _mediator.Send(new DeleteUserCommand(userId), token);
             return NoContent();
         }
 
+
+        /// <summary>
+        /// Get All Users.
+        /// </summary>
+        /// <param name="token">Cancellation token</param>
+        /// <returns>Return List of Users</returns>
         [HttpGet]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> GetAllUsersAsync(CancellationToken token)
         {
             var result = await _mediator.Send(new GetAllUserQuery(), token);
             return Ok(result);
         }
 
-        [HttpGet("{userId}")]
+        /// <summary>
+        /// Get User by Id.
+        /// </summary>
+        /// <param name="userId">UserId</param>
+        /// <param name="token">Cancellation token</param>
+        /// <returns>Return Single user by Id</returns>
+        [HttpGet("{userId:guid}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> GetUserById([FromRoute] Guid userId, CancellationToken token)
         {
             var result = await _mediator.Send(new GetUserByIdQuery(userId), token);
