@@ -5,6 +5,7 @@
 
 namespace JiraLike.Application.Handler.Users
 {
+    using AutoMapper;
     using JiraLike.Application.Abstraction.Command;
     using JiraLike.Application.Abstraction.Services;
     using JiraLike.Domain.Dtos;
@@ -18,10 +19,13 @@ namespace JiraLike.Application.Handler.Users
 
         private readonly IPasswordHasher<UserEntity> _passwordHasher;
 
-        public CreateUserHandler(IRepository<UserEntity> repository, IPasswordHasher<UserEntity> passwordHasher)
+        private readonly IMapper _mapper;
+
+        public CreateUserHandler(IRepository<UserEntity> repository, IPasswordHasher<UserEntity> passwordHasher, IMapper mapper)
         {
             _repository = repository;
             _passwordHasher = passwordHasher;
+            _mapper = mapper;
         }
 
         /// <summary>
@@ -54,17 +58,8 @@ namespace JiraLike.Application.Handler.Users
 
             await _repository.AddAsync(user, cancellationToken);
             await _repository.SaveChangesAsync(cancellationToken);
-
-            return new UserResponseDto
-            {
-                UserId = user.Id,
-                Email = user.Email,
-                CreatedAt = user.CreatedAt,
-                Message = "User Successfully Added",
-                Role = user.Role,
-                Success = true,
-                Username = user.Name
-            };
+            var response = _mapper.Map<UserResponseDto>(user);
+            return response;
         }
     }
 }

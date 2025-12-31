@@ -5,6 +5,7 @@
 /// 
 namespace JiraLike.Application.Handler.Users
 {
+    using AutoMapper;
     using JiraLike.Application.Abstraction.Command;
     using JiraLike.Application.Abstraction.Exceptions;
     using JiraLike.Application.Abstraction.Services;
@@ -17,9 +18,12 @@ namespace JiraLike.Application.Handler.Users
     public class UpdateUserHandler : IRequestHandler<UpdateUserCommand, UserResponseDto>
     {
         private readonly IRepository<UserEntity> _repository;
-        public UpdateUserHandler(IRepository<UserEntity> repository)
+
+        private readonly IMapper _mapper;
+        public UpdateUserHandler(IRepository<UserEntity> repository, IMapper mapper)
         {
             _repository = repository;
+            _mapper = mapper;
         }
         public async Task<UserResponseDto> Handle(UpdateUserCommand command, CancellationToken cancellationToken)
         {
@@ -45,13 +49,8 @@ namespace JiraLike.Application.Handler.Users
             await _repository.SaveChangesAsync(cancellationToken);
 
             // Return response
-            return new UserResponseDto
-            {
-                UserId = user.Id,
-                Username = user.Name,
-                Email = user.Email,
-                Role = user.Role
-            };
+            var result = _mapper.Map<UserResponseDto>(user);
+            return result;
         }
     }
 }

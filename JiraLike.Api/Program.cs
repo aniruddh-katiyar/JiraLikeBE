@@ -1,10 +1,12 @@
 using JiraLike.Application.Abstraction.Services;
 using JiraLike.Application.Handler.Users;
+using JiraLike.Application.Mapper;
 using JiraLike.Domain.Entities;
 using JiraLike.Infrastructure.DbContexts;
 using JiraLike.Infrastructure.Repository;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -22,9 +24,17 @@ builder.Services.AddSwaggerGen(options =>
         Version = "v1"
     });
 });
-// For .NET 6+ minimal hosting model (Program.cs)
+
 builder.Services.AddScoped<IPasswordHasher<UserEntity>, PasswordHasher<UserEntity>>();
 builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
+
+// Register AutoMapper and scan for profiles
+builder.Services.AddAutoMapper(cfg =>
+{
+    cfg.ShouldMapMethod = _ => false;
+    cfg.ShouldMapProperty = p => p.GetMethod?.IsPublic == true;
+}, typeof(UserMapper));
+
 builder.Services.AddMediatR(cfg =>
     cfg.RegisterServicesFromAssembly(typeof(CreateUserHandler).Assembly));
 builder.Services.AddDbContext<JiraLikeDbContext>(options => options.UseSqlServer(
