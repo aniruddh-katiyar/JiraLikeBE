@@ -1,5 +1,6 @@
 ﻿namespace JiraLike.Application.Handler.Users
 {
+    using AutoMapper;
     using JiraLike.Application.Abstraction.Exceptions;
     using JiraLike.Application.Abstraction.Query;
     using JiraLike.Application.Abstraction.Services;
@@ -12,23 +13,18 @@
     public class GetUserByIdHandler : IRequestHandler<GetUserByIdQuery, UserResponseDto>
     {
         private readonly IRepository<UserEntity> _repository;
-        public GetUserByIdHandler(IRepository<UserEntity> repository)
+        private readonly IMapper _mapper;
+        public GetUserByIdHandler(IRepository<UserEntity> repository, IMapper mapper)
         {
             _repository = repository;
+            _mapper = mapper;
         }
         public async Task<UserResponseDto> Handle(GetUserByIdQuery request, CancellationToken cancellationToken)
         {
-            var userEntity = await _repository.FirstOrDefaultAsync(x => x.Id == request.UserId, cancellationToken)
+            var user = await _repository.FirstOrDefaultAsync(x => x.Id == request.UserId, cancellationToken)
                 ?? throw new EntityNotFoundException<UserEntity>(request.UserId);
-            var userResponse = new UserResponseDto
-            {
-                UserId = userEntity.Id,
-                Email = userEntity.Email,
-                Username = userEntity.Name,
-                CreatedAt = userEntity.CreatedAt,
-                Role = userEntity.Role,
-            };
-            return userResponse;
+            var result = _mapper.Map<UserResponseDto>(user);
+            return result;
         }
     }
 }
