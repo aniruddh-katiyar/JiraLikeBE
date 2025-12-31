@@ -1,12 +1,14 @@
 using JiraLike.Application.Abstraction.Services;
 using JiraLike.Application.Handler.Users;
 using JiraLike.Application.Mapper;
+using JiraLike.Application.Services;
 using JiraLike.Domain.Entities;
 using JiraLike.Infrastructure.DbContexts;
 using JiraLike.Infrastructure.Repository;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -27,6 +29,25 @@ builder.Services.AddSwaggerGen(options =>
 
 builder.Services.AddScoped<IPasswordHasher<UserEntity>, PasswordHasher<UserEntity>>();
 builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
+builder.Services.AddScoped<TokenGeneratorService>();
+var configuration = builder.Configuration;
+var secretKey = configuration.GetValue<string>("Jwt:SecretKey");
+
+builder.Services.AddAuthentication("Bearer")
+.AddJwtBearer("Bearer", options =>
+{
+    options.TokenValidationParameters = new TokenValidationParameters
+    {
+        ValidateIssuer = true,
+        ValidateAudience = true,
+        ValidateLifetime = true,
+        ValidateIssuerSigningKey = true,
+        ValidIssuer = configuration["Jwt:Issuer"],
+        ValidAudience = configuration["Jwt:Audience"],
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secretKey!))
+    };
+});
+
 
 // Register AutoMapper and scan for profiles
 builder.Services.AddAutoMapper(cfg =>
