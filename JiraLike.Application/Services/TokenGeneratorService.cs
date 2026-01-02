@@ -1,12 +1,15 @@
 ﻿namespace JiraLike.Application.Services
 {
+    using JiraLike.Domain.Token;
     using Microsoft.Extensions.Configuration;
     using Microsoft.IdentityModel.Tokens;
     using System.IdentityModel.Tokens.Jwt;
     using System.Security.Claims;
+    using System.Security.Cryptography;
     using System.Text;
+    using System.Threading.Tasks;
 
-    public class TokenGeneratorService
+    public class TokenGeneratorService : ITokenGeneratorService
     {
         private readonly IConfiguration _configuration;
 
@@ -15,12 +18,15 @@
             _configuration = configuration;
         }
 
-        public string GenerateJwtToken(string email, string role)
+        // Access Token will be generated.
+        public string GenerateAccessToken(string email, string role, Guid userId)
         {
             var claims = new List<Claim>
             {
-                new Claim(ClaimTypes.Email, email),
-                new Claim(ClaimTypes.Role, role)
+              new Claim(JwtRegisteredClaimNames.Sub, userId.ToString()),
+              new Claim(JwtRegisteredClaimNames.Email, email),
+              new Claim(ClaimTypes.Role, role),
+              new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
             };
 
             var secretKey = _configuration.GetValue<string>("Jwt:SecretKey")
@@ -39,6 +45,27 @@
 
             var tokenHandler = new JwtSecurityTokenHandler();
             return tokenHandler.WriteToken(tokenDescriptor);
+        }
+
+
+        public string GenerateRefreshToken()
+        {
+            return Convert.ToBase64String(RandomNumberGenerator.GetBytes(64));
+        }
+        public string GenerateEncryptedRefreshToken(string refreshToken)
+        {
+            return Convert.ToBase64String(SHA256.HashData(Encoding.UTF8.GetBytes(refreshToken)));
+        }
+
+
+        public bool VerifyRefreshToken(string incomingToken, RefreshTokenEntity refreshTokenEnity)
+        {
+            var incominghasedrefreshToken = Convert.ToBase64String(SHA256.HashData(Encoding.UTF8.GetBytes(incomingToken)));
+            if(refreshTokenEnity.TokenHash == incominghasedrefreshToken && refreshTokenEnity.IsRevoked == false && refreshTokenEnity.ExpiresAt > DateTime.UtcNow)
+             {
+                return true;
+             }
+            return false;
         }
     }
 }

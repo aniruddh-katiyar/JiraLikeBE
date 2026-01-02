@@ -1,4 +1,6 @@
 ﻿using JiraLike.Domain.Base;
+using JiraLike.Domain.Token;
+using System.Collections.Generic;
 
 namespace JiraLike.Domain.Entities
 {
@@ -12,5 +14,7 @@ namespace JiraLike.Domain.Entities
         public ICollection<ProjectUserEntity> ProjectUsers { get; set; } = null!;
         public ICollection<TaskItemEntity> AssignedTasks { get; set; } = null!;
         public ICollection<CommentEntity> Comments { get; set; } = null!;
+
+        public ICollection<RefreshTokenEntity>? RefreshTokens { get; set; } 
     }
 }

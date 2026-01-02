@@ -61,5 +61,13 @@ namespace JiraLike.Infrastructure.Repository
         {
             return await _dbContext.Set<T>().FirstOrDefaultAsync(predicate, token);
         }
+
+        public IQueryable<T> Query(bool asNoTracking = true)
+        {
+            var query = _dbContext.Set<T>().AsQueryable();
+            return asNoTracking ? query.AsNoTracking() : query;
+        }
+
+
     }
 }
