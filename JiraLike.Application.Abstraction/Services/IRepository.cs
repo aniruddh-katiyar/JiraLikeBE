@@ -14,5 +14,8 @@ namespace JiraLike.Application.Abstraction.Services
         Task SoftDeleteAsync(T entity, CancellationToken token);
         Task SaveChangesAsync(CancellationToken token);
         Task<T?> FirstOrDefaultAsync(Expression<Func<T, bool>> predicate, CancellationToken token);
+
+        IQueryable<T> Query(bool asNoTracking = true);
+
     }
 }

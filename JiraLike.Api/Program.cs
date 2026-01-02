@@ -29,7 +29,7 @@ builder.Services.AddSwaggerGen(options =>
 
 builder.Services.AddScoped<IPasswordHasher<UserEntity>, PasswordHasher<UserEntity>>();
 builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
-builder.Services.AddScoped<TokenGeneratorService>();
+builder.Services.AddScoped<ITokenGeneratorService, TokenGeneratorService>();
 var configuration = builder.Configuration;
 var secretKey = configuration.GetValue<string>("Jwt:SecretKey");
 

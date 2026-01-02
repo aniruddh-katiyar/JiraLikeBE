@@ -3,7 +3,7 @@
     using JiraLike.Domain.Dtos;
     using MediatR;
 
-    public sealed class LoginUserCommand : IRequest<string>
+    public sealed class LoginUserCommand : IRequest<AuthResponseDto>
     {
         public LoginRequestDto LoginRequestDto { get; }
         public LoginUserCommand(LoginRequestDto loginRequestDto)
