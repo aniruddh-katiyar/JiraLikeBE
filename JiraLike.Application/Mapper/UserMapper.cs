@@ -9,7 +9,7 @@
     {
         public UserMapper()
         {
-           // Request DTO ➜ Entity
+           
             CreateMap<UserRequestDto, UserEntity>()
                 // Explicit mappings
                 .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name))
@@ -22,7 +22,8 @@
                 // EF Core navigation properties (must be ignored)
                 .ForMember(dest => dest.ProjectUsers, opt => opt.Ignore())
                 .ForMember(dest => dest.AssignedTasks, opt => opt.Ignore())
-                .ForMember(dest => dest.Comments, opt => opt.Ignore());
+                .ForMember(dest => dest.Comments, opt => opt.Ignore())
+                .ForMember(dest => dest.RefreshTokens, opt => opt.Ignore());
 
 
            
