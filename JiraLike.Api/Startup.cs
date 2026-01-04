@@ -11,6 +11,7 @@ namespace JiraLike.Api
     using Microsoft.AspNetCore.Identity;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.IdentityModel.Tokens;
+    using Serilog;
     using System.Text;
 
     public class Startup
@@ -26,6 +27,13 @@ namespace JiraLike.Api
         {
             // Controllers
             services.AddControllers();
+
+            //Logging
+            services.AddSerilog();
+            services.AddLogging(loggingBuilder =>
+            {
+                loggingBuilder.AddSerilog(dispose: true);
+            });
 
             // Swagger
             services.AddEndpointsApiExplorer();
@@ -102,8 +110,23 @@ namespace JiraLike.Api
                 app.UseSwagger();
                 app.UseSwaggerUI();
             }
+            //  
+            app.UseMiddleware<CorrelationIdMiddleware>();
+
+            // Serilog can read CorrelationId
+            app.UseSerilogRequestLogging(options =>
+            {
+                options.EnrichDiagnosticContext = (diagnosticContext, httpContext) =>
+                {
+                    diagnosticContext.Set(
+                        "CorrelationId",
+                        httpContext.TraceIdentifier
+                    );
+                };
+            });
 
             app.UseHttpsRedirection();
+          
 
             app.UseRouting();
 
