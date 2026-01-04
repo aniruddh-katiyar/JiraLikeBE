@@ -110,10 +110,10 @@ namespace JiraLike.Api
                 app.UseSwagger();
                 app.UseSwaggerUI();
             }
-            // ✅ MUST BE FIRST (before Serilog logging)
+            //  
             app.UseMiddleware<CorrelationIdMiddleware>();
 
-            // ✅ Now Serilog can read CorrelationId
+            // Serilog can read CorrelationId
             app.UseSerilogRequestLogging(options =>
             {
                 options.EnrichDiagnosticContext = (diagnosticContext, httpContext) =>

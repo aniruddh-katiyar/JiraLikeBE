@@ -13,19 +13,19 @@ public class CorrelationIdMiddleware
 
     public async Task Invoke(HttpContext context)
     {
-        // 1️⃣ Read incoming CorrelationId OR create new
+        // Read incoming CorrelationId OR create new
         var correlationId = context.Request.Headers.ContainsKey(HeaderName)
             ? context.Request.Headers[HeaderName].ToString()
             : Guid.NewGuid().ToString();
 
-        // 2️⃣ Store it for the entire request
+        //  Store it for the entire request
         context.TraceIdentifier = correlationId;
         context.Items[HeaderName] = correlationId;
 
-        // 3️⃣ Add to response headers
+        //  Add to response headers
         context.Response.Headers[HeaderName] = correlationId;
 
-        // 4️⃣ Push into Serilog context
+        //  Push into Serilog context
         using (LogContext.PushProperty("CorrelationId", correlationId))
         {
             await _next(context);
