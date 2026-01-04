@@ -15,9 +15,11 @@ namespace JiraLike.Api.Controllers
     public class UsersController : ControllerBase
     {
         private readonly IMediator _mediator;
-        public UsersController(IMediator mediator)
+        private readonly ILogger<UsersController> _logger;
+        public UsersController(IMediator mediator, ILogger<UsersController> logger)
         {
             _mediator = mediator;
+            _logger = logger;
         }
 
         /// <summary>
@@ -84,6 +86,11 @@ namespace JiraLike.Api.Controllers
         public async Task<IActionResult> GetAllUsersAsync(CancellationToken token)
         {
             var result = await _mediator.Send(new GetAllUserQuery(), token);
+            _logger.LogInformation(
+      "CreateUser API called. CorrelationId: {CorrelationId}",
+      HttpContext.TraceIdentifier
+  );
+
             return Ok(result);
         }
 
