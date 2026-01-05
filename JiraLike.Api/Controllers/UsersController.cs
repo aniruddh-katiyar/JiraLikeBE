@@ -8,6 +8,7 @@ namespace JiraLike.Api.Controllers
     using JiraLike.Application.Abstraction.Query;
     using JiraLike.Domain.Dtos;
     using MediatR;
+    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
 
     [Route("api/[controller]")]
@@ -83,6 +84,7 @@ namespace JiraLike.Api.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [Authorize]
         public async Task<IActionResult> GetAllUsersAsync(CancellationToken token)
         {
             var result = await _mediator.Send(new GetAllUserQuery(), token);

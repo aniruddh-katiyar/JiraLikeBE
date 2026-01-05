@@ -1,6 +1,7 @@
 ﻿
 namespace JiraLike.Api
 {
+    using JiraLike.Api.Middlewares;
     using JiraLike.Application.Abstraction.Services;
     using JiraLike.Application.Handler.Users;
     using JiraLike.Application.Mapper;
@@ -11,6 +12,7 @@ namespace JiraLike.Api
     using Microsoft.AspNetCore.Identity;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.IdentityModel.Tokens;
+    using Microsoft.OpenApi.Models;
     using Serilog;
     using System.Text;
 
@@ -37,15 +39,31 @@ namespace JiraLike.Api
 
             // Swagger
             services.AddEndpointsApiExplorer();
-            services.AddSwaggerGen(options =>
+            services.AddSwaggerGen(c =>
             {
-                options.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo
-                {
-                    Title = "JiraLike API",
-                    Version = "v1"
-                });
-            });
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "JiraLIke API", Version = "v1" });
 
+                c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+                {
+                    Description = "JWT Authorization header using the Bearer scheme. Example: \"Bearer {token}\"",
+                    Name = "Authorization",
+                    In = ParameterLocation.Header,
+                    Type = SecuritySchemeType.Http,
+                    Scheme = "bearer",
+                    BearerFormat = "JWT"
+                });
+
+                c.AddSecurityRequirement(new OpenApiSecurityRequirement
+    {
+        {
+            new OpenApiSecurityScheme
+            {
+                Reference = new OpenApiReference { Type = ReferenceType.SecurityScheme, Id = "Bearer" }
+            },
+            new string[] {}
+        }
+    });
+            });
             // Database
             services.AddDbContext<JiraLikeDbContext>(options =>
                 options.UseSqlServer(
@@ -112,6 +130,8 @@ namespace JiraLike.Api
             }
             //  
             app.UseMiddleware<CorrelationIdMiddleware>();
+            app.UseMiddleware<GlobalExceptionMiddleware>();
+            app.UseExceptionHandler("/Home/Error");
 
             // Serilog can read CorrelationId
             app.UseSerilogRequestLogging(options =>
