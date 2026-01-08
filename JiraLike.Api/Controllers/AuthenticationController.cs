@@ -6,24 +6,24 @@
     using MediatR;
     using Microsoft.AspNetCore.Mvc;
 
+    [Route("api/auth")]
     [ApiController]
-    [Route("api/[controller]")]
-    public class LoginController : ControllerBase
+    public class AuthenticationController : ControllerBase
     {
         private readonly IMediator _mediator;
-        public LoginController(IMediator mediator)
+        public AuthenticationController(IMediator mediator)
         {
             _mediator = mediator;
         }
 
-        [HttpPost("/login")]
+        [HttpPost("login")]
         public async Task<IActionResult> LoginAsync([FromBody] LoginRequestDto loginRequestDto, CancellationToken cancellationToken)
         {
             var result = await _mediator.Send(new LoginUserCommand(loginRequestDto), cancellationToken);
             return Ok(result);
         }
 
-        [HttpPost("/refresh")]
+        [HttpPost("refresh")]
         public async Task<IActionResult> GetRefreshTokenAsync([FromBody] string refreshToken, CancellationToken cancellationToken)
         {
             var result = await _mediator.Send(new GetRefreshTokenQuery(refreshToken), cancellationToken);
