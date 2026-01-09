@@ -13,6 +13,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JiraLike.Domain", "JiraLike
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JiraLike.Infrastructure", "JiraLike.Infrastructure\JiraLike.Infrastructure.csproj", "{8ED57B7E-A0D4-D8B6-F54C-DDE93C47A542}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JiraLike.Api.Tests", "JiraLike.Api.Tests\JiraLike.Api.Tests.csproj", "{A2D85566-E51F-4C21-9E5B-88FA110E9204}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JiraLike.Application.Tests", "JiraLike.Application.Tests\JiraLike.Application.Tests.csproj", "{6BAC6BB8-6C96-42DE-93C8-628076BD8CBF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +43,14 @@ Global
 		{8ED57B7E-A0D4-D8B6-F54C-DDE93C47A542}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8ED57B7E-A0D4-D8B6-F54C-DDE93C47A542}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8ED57B7E-A0D4-D8B6-F54C-DDE93C47A542}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A2D85566-E51F-4C21-9E5B-88FA110E9204}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A2D85566-E51F-4C21-9E5B-88FA110E9204}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A2D85566-E51F-4C21-9E5B-88FA110E9204}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A2D85566-E51F-4C21-9E5B-88FA110E9204}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6BAC6BB8-6C96-42DE-93C8-628076BD8CBF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6BAC6BB8-6C96-42DE-93C8-628076BD8CBF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6BAC6BB8-6C96-42DE-93C8-628076BD8CBF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6BAC6BB8-6C96-42DE-93C8-628076BD8CBF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

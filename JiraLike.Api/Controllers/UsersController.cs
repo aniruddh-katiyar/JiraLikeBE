@@ -30,13 +30,12 @@ namespace JiraLike.Api.Controllers
         /// <param name="token">Cancellation token</param>
         /// <returns>Returns the created user identifier</returns>
         [HttpPost]
-        [ProducesResponseType(typeof(UserResponseDto), StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> CreateUserAsync([FromBody] UserRequestDto userRequestDto, CancellationToken token)
         {
             var result = await _mediator.Send(new CreateUserCommand(userRequestDto), token);
-            return Created($"api/users/{result.UserId}", result);
+            return Ok(result);
         }
 
         /// <summary>
