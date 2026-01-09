@@ -21,6 +21,9 @@
     <PackageReference Include="Serilog.Sinks.Console" Version="6.0.0" />
     <PackageReference Include="Serilog.Sinks.File" Version="6.0.0" />
   </ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+	</ItemGroup>
 
 	<ItemGroup>
 		<ProjectReference Include="..\JiraLike.Domain\JiraLike.Domain.csproj" />
