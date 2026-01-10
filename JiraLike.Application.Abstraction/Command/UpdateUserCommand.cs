@@ -6,7 +6,7 @@ namespace JiraLike.Application.Abstraction.Command
 {
     using JiraLike.Domain.Dtos;
     using MediatR;
-    public sealed class UpdateUserCommand : IRequest<UserResponseDto>
+    public sealed class UpdateUserCommand : IRequest<GetUserResponseDto>
     {
         public UpdateUserRequestDto UserRequest { get; }
         public Guid UserId { get; }

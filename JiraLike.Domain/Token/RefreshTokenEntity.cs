@@ -5,9 +5,9 @@
 
     public class RefreshTokenEntity
     {
-        public Guid Id { get; set; } = Guid.NewGuid();   // internal identifier
-        public Guid UserId { get; set; }                 // FK to Users table
-        public string TokenHash { get; set; } = null!;          // hashed token
+        public Guid Id { get; set; } = Guid.NewGuid();   
+        public Guid UserId { get; set; }                 
+        public string TokenHash { get; set; } = null!;          
         public DateTime ExpiresAt { get; set; }
         public bool IsRevoked { get; set;}
         public UserEntity User { get; set; } = null!;

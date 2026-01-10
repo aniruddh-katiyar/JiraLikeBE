@@ -7,10 +7,10 @@ namespace JiraLike.Application.Abstraction.Command
     using JiraLike.Domain.Dtos;
     using MediatR;
 
-    public sealed class CreateUserCommand : IRequest<UserResponseDto>
+    public sealed class CreateUserCommand : IRequest<GetUserResponseDto>
     {
-        public UserRequestDto UserRequestDto { get; }
-        public CreateUserCommand(UserRequestDto userRequestDto)
+        public AddUserRequestDto UserRequestDto { get; }
+        public CreateUserCommand(AddUserRequestDto userRequestDto)
         {
             UserRequestDto = userRequestDto ?? throw new ArgumentNullException(nameof(userRequestDto));
         }

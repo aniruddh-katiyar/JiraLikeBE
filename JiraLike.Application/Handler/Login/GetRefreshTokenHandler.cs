@@ -5,18 +5,20 @@ using JiraLike.Domain.Dtos;
 using JiraLike.Domain.Token;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 
 public class GetRefreshTokenHandler : IRequestHandler<GetRefreshTokenQuery, AuthResponseDto>
 {
     private readonly IRepository<RefreshTokenEntity> _refreshTokenRepository;
     private readonly ITokenGeneratorService _tokenGeneratorService;
-
+    private readonly IConfiguration _configuration;
     public GetRefreshTokenHandler(
         IRepository<RefreshTokenEntity> refreshTokenRepository,
-        ITokenGeneratorService tokenGeneratorService)
+        ITokenGeneratorService tokenGeneratorService, IConfiguration configuration)
     {
         _refreshTokenRepository = refreshTokenRepository;
         _tokenGeneratorService = tokenGeneratorService;
+        _configuration = configuration;
     }
 
     public async Task<AuthResponseDto> Handle(GetRefreshTokenQuery request, CancellationToken cancellationToken)
@@ -42,7 +44,7 @@ public class GetRefreshTokenHandler : IRequestHandler<GetRefreshTokenQuery, Auth
         {
             UserId = refreshTokenEntity.UserId,
             TokenHash = newEncyptedRefreshToke,
-            ExpiresAt = DateTime.UtcNow.AddDays(7), // configurable lifetime
+            ExpiresAt = DateTime.UtcNow.AddDays(_configuration.GetValue<int>("RefreshTokens: ExpireDays")), 
             IsRevoked = false
         };
         refreshTokenEntity.IsRevoked = true;

@@ -1,6 +1,6 @@
 ﻿namespace JiraLike.Application.Tests
 {
-    public class Class1
+    public class SeedData
     {
 
     }

@@ -9,9 +9,9 @@
 
     public static class SeedData
     {
-        public static UserResponseDto GetUserResponse()
+        public static GetUserResponseDto GetUserResponse()
         {
-            return new UserResponseDto
+            return new GetUserResponseDto
             {
                 UserId = Guid.NewGuid(),
                 Username = "Amit",
@@ -19,9 +19,9 @@
                 Success = true
             };
         }
-        public static UserRequestDto GetUserRequest()
+        public static AddUserRequestDto GetUserRequest()
         {
-            return new UserRequestDto
+            return new AddUserRequestDto
             {
                 Name = "Amit",
                 Email = "Amit@gmail.com",

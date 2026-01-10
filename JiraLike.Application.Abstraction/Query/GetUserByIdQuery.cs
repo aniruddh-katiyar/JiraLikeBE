@@ -3,7 +3,7 @@
     using JiraLike.Domain.Dtos;
     using MediatR;
 
-    public class GetUserByIdQuery : IRequest<UserResponseDto>
+    public class GetUserByIdQuery : IRequest<GetUserResponseDto>
     {
         public Guid UserId { get; set; }
 

@@ -9,8 +9,7 @@
     using JiraLike.Domain.Token;
     using MediatR;
     using Microsoft.AspNetCore.Identity;
-    using System.Security.Cryptography;
-    using System.Text;
+    using Microsoft.Extensions.Configuration;
     using System.Threading;
     using System.Threading.Tasks;
 
@@ -20,14 +19,17 @@
         private readonly IRepository<RefreshTokenEntity> _refereshTokenRepository;
         private readonly IPasswordHasher<UserEntity> _passwordHasher;
         private readonly ITokenGeneratorService _tokenGeneratorService;
+        private readonly IConfiguration _configuration;
         public UserLoginHandler(IRepository<UserEntity> repository, IPasswordHasher<UserEntity> passwordHasher,
             ITokenGeneratorService tokenGeneratorService,
-            IRepository<RefreshTokenEntity> refereshTokenRepository)
+            IRepository<RefreshTokenEntity> refereshTokenRepository,
+            IConfiguration configuration)
         {
             _repository = repository;
             _passwordHasher = passwordHasher;
             _tokenGeneratorService = tokenGeneratorService;
             _refereshTokenRepository = refereshTokenRepository;
+            _configuration = configuration;
         }
         public async Task<AuthResponseDto> Handle(LoginUserCommand request, CancellationToken cancellationToken)
         {
@@ -47,7 +49,7 @@
                 {
                     UserId = user.Id,
                     TokenHash = encrptedRefreshToken,
-                    ExpiresAt = DateTime.UtcNow.AddDays(7), // configurable lifetime
+                    ExpiresAt = DateTime.UtcNow.AddDays(_configuration.GetValue<int>("RefreshTokens:ExpireDays")),
                     IsRevoked = false
                 };
 
@@ -62,6 +64,6 @@
             }
             throw new Exception();
         }
-    
+
     }
 }
