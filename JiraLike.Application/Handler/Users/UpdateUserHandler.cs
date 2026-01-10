@@ -15,7 +15,7 @@ namespace JiraLike.Application.Handler.Users
     using System.Threading;
     using System.Threading.Tasks;
 
-    public class UpdateUserHandler : IRequestHandler<UpdateUserCommand, UserResponseDto>
+    public class UpdateUserHandler : IRequestHandler<UpdateUserCommand, GetUserResponseDto>
     {
         private readonly IRepository<UserEntity> _repository;
 
@@ -25,7 +25,7 @@ namespace JiraLike.Application.Handler.Users
             _repository = repository;
             _mapper = mapper;
         }
-        public async Task<UserResponseDto> Handle(UpdateUserCommand command, CancellationToken cancellationToken)
+        public async Task<GetUserResponseDto> Handle(UpdateUserCommand command, CancellationToken cancellationToken)
         {
             //Fetch entity
             var user = await _repository.FirstOrDefaultAsync(u => u.Id == command.UserId,
@@ -49,7 +49,7 @@ namespace JiraLike.Application.Handler.Users
             await _repository.SaveChangesAsync(cancellationToken);
 
             // Return response
-            var result = _mapper.Map<UserResponseDto>(user);
+            var result = _mapper.Map<GetUserResponseDto>(user);
             return result;
         }
     }

@@ -3,7 +3,7 @@ using MediatR;
 
 namespace JiraLike.Application.Abstraction.Query
 {
-    public class GetAllUserQuery : IRequest<List<UserResponseDto>>
+    public class GetAllUserQuery : IRequest<List<GetUserResponseDto>>
     {
 
 

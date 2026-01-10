@@ -10,7 +10,7 @@
     using System.Threading;
     using System.Threading.Tasks;
 
-    public class GetUserByIdHandler : IRequestHandler<GetUserByIdQuery, UserResponseDto>
+    public class GetUserByIdHandler : IRequestHandler<GetUserByIdQuery, GetUserResponseDto>
     {
         private readonly IRepository<UserEntity> _repository;
         private readonly IMapper _mapper;
@@ -19,11 +19,11 @@
             _repository = repository;
             _mapper = mapper;
         }
-        public async Task<UserResponseDto> Handle(GetUserByIdQuery request, CancellationToken cancellationToken)
+        public async Task<GetUserResponseDto> Handle(GetUserByIdQuery request, CancellationToken cancellationToken)
         {
             var user = await _repository.FirstOrDefaultAsync(x => x.Id == request.UserId, cancellationToken)
                 ?? throw new EntityNotFoundException<UserEntity>(request.UserId);
-            var result = _mapper.Map<UserResponseDto>(user);
+            var result = _mapper.Map<GetUserResponseDto>(user);
             return result;
         }
     }

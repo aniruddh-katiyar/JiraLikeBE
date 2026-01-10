@@ -32,10 +32,10 @@ namespace JiraLike.Api.Controllers
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> CreateUserAsync([FromBody] UserRequestDto userRequestDto, CancellationToken token)
+        public async Task<IActionResult> CreateUserAsync([FromBody] AddUserRequestDto userRequestDto, CancellationToken token)
         {
             var result = await _mediator.Send(new CreateUserCommand(userRequestDto), token);
-            return Ok(result);
+            return Created("", result);
         }
 
         /// <summary>

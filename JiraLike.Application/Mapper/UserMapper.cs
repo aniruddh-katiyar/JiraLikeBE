@@ -10,7 +10,7 @@
         public UserMapper()
         {
            
-            CreateMap<UserRequestDto, UserEntity>()
+            CreateMap<AddUserRequestDto, UserEntity>()
                 // Explicit mappings
                 .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name))
                 .ForMember(dest => dest.Email, opt => opt.MapFrom(src => src.Email))
@@ -29,7 +29,7 @@
            
             // Entity ➜ Response DTO
            
-            CreateMap<UserEntity, UserResponseDto>()
+            CreateMap<UserEntity, GetUserResponseDto>()
                 .ForMember(dest => dest.UserId, opt => opt.MapFrom(src => src.Id))
                 .ForMember(dest => dest.Username, opt => opt.MapFrom(src => src.Name))
                 .ForMember(dest => dest.Email, opt => opt.MapFrom(src => src.Email))

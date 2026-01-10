@@ -37,7 +37,7 @@ namespace JiraLike.Api.Tests.Controller
             var result = await _controller.CreateUserAsync(requestDto, CancellationToken.None);
 
             // Assert
-            var okResult = Assert.IsType<OkObjectResult>(result);
+            var okResult = Assert.IsType<CreatedResult>(result);
             Assert.Equal(responseDto, okResult.Value);
 
             // Verify
