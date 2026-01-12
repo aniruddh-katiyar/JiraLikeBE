@@ -3,6 +3,8 @@ namespace JiraLike.Api.Tests.Controller
 {
     using JiraLike.Api.Controllers;
     using JiraLike.Application.Abstraction.Command;
+    using JiraLike.Application.Abstraction.Query;
+    using JiraLike.Domain.Dtos;
     using MediatR;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.Logging;
@@ -43,6 +45,29 @@ namespace JiraLike.Api.Tests.Controller
             // Verify
             _mockMediator.Verify(
                 x => x.Send(It.IsAny<CreateUserCommand>(), It.IsAny<CancellationToken>()),
+                Times.Once);
+        }
+        [Fact]
+        public async Task GetAllUserAsync_ShouldReturnOkResult_WhenUserIsCreated()
+        {
+            // Arrange
+            var requestDto = SeedData.GetUserRequest();
+            var responseDto = new List<GetUserResponseDto> { SeedData.GetUserResponse() };
+
+            _mockMediator
+                .Setup(x => x.Send(It.IsAny<GetAllUserQuery>(), It.IsAny<CancellationToken>()))
+                .ReturnsAsync(responseDto);
+
+            // Act
+            var result = await _controller.GetAllUsersAsync(CancellationToken.None);
+
+            // Assert
+            var okResult = Assert.IsType<OkObjectResult>(result);
+            Assert.Equal(responseDto, okResult.Value);
+
+            // Verify
+            _mockMediator.Verify(
+                x => x.Send(It.IsAny<GetAllUserQuery>(), It.IsAny<CancellationToken>()),
                 Times.Once);
         }
     }

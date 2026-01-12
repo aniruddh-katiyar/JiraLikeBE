@@ -87,11 +87,6 @@ namespace JiraLike.Api.Controllers
         public async Task<IActionResult> GetAllUsersAsync(CancellationToken token)
         {
             var result = await _mediator.Send(new GetAllUserQuery(), token);
-            _logger.LogInformation(
-      "CreateUser API called. CorrelationId: {CorrelationId}",
-      HttpContext.TraceIdentifier
-  );
-
             return Ok(result);
         }
 
