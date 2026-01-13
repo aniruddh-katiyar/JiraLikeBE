@@ -17,6 +17,16 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JiraLike.Api.Tests", "JiraL
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JiraLike.Application.Tests", "JiraLike.Application.Tests\JiraLike.Application.Tests.csproj", "{6BAC6BB8-6C96-42DE-93C8-628076BD8CBF}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Docs", "Docs", "{02EA681E-C7D8-13C7-8484-4AC65E1B71E8}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Architecture", "Architecture", "{B8877C2D-9D8D-47FA-820F-1AB399CF9067}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "WorkFlows", "WorkFlows", "{1C6957C5-1FE9-4A49-8F0A-24AEADA5F5AE}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Sequence_diagrams", "Sequence_diagrams", "{BC7BCB13-CD43-4AC4-9C75-E6F4CA2C9D14}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Database", "Database", "{13084AF3-0115-44A4-BB24-BE9322C7B8D0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -54,6 +64,12 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{B8877C2D-9D8D-47FA-820F-1AB399CF9067} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
+		{1C6957C5-1FE9-4A49-8F0A-24AEADA5F5AE} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
+		{BC7BCB13-CD43-4AC4-9C75-E6F4CA2C9D14} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
+		{13084AF3-0115-44A4-BB24-BE9322C7B8D0} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {35548315-8CF7-49AF-B7E9-2A40EE5C2259}
