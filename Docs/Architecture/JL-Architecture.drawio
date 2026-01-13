@@ -1,0 +1,40 @@
+<mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36 Edg/143.0.0.0" version="29.3.0">
+  <diagram name="Page-1" id="_OdzL5GUWyGzQgfMhfXg">
+    <mxGraphModel dx="778" dy="500" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="Jcs2hvlD76PGq_MmrqJT-11" edge="1" parent="1" source="Jcs2hvlD76PGq_MmrqJT-1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="Jcs2hvlD76PGq_MmrqJT-10" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="Jcs2hvlD76PGq_MmrqJT-1" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="Client&lt;div&gt;(Angular Web App)&lt;/div&gt;" vertex="1">
+          <mxGeometry height="60" width="120" x="30" y="180" as="geometry" />
+        </mxCell>
+        <mxCell id="Jcs2hvlD76PGq_MmrqJT-13" edge="1" parent="1" source="Jcs2hvlD76PGq_MmrqJT-10" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="Jcs2hvlD76PGq_MmrqJT-12" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="Jcs2hvlD76PGq_MmrqJT-10" parent="1" style="whiteSpace=wrap;html=1;rounded=1;" value="Server&lt;div&gt;(.NET core)&lt;/div&gt;" vertex="1">
+          <mxGeometry height="60" width="120" x="230" y="180" as="geometry" />
+        </mxCell>
+        <mxCell id="Jcs2hvlD76PGq_MmrqJT-12" parent="1" style="whiteSpace=wrap;html=1;rounded=1;" value="Database&lt;div&gt;(Sql Server)&lt;/div&gt;" vertex="1">
+          <mxGeometry height="60" width="120" x="430" y="180" as="geometry" />
+        </mxCell>
+        <mxCell id="Jcs2hvlD76PGq_MmrqJT-14" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;autosize=1;resizable=0;" value="HTTPS" vertex="1">
+          <mxGeometry height="30" width="60" x="155" y="180" as="geometry" />
+        </mxCell>
+        <mxCell id="Jcs2hvlD76PGq_MmrqJT-17" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;autosize=1;resizable=0;" value="REST" vertex="1">
+          <mxGeometry height="30" width="60" x="150" y="210" as="geometry" />
+        </mxCell>
+        <mxCell id="Jcs2hvlD76PGq_MmrqJT-18" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;autosize=1;resizable=0;" value="EFCORE" vertex="1">
+          <mxGeometry height="30" width="70" x="355" y="180" as="geometry" />
+        </mxCell>
+        <mxCell id="Jcs2hvlD76PGq_MmrqJT-19" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;autosize=1;resizable=0;" value="SQL" vertex="1">
+          <mxGeometry height="30" width="50" x="365" y="210" as="geometry" />
+        </mxCell>
+        <mxCell id="Jcs2hvlD76PGq_MmrqJT-20" edge="1" parent="1" source="Jcs2hvlD76PGq_MmrqJT-19" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" target="Jcs2hvlD76PGq_MmrqJT-19">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
