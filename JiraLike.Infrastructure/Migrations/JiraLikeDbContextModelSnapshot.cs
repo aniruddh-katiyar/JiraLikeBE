@@ -229,6 +229,35 @@ namespace JiraLike.Infrastructure.Migrations
                     b.ToTable("Users", (string)null);
                 });
 
+            modelBuilder.Entity("JiraLike.Domain.Token.RefreshTokenEntity", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("ExpiresAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsRevoked")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(false);
+
+                    b.Property<string>("TokenHash")
+                        .IsRequired()
+                        .HasMaxLength(512)
+                        .HasColumnType("nvarchar(512)");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("RefreshTokens", (string)null);
+                });
+
             modelBuilder.Entity("JiraLike.Domain.Entities.CommentEntity", b =>
                 {
                     b.HasOne("JiraLike.Domain.Entities.TaskItemEntity", "TaskItem")
@@ -286,6 +315,17 @@ namespace JiraLike.Infrastructure.Migrations
                     b.Navigation("Project");
                 });
 
+            modelBuilder.Entity("JiraLike.Domain.Token.RefreshTokenEntity", b =>
+                {
+                    b.HasOne("JiraLike.Domain.Entities.UserEntity", "User")
+                        .WithMany("RefreshTokens")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("JiraLike.Domain.Entities.ProjectEntity", b =>
                 {
                     b.Navigation("ProjectUsers");
@@ -305,6 +345,8 @@ namespace JiraLike.Infrastructure.Migrations
                     b.Navigation("Comments");
 
                     b.Navigation("ProjectUsers");
+
+                    b.Navigation("RefreshTokens");
                 });
 #pragma warning restore 612, 618
         }
