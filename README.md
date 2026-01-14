@@ -1,16 +1,25 @@
-# JiraLike Backend API
+# JiraLike Project Management Backend API
 
-This is the backend API for a Jira-like issue tracking system, built using ASP.NET Core.
-The project is designed to practice and demonstrate clean backend architecture, API design, and real-world development patterns.
+This repository contains the backend API for a **project management system** built using **ASP.NET Core**.
+
+The project is created to practice and demonstrate **clean backend architecture**, **API design**, and **real-world backend development patterns** commonly used in enterprise applications.
+
+The primary focus is on **code structure, maintainability, and clarity**, rather than UI or feature completeness.
 
 ---
 
 ## Overview
 
-The application provides backend services for managing users, projects, and issues.
-It follows Clean Architecture principles to keep business logic separate from infrastructure and framework-specific code.
+The application provides backend services for managing:
 
-The focus of this project is backend structure, maintainability, and clarity rather than feature completeness.
+- Users
+- Projects
+- Project members
+- Tasks within projects
+- Task status and workflow
+
+The system is designed using **Clean Architecture principles**, keeping business logic independent from frameworks and infrastructure concerns.  
+This helps ensure the codebase remains easy to understand, test, and extend over time.
 
 ---
 
@@ -21,36 +30,37 @@ The solution follows a layered Clean Architecture approach.
 JiraLikeBE
 - JiraLike.Api
 - JiraLike.Application
-- JiraLike.Application.Abstraction
 - JiraLike.Domain
 - JiraLike.Infrastructure
 - JiraLike.sln
 
-### Layer Responsibilities
 
-**Domain**
-- Core business entities
-- Domain rules and validations
-- No dependency on external libraries or frameworks
+---
 
-**Application**
-- Use cases and business logic
-- Command and Query handlers (CQRS)
-- DTOs and application-level rules
+## Layer Responsibilities
 
-**Application.Abstraction**
-- Interfaces for repositories and services
-- Contracts used by the Application layer
+### Domain
+- Core business entities such as User, Project, Task, and related models
+- Domain rules and invariants
+- No dependency on ASP.NET Core, Entity Framework, or external libraries
 
-**Infrastructure**
+### Application
+- Application use cases
+- CQRS command and query handlers
+- Request and response DTOs
+- Orchestrates domain logic and persistence
+
+### Infrastructure
 - Entity Framework Core implementation
-- Database context and repository implementations
-- External integrations
+- Database context and migrations
+- Repository implementations
+- Authentication, persistence, and external integrations
 
-**API**
-- REST endpoints
-- Controllers and middleware
-- Dependency injection and application configuration
+### API
+- REST endpoints (controllers)
+- Middleware and filters
+- Dependency injection configuration
+- Request handling and response mapping
 
 ---
 
@@ -68,30 +78,18 @@ JiraLikeBE
 
 ## Features
 
-Currently implemented or planned features include:
+### Implemented / In Progress
 
 - User management
-- Project management
-- Issue / ticket management
-- Issue status workflow (To Do, In Progress, Done)
-- Role-based authorization
+- Project creation and management
+- Project member assignment
+- Task management within projects
+- Task status workflow (To Do, In Progress, Done)
 - JWT-based authentication
+- Role-based authorization (in progress)
 - Global exception handling
 - Logging support
 
-Some features are still under development and will be added incrementally.
+Features are implemented **incrementally**, with a strong focus on correctness and clean design.
 
 ---
-
-## How to Run the Project
-
-### Prerequisites
-- .NET SDK (Latest LTS)
-- SQL Server
-- Visual Studio or VS Code
-
-### Steps
-
-1. Clone the repository
-   ```bash
-   git clone https://github.com/aniruddh-katiyar/JiraLikeBE.git
