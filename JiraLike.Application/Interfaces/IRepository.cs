@@ -1,6 +1,4 @@
-﻿
-
-namespace JiraLike.Application.Abstraction.Services
+﻿namespace JiraLike.Application.Interfaces
 {
     using System.Linq.Expressions;
 

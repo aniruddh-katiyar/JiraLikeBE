@@ -1,4 +1,4 @@
-﻿using JiraLike.Domain.Dtos;
+﻿using JiraLike.Application.Dtos;
 using MediatR;
 
 namespace JiraLike.Application.Abstraction.Query

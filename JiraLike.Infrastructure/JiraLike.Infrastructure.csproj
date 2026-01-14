@@ -28,7 +28,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-    <ProjectReference Include="..\JiraLike.Application.Abstraction\JiraLike.Application.Abstraction.csproj" />
+    <ProjectReference Include="..\JiraLike.Application\JiraLike.Application.csproj" />
     <ProjectReference Include="..\JiraLike.Domain\JiraLike.Domain.csproj" />
   </ItemGroup>
 

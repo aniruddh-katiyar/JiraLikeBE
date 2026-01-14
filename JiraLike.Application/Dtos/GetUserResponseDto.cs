@@ -1,4 +1,4 @@
-﻿namespace JiraLike.Domain.Dtos
+﻿namespace JiraLike.Application.Dtos
 {
     public record GetUserResponseDto
     {

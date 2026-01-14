@@ -1,7 +1,7 @@
 ﻿
 namespace JiraLike.Infrastructure.Repository
 {
-    using JiraLike.Application.Abstraction.Services;
+    using JiraLike.Application.Interfaces;
     using JiraLike.Infrastructure.DbContexts;
     using Microsoft.EntityFrameworkCore;
     using System.Linq.Expressions;

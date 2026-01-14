@@ -1,7 +1,7 @@
 ﻿namespace JiraLike.Application.Mapper
 {
     using AutoMapper;
-    using JiraLike.Domain.Dtos;
+    using JiraLike.Application.Dtos;
     using JiraLike.Domain.Entities;
     using MediatR;
 

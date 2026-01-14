@@ -26,6 +26,9 @@ namespace JiraLike.Infrastructure.Configurations
             builder.Property(u => u.PasswordHash)
                    .IsRequired();
 
+            builder.Property(u => u.Role)
+                  .IsRequired();
+
             // Indexes
             builder.HasIndex(u => u.Email)
                    .IsUnique();

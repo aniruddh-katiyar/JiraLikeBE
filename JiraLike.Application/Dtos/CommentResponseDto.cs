@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace JiraLike.Domain.Dtos
+namespace JiraLike.Application.Dtos
 {
-    internal class ActivityLogRequestDto
+    internal class CommentResponseDto
     {
     }
 }

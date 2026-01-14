@@ -7,8 +7,8 @@ namespace JiraLike.Application.Handler.Users
 {
     using AutoMapper;
     using JiraLike.Application.Abstraction.Command;
-    using JiraLike.Application.Abstraction.Services;
-    using JiraLike.Domain.Dtos;
+    using JiraLike.Application.Dtos;
+    using JiraLike.Application.Interfaces;
     using JiraLike.Domain.Entities;
     using MediatR;
     using Microsoft.AspNetCore.Identity;
@@ -44,18 +44,10 @@ namespace JiraLike.Application.Handler.Users
 
             if (existingUser != null)
                 throw new InvalidOperationException("User already exists");
-
-            var user = new UserEntity
-            {
-                Name = userRequestDto.Name,
-                Email = userRequestDto.Email,
-                Role = userRequestDto.Role,
-                CreatedAt = DateTime.UtcNow
-            };
-
-            // Hash password securely
-            user.PasswordHash = _passwordHasher.HashPassword(user, userRequestDto.Password);
-
+           
+            var user = new UserEntity(userRequestDto.Name, userRequestDto.Email, userRequestDto.Role);
+            var passwordHash = _passwordHasher.HashPassword(user, userRequestDto.Password);
+            user.SetPasswordHash(passwordHash);
             await _repository.AddAsync(user, cancellationToken);
             await _repository.SaveChangesAsync(cancellationToken);
             var response = _mapper.Map<GetUserResponseDto>(user);

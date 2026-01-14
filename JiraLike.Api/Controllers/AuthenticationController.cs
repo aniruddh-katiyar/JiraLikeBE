@@ -2,7 +2,7 @@
 {
     using JiraLike.Application.Abstraction.Command;
     using JiraLike.Application.Abstraction.Query;
-    using JiraLike.Domain.Dtos;
+    using JiraLike.Application.Dtos;
     using MediatR;
     using Microsoft.AspNetCore.Mvc;
 

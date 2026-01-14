@@ -1,7 +1,6 @@
 ﻿using JiraLike.Application.Abstraction.Query;
-using JiraLike.Application.Abstraction.Services;
-using JiraLike.Application.Services;
-using JiraLike.Domain.Dtos;
+using JiraLike.Application.Dtos;
+using JiraLike.Application.Interfaces;
 using JiraLike.Domain.Token;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
@@ -10,11 +9,11 @@ using Microsoft.Extensions.Configuration;
 public class GetRefreshTokenHandler : IRequestHandler<GetRefreshTokenQuery, AuthResponseDto>
 {
     private readonly IRepository<RefreshTokenEntity> _refreshTokenRepository;
-    private readonly ITokenGeneratorService _tokenGeneratorService;
+    private readonly ITokenGenerator _tokenGeneratorService;
     private readonly IConfiguration _configuration;
     public GetRefreshTokenHandler(
         IRepository<RefreshTokenEntity> refreshTokenRepository,
-        ITokenGeneratorService tokenGeneratorService, IConfiguration configuration)
+        ITokenGenerator tokenGeneratorService, IConfiguration configuration)
     {
         _refreshTokenRepository = refreshTokenRepository;
         _tokenGeneratorService = tokenGeneratorService;

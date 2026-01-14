@@ -2,9 +2,8 @@
 {
     using JiraLike.Application.Abstraction.Command;
     using JiraLike.Application.Abstraction.Exceptions;
-    using JiraLike.Application.Abstraction.Services;
-    using JiraLike.Application.Services;
-    using JiraLike.Domain.Dtos;
+    using JiraLike.Application.Dtos;
+    using JiraLike.Application.Interfaces;
     using JiraLike.Domain.Entities;
     using JiraLike.Domain.Token;
     using MediatR;
@@ -18,10 +17,10 @@
         private readonly IRepository<UserEntity> _repository;
         private readonly IRepository<RefreshTokenEntity> _refereshTokenRepository;
         private readonly IPasswordHasher<UserEntity> _passwordHasher;
-        private readonly ITokenGeneratorService _tokenGeneratorService;
+        private readonly ITokenGenerator _tokenGeneratorService;
         private readonly IConfiguration _configuration;
         public UserLoginHandler(IRepository<UserEntity> repository, IPasswordHasher<UserEntity> passwordHasher,
-            ITokenGeneratorService tokenGeneratorService,
+            ITokenGenerator tokenGeneratorService,
             IRepository<RefreshTokenEntity> refereshTokenRepository,
             IConfiguration configuration)
         {
