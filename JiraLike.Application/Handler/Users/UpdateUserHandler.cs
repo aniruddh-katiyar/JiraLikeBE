@@ -36,13 +36,13 @@ namespace JiraLike.Application.Handler.Users
 
             //Partial Update
             if (command.UserRequest.Name is not null)
-                user.SetUserName(command.UserRequest.Name);
+                user.ChangeUserName(command.UserRequest.Name);
 
             if (command.UserRequest.Email is not null)
-                user.SetEmail(command.UserRequest.Email);
+                user.ChangeEmail(command.UserRequest.Email);
 
             if (command.UserRequest.Role is not null)
-                user.SetRole(command.UserRequest.Role);
+                user.ChangeRole(command.UserRequest.Role);
 
 
             // Persist changes
