@@ -2,8 +2,8 @@
 {
     using AutoMapper;
     using JiraLike.Application.Abstraction.Query;
-    using JiraLike.Application.Abstraction.Services;
-    using JiraLike.Domain.Dtos;
+    using JiraLike.Application.Dtos;
+    using JiraLike.Application.Interfaces;
     using JiraLike.Domain.Entities;
     using MediatR;
     using Microsoft.Extensions.Logging;

@@ -7,8 +7,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JiraLike.Api", "JiraLike.Ap
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JiraLike.Application", "JiraLike.Application\JiraLike.Application.csproj", "{E0A153A3-EA50-D817-B698-ED946C64323F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JiraLike.Application.Abstraction", "JiraLike.Application.Abstraction\JiraLike.Application.Abstraction.csproj", "{CD4FBF05-E495-10CE-E75F-8543A95D688D}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JiraLike.Domain", "JiraLike.Domain\JiraLike.Domain.csproj", "{FEC4D3B1-F3FE-2314-FFA9-38EEBF988E3B}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JiraLike.Infrastructure", "JiraLike.Infrastructure\JiraLike.Infrastructure.csproj", "{8ED57B7E-A0D4-D8B6-F54C-DDE93C47A542}"
@@ -31,10 +29,6 @@ Global
 		{E0A153A3-EA50-D817-B698-ED946C64323F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E0A153A3-EA50-D817-B698-ED946C64323F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E0A153A3-EA50-D817-B698-ED946C64323F}.Release|Any CPU.Build.0 = Release|Any CPU
-		{CD4FBF05-E495-10CE-E75F-8543A95D688D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{CD4FBF05-E495-10CE-E75F-8543A95D688D}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{CD4FBF05-E495-10CE-E75F-8543A95D688D}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{CD4FBF05-E495-10CE-E75F-8543A95D688D}.Release|Any CPU.Build.0 = Release|Any CPU
 		{FEC4D3B1-F3FE-2314-FFA9-38EEBF988E3B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{FEC4D3B1-F3FE-2314-FFA9-38EEBF988E3B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FEC4D3B1-F3FE-2314-FFA9-38EEBF988E3B}.Release|Any CPU.ActiveCfg = Release|Any CPU

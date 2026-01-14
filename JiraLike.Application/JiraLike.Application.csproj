@@ -7,10 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Helper\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="AutoMapper" Version="11.0.0" />
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="11.0.0" />
     <PackageReference Include="MediatR" Version="14.0.0" />
@@ -27,9 +23,6 @@
 
 	<ItemGroup>
 		<ProjectReference Include="..\JiraLike.Domain\JiraLike.Domain.csproj" />
-	</ItemGroup>
-	<ItemGroup>
-		<ProjectReference Include="..\JiraLike.Application.Abstraction\JiraLike.Application.Abstraction.csproj" />
 	</ItemGroup>
 
 </Project>

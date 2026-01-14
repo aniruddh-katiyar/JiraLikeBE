@@ -4,7 +4,7 @@
 
 namespace JiraLike.Application.Abstraction.Command
 {
-    using JiraLike.Domain.Dtos;
+    using JiraLike.Application.Dtos;
     using MediatR;
 
     public sealed class CreateUserCommand : IRequest<GetUserResponseDto>

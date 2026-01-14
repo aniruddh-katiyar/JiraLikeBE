@@ -8,8 +8,8 @@ namespace JiraLike.Application.Handler.Users
     using AutoMapper;
     using JiraLike.Application.Abstraction.Command;
     using JiraLike.Application.Abstraction.Exceptions;
-    using JiraLike.Application.Abstraction.Services;
-    using JiraLike.Domain.Dtos;
+    using JiraLike.Application.Dtos;
+    using JiraLike.Application.Interfaces;
     using JiraLike.Domain.Entities;
     using MediatR;
     using System.Threading;
@@ -36,13 +36,13 @@ namespace JiraLike.Application.Handler.Users
 
             //Partial Update
             if (command.UserRequest.Name is not null)
-                user.Name = command.UserRequest.Name;
+                user.SetUserName(command.UserRequest.Name);
 
             if (command.UserRequest.Email is not null)
-                user.Name = command.UserRequest.Email;
+                user.SetEmail(command.UserRequest.Email);
 
             if (command.UserRequest.Role is not null)
-                user.Name = command.UserRequest.Role;
+                user.SetRole(command.UserRequest.Role);
 
 
             // Persist changes

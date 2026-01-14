@@ -1,5 +1,6 @@
-﻿namespace JiraLike.Application.Services
+﻿namespace JiraLike.Infrastructure.TokenGenerator
 {
+    using JiraLike.Application.Interfaces;
     using JiraLike.Domain.Token;
     using Microsoft.Extensions.Configuration;
     using Microsoft.IdentityModel.Tokens;
@@ -7,13 +8,12 @@
     using System.Security.Claims;
     using System.Security.Cryptography;
     using System.Text;
-    using System.Threading.Tasks;
 
-    public class TokenGeneratorService : ITokenGeneratorService
+    public class TokenGenerator : ITokenGenerator
     {
         private readonly IConfiguration _configuration;
 
-        public TokenGeneratorService(IConfiguration configuration)
+        public TokenGenerator(IConfiguration configuration)
         {
             _configuration = configuration;
         }
@@ -39,7 +39,7 @@
                 issuer: _configuration.GetValue<string>("Jwt:Issuer") ?? "JiraLikeApp",
                 audience: _configuration.GetValue<string>("Jwt:Audience") ?? "JiraLikeUsers",
                 claims: claims,
-                expires: DateTime.UtcNow.AddHours(_configuration.GetValue<int>("Jwt:ExpiryHours", 1)),
+                expires: DateTime.UtcNow.AddHours(_configuration.GetValue("Jwt:ExpiryHours", 1)),
                 signingCredentials: creds
             );
 
@@ -61,10 +61,10 @@
         public bool VerifyRefreshToken(string incomingToken, RefreshTokenEntity refreshTokenEnity)
         {
             var incominghasedrefreshToken = Convert.ToBase64String(SHA256.HashData(Encoding.UTF8.GetBytes(incomingToken)));
-            if(refreshTokenEnity.TokenHash == incominghasedrefreshToken && refreshTokenEnity.IsRevoked == false && refreshTokenEnity.ExpiresAt > DateTime.UtcNow)
-             {
+            if (refreshTokenEnity.TokenHash == incominghasedrefreshToken && refreshTokenEnity.IsRevoked == false && refreshTokenEnity.ExpiresAt > DateTime.UtcNow)
+            {
                 return true;
-             }
+            }
             return false;
         }
     }

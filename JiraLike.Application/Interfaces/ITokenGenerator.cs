@@ -1,9 +1,9 @@
-﻿namespace JiraLike.Application.Services
+﻿namespace JiraLike.Application.Interfaces
 {
     using JiraLike.Domain.Token;
     using System;
 
-    public interface ITokenGeneratorService
+    public interface ITokenGenerator
     {
         string GenerateAccessToken(string email, string role, Guid userId);
         string GenerateRefreshToken();

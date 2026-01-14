@@ -1,6 +1,6 @@
 ﻿namespace JiraLike.Api.Tests
 {
-    using JiraLike.Domain.Dtos;
+    using JiraLike.Application.Dtos;
     using System;
     using System.Collections.Generic;
     using System.Linq;

@@ -1,6 +1,6 @@
 ﻿namespace JiraLike.Application.Abstraction.Query
 {
-    using JiraLike.Domain.Dtos;
+    using JiraLike.Application.Dtos;
     using MediatR;
 
     public class GetRefreshTokenQuery : IRequest<AuthResponseDto>

@@ -2,13 +2,13 @@
 namespace JiraLike.Api
 {
     using JiraLike.Api.Middlewares;
-    using JiraLike.Application.Abstraction.Services;
     using JiraLike.Application.Handler.Users;
+    using JiraLike.Application.Interfaces;
     using JiraLike.Application.Mapper;
-    using JiraLike.Application.Services;
     using JiraLike.Domain.Entities;
     using JiraLike.Infrastructure.DbContexts;
     using JiraLike.Infrastructure.Repository;
+    using JiraLike.Infrastructure.TokenGenerator;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.IdentityModel.Tokens;
@@ -71,7 +71,7 @@ namespace JiraLike.Api
 
             // Repositories & Services
             services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
-            services.AddScoped<ITokenGeneratorService, TokenGeneratorService>();
+            services.AddScoped<ITokenGenerator, TokenGenerator>();
             services.AddScoped<IPasswordHasher<UserEntity>, PasswordHasher<UserEntity>>();
 
             // JWT Authentication
@@ -146,7 +146,7 @@ namespace JiraLike.Api
             });
 
             app.UseHttpsRedirection();
-          
+
 
             app.UseRouting();
 

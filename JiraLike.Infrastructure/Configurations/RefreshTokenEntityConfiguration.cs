@@ -12,7 +12,6 @@
 
             builder.HasKey(x => x.Id);
 
-            // Foreign key only (no navigation property)
             builder.Property(x => x.UserId)
                    .IsRequired();
 
@@ -22,15 +21,20 @@
 
             builder.Property(x => x.ExpiresAt)
                    .IsRequired();
-            builder.HasOne(user => user.User)
-                .WithMany(token => token.RefreshTokens)
-                .HasForeignKey(user => user.UserId);
+
+            builder.HasOne(rt => rt.User)
+                   .WithMany(u => u.RefreshTokens)
+                   .HasForeignKey(rt => rt.UserId)
+                   .IsRequired(); // still required
 
             builder.Property(x => x.IsRevoked)
                    .HasDefaultValue(false);
 
             // Index for faster lookups
             builder.HasIndex(x => x.UserId);
+
+            // Matching query filter to align with UserEntity’s filter
+            builder.HasQueryFilter(rt => !rt.User.IsDeleted);
         }
     }
 }

@@ -2,7 +2,7 @@
 {
     using JiraLike.Application.Abstraction.Command;
     using JiraLike.Application.Abstraction.Exceptions;
-    using JiraLike.Application.Abstraction.Services;
+    using JiraLike.Application.Interfaces;
     using JiraLike.Domain.Entities;
     using MediatR;
     using System.Threading;
