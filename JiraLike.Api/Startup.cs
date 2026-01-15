@@ -1,6 +1,8 @@
 ﻿namespace JiraLike.Api
 {
     using JiraLike.Api.Middlewares;
+    using JiraLike.Api.services;
+    using JiraLike.Api.Services;
     using JiraLike.Application.Handler.Users;
     using JiraLike.Application.Interfaces;
     using JiraLike.Application.Mapper;
@@ -81,6 +83,10 @@
 
                 options.UseSqlite($"Data Source={dbPath}");
             });
+
+           services.AddScoped<KnowledgeService>();
+            services.AddScoped<BotService>();
+            services.AddHttpClient<OllamaService>();
 
             // ------------------------
             // Repositories & Core Services

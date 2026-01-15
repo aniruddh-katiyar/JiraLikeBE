@@ -1,50 +1,24 @@
-﻿# ===============================
-# Base runtime image
-# ===============================
-FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS base
+﻿FROM ollama/ollama:latest
+
 WORKDIR /app
 EXPOSE 8080
 
-# Install native dependencies required for SQLite
 RUN apt-get update && \
     apt-get install -y --no-install-recommends \
+        wget \
+        ca-certificates \
         sqlite3 \
         libsqlite3-dev && \
+    wget https://packages.microsoft.com/config/debian/12/packages-microsoft-prod.deb -O packages-microsoft-prod.deb && \
+    dpkg -i packages-microsoft-prod.deb && \
+    apt-get update && \
+    apt-get install -y aspnetcore-runtime-8.0 && \
     rm -rf /var/lib/apt/lists/*
 
-# ===============================
-# Build stage
-# ===============================
-FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
-ARG BUILD_CONFIGURATION=Release
-WORKDIR /src
+COPY ./JiraLike.Api/bin/Release/net8.0/publish/ .
 
-# Copy project files for restore (better Docker cache)
-COPY ["JiraLike.Api/JiraLike.Api.csproj", "JiraLike.Api/"]
-COPY ["JiraLike.Application/JiraLike.Application.csproj", "JiraLike.Application/"]
-COPY ["JiraLike.Domain/JiraLike.Domain.csproj", "JiraLike.Domain/"]
-COPY ["JiraLike.Infrastructure/JiraLike.Infrastructure.csproj", "JiraLike.Infrastructure/"]
-
-RUN dotnet restore "JiraLike.Api/JiraLike.Api.csproj"
-
-# Copy full source
-COPY . .
-
-WORKDIR "/src/JiraLike.Api"
-RUN dotnet publish -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
-
-# ===============================
-# Final runtime stage
-# ===============================
-FROM base AS final
-WORKDIR /app
-
-COPY --from=build /app/publish .
-
-# Production environment → SQLite
 ENV ASPNETCORE_ENVIRONMENT=Production
-
-# SQLite persistence directory (mapped to Docker volume)
 RUN mkdir -p /app/data
 
-ENTRYPOINT ["dotnet", "JiraLike.Api.dll"]
+ENTRYPOINT ["/bin/sh", "-c"]
+CMD ["ollama serve & sleep 10 && ollama pull tinyllama && exec dotnet JiraLike.Api.dll"]
