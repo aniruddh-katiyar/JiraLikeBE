@@ -1,5 +1,4 @@
-﻿
-namespace JiraLike.Api
+﻿namespace JiraLike.Api
 {
     using JiraLike.Api.Middlewares;
     using JiraLike.Application.Handler.Users;
@@ -9,6 +8,7 @@ namespace JiraLike.Api
     using JiraLike.Infrastructure.DbContexts;
     using JiraLike.Infrastructure.Repository;
     using JiraLike.Infrastructure.TokenGenerator;
+    using Microsoft.AspNetCore.Authentication.JwtBearer;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.IdentityModel.Tokens;
@@ -19,55 +19,73 @@ namespace JiraLike.Api
     public class Startup
     {
         private readonly IConfiguration _configuration;
+        private readonly IWebHostEnvironment _environment;
 
-        public Startup(IConfiguration configuration)
+        public Startup(IConfiguration configuration, IWebHostEnvironment environment)
         {
             _configuration = configuration;
+            _environment = environment;
         }
 
         public void ConfigureServices(IServiceCollection services)
         {
-            // Controllers
             services.AddControllers();
 
-            //Logging
-            services.AddSerilog();
-            services.AddLogging(loggingBuilder =>
-            {
-                loggingBuilder.AddSerilog(dispose: true);
-            });
+            // Logging (Serilog already wired in Program.cs)
+            services.AddLogging(lb => lb.AddSerilog(dispose: true));
 
             // Swagger
             services.AddEndpointsApiExplorer();
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "JiraLIke API", Version = "v1" });
+                c.SwaggerDoc("v1", new OpenApiInfo
+                {
+                    Title = "JiraLike API",
+                    Version = "v1"
+                });
 
                 c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
                 {
-                    Description = "JWT Authorization header using the Bearer scheme. Example: \"Bearer {token}\"",
                     Name = "Authorization",
-                    In = ParameterLocation.Header,
                     Type = SecuritySchemeType.Http,
                     Scheme = "bearer",
-                    BearerFormat = "JWT"
+                    BearerFormat = "JWT",
+                    In = ParameterLocation.Header
                 });
 
                 c.AddSecurityRequirement(new OpenApiSecurityRequirement
-    {
-        {
-            new OpenApiSecurityScheme
-            {
-                Reference = new OpenApiReference { Type = ReferenceType.SecurityScheme, Id = "Bearer" }
-            },
-            new string[] {}
-        }
-    });
+                {
+                    {
+                        new OpenApiSecurityScheme
+                        {
+                            Reference = new OpenApiReference
+                            {
+                                Type = ReferenceType.SecurityScheme,
+                                Id = "Bearer"
+                            }
+                        },
+                        Array.Empty<string>()
+                    }
+                });
             });
-            // Database
+
             services.AddDbContext<JiraLikeDbContext>(options =>
-                options.UseSqlServer(
-                    _configuration.GetConnectionString("DbConnection")));
+            {
+                if (_environment.IsDevelopment())
+                {
+                    options.UseSqlServer(
+                        _configuration.GetConnectionString("SqlServer"));
+                }
+                else
+                {
+                    var dbPath = _environment.IsEnvironment("Docker")
+                        ? "/app/data/jiralike.db"
+                        : Path.Combine(AppContext.BaseDirectory, "jiralike.db");
+
+                    options.UseSqlite($"Data Source={dbPath}");
+                }
+            });
+
 
             // Repositories & Services
             services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
@@ -76,10 +94,10 @@ namespace JiraLike.Api
 
             // JWT Authentication
             var secretKey = _configuration["Jwt:SecretKey"]
-                ?? throw new InvalidOperationException("JWT SecretKey is missing");
+                ?? throw new InvalidOperationException("JWT SecretKey missing");
 
-            services.AddAuthentication("Bearer")
-                .AddJwtBearer("Bearer", options =>
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer(options =>
                 {
                     options.TokenValidationParameters = new TokenValidationParameters
                     {
@@ -96,59 +114,40 @@ namespace JiraLike.Api
 
             services.AddAuthorization();
 
-            // AutoMapper
-            services.AddAutoMapper(cfg =>
-            {
-                cfg.ShouldMapMethod = _ => false;
-                cfg.ShouldMapProperty = p => p.GetMethod?.IsPublic == true;
-            }, typeof(UserMapper));
+            services.AddAutoMapper(typeof(UserMapper));
 
-            // MediatR
             services.AddMediatR(cfg =>
                 cfg.RegisterServicesFromAssembly(typeof(CreateUserHandler).Assembly));
 
-            // CORS (Angular)
             services.AddCors(options =>
             {
                 options.AddPolicy("AllowAngular", policy =>
                 {
-                    policy
-                        .AllowAnyOrigin()
-                        .AllowAnyHeader()
-                        .AllowAnyMethod();
+                    policy.AllowAnyOrigin()
+                          .AllowAnyHeader()
+                          .AllowAnyMethod();
                 });
             });
         }
 
-        //Pipeline
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app)
         {
-            if (env.IsDevelopment())
+            // ✅ Apply migrations once at startup
+            using (var scope = app.ApplicationServices.CreateScope())
             {
-                app.UseSwagger();
-                app.UseSwaggerUI();
+                var db = scope.ServiceProvider.GetRequiredService<JiraLikeDbContext>();
+                db.Database.Migrate();
             }
-            //  
-            app.UseMiddleware<CorrelationIdMiddleware>();
-            app.UseMiddleware<GlobalExceptionMiddleware>();
-            app.UseExceptionHandler("/Home/Error");
-
-            // Serilog can read CorrelationId
-            app.UseSerilogRequestLogging(options =>
-            {
-                options.EnrichDiagnosticContext = (diagnosticContext, httpContext) =>
-                {
-                    diagnosticContext.Set(
-                        "CorrelationId",
-                        httpContext.TraceIdentifier
-                    );
-                };
-            });
-
-            app.UseHttpsRedirection();
-
 
             app.UseRouting();
+
+            app.UseSwagger();
+            app.UseSwaggerUI();
+
+            app.UseMiddleware<CorrelationIdMiddleware>();
+            app.UseMiddleware<GlobalExceptionMiddleware>();
+
+            app.UseSerilogRequestLogging();
 
             app.UseCors("AllowAngular");
 
