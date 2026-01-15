@@ -1,6 +1,5 @@
 ﻿namespace JiraLike.Api
 {
-    using AutoMapper;
     using JiraLike.Api.Middlewares;
     using JiraLike.Application.Handler.Users;
     using JiraLike.Application.Interfaces;
@@ -9,7 +8,6 @@
     using JiraLike.Infrastructure.DbContexts;
     using JiraLike.Infrastructure.Repository;
     using JiraLike.Infrastructure.TokenGenerator;
-    using MediatR;
     using Microsoft.AspNetCore.Authentication.JwtBearer;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.EntityFrameworkCore;
@@ -75,24 +73,13 @@
                 });
             });
 
-            // ------------------------
-            // Database
-            // ------------------------
             services.AddDbContext<JiraLikeDbContext>(options =>
             {
-                if (_environment.IsDevelopment())
-                {
-                    options.UseSqlServer(
-                        _configuration.GetConnectionString("SqlServer"));
-                }
-                else
-                {
-                    var dbPath = _environment.IsEnvironment("Docker")
-                        ? "/app/data/jiralike.db"
-                        : Path.Combine(AppContext.BaseDirectory, "jiralike.db");
+                var dbPath = _environment.IsEnvironment("Docker")
+                    ? "/app/data/jiralike.db"
+                    : Path.Combine(AppContext.BaseDirectory, "jiralike.db");
 
-                    options.UseSqlite($"Data Source={dbPath}");
-                }
+                options.UseSqlite($"Data Source={dbPath}");
             });
 
             // ------------------------
