@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace JiraLike.Infrastructure.Migrations
 {
     [DbContext(typeof(JiraLikeDbContext))]
-    [Migration("20260115034815_InitialCreate")]
+    [Migration("20260115142344_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
