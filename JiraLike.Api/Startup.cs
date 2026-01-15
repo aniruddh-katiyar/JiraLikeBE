@@ -84,9 +84,10 @@
                 options.UseSqlite($"Data Source={dbPath}");
             });
 
-           services.AddScoped<KnowledgeService>();
+            services.AddScoped<KnowledgeService>();
             services.AddScoped<BotService>();
-            services.AddHttpClient<OllamaService>();
+            services.AddHttpClient<GroqService>();
+
 
             // ------------------------
             // Repositories & Core Services
