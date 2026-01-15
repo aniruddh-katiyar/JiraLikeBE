@@ -28,3 +28,6 @@ README.md
 !.git/config
 !.git/packed-refs
 !.git/refs/heads/**
+
+# ✅ ALLOW published API binaries
+!JiraLike.Api/bin/Release/net8.0/publish/**

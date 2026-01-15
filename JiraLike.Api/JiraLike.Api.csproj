@@ -32,9 +32,15 @@
     <PackageReference Include="Swashbuckle.AspNetCore.SwaggerGen" Version="9.0.0" />
     <PackageReference Include="Swashbuckle.AspNetCore.SwaggerUI" Version="9.0.0" />
   </ItemGroup>
+	<ItemGroup>
+		<Content Include="KnowledgeBase\**\*.md">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+	</ItemGroup>
 
-  <ItemGroup>
+	<ItemGroup>
     <Folder Include="ExtensionMethods\" />
+    <Folder Include="KnowledgeBase\" />
   </ItemGroup>
 
   <ItemGroup>
