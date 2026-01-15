@@ -33,15 +33,15 @@ namespace JiraLike.Domain.Entities
         {
             PasswordHash = passwordHash;
         }
-        public void SetUserName(string name)
+        public void ChangeUserName(string name)
         {
             Name = name;
         }
-        public void SetEmail(string email)
+        public void ChangeEmail(string email)
         {
             Email = email;
         }
-        public void SetRole(string role)
+        public void ChangeRole(string role)
         {
             Role = role;
         }
