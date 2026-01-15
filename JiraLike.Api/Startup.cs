@@ -1,5 +1,6 @@
 ﻿namespace JiraLike.Api
 {
+    using AutoMapper;
     using JiraLike.Api.Middlewares;
     using JiraLike.Application.Handler.Users;
     using JiraLike.Application.Interfaces;
@@ -8,6 +9,7 @@
     using JiraLike.Infrastructure.DbContexts;
     using JiraLike.Infrastructure.Repository;
     using JiraLike.Infrastructure.TokenGenerator;
+    using MediatR;
     using Microsoft.AspNetCore.Authentication.JwtBearer;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.EntityFrameworkCore;
@@ -16,7 +18,7 @@
     using Serilog;
     using System.Text;
 
-    public class Startup
+    public sealed class Startup
     {
         private readonly IConfiguration _configuration;
         private readonly IWebHostEnvironment _environment;
@@ -31,10 +33,14 @@
         {
             services.AddControllers();
 
-            // Logging (Serilog already wired in Program.cs)
+            // ------------------------
+            // Logging
+            // ------------------------
             services.AddLogging(lb => lb.AddSerilog(dispose: true));
 
+            // ------------------------
             // Swagger
+            // ------------------------
             services.AddEndpointsApiExplorer();
             services.AddSwaggerGen(c =>
             {
@@ -69,6 +75,9 @@
                 });
             });
 
+            // ------------------------
+            // Database
+            // ------------------------
             services.AddDbContext<JiraLikeDbContext>(options =>
             {
                 if (_environment.IsDevelopment())
@@ -86,13 +95,37 @@
                 }
             });
 
-
-            // Repositories & Services
+            // ------------------------
+            // Repositories & Core Services
+            // ------------------------
             services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
             services.AddScoped<ITokenGenerator, TokenGenerator>();
             services.AddScoped<IPasswordHasher<UserEntity>, PasswordHasher<UserEntity>>();
 
-            // JWT Authentication
+            services.AddAutoMapper(typeof(UserMapper));
+
+#if DEBUG
+            services.AddAutoMapper(cfg =>
+            {
+                cfg.AddProfile<UserMapper>();
+
+                // 🔴 CRITICAL: Disable LINQ extension method scanning
+                cfg.ShouldMapMethod = method =>
+                    !method.DeclaringType.Namespace!.StartsWith("System.Linq");
+            });
+
+#endif
+
+
+            // ------------------------
+            // MediatR
+            // ------------------------
+            services.AddMediatR(cfg =>
+                cfg.RegisterServicesFromAssembly(typeof(CreateUserHandler).Assembly));
+
+            // ------------------------
+            // Authentication & Authorization
+            // ------------------------
             var secretKey = _configuration["Jwt:SecretKey"]
                 ?? throw new InvalidOperationException("JWT SecretKey missing");
 
@@ -108,17 +141,16 @@
                         ValidIssuer = _configuration["Jwt:Issuer"],
                         ValidAudience = _configuration["Jwt:Audience"],
                         IssuerSigningKey =
-                            new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secretKey))
+                            new SymmetricSecurityKey(
+                                Encoding.UTF8.GetBytes(secretKey))
                     };
                 });
 
             services.AddAuthorization();
 
-            services.AddAutoMapper(typeof(UserMapper));
-
-            services.AddMediatR(cfg =>
-                cfg.RegisterServicesFromAssembly(typeof(CreateUserHandler).Assembly));
-
+            // ------------------------
+            // CORS
+            // ------------------------
             services.AddCors(options =>
             {
                 options.AddPolicy("AllowAngular", policy =>
@@ -132,18 +164,26 @@
 
         public void Configure(IApplicationBuilder app)
         {
-            // ✅ Apply migrations once at startup
+            // ------------------------
+            // Database Migration
+            // ------------------------
             using (var scope = app.ApplicationServices.CreateScope())
             {
-                var db = scope.ServiceProvider.GetRequiredService<JiraLikeDbContext>();
-                db.Database.Migrate();
+                var dbContext = scope.ServiceProvider.GetRequiredService<JiraLikeDbContext>();
+                dbContext.Database.Migrate();
             }
 
             app.UseRouting();
 
+            // ------------------------
+            // Swagger
+            // ------------------------
             app.UseSwagger();
             app.UseSwaggerUI();
 
+            // ------------------------
+            // Middleware Pipeline
+            // ------------------------
             app.UseMiddleware<CorrelationIdMiddleware>();
             app.UseMiddleware<GlobalExceptionMiddleware>();
 
