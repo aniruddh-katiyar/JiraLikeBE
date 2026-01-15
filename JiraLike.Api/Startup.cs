@@ -104,17 +104,14 @@
 
             services.AddAutoMapper(typeof(UserMapper));
 
-#if DEBUG
             services.AddAutoMapper(cfg =>
             {
                 cfg.AddProfile<UserMapper>();
 
-                // 🔴 CRITICAL: Disable LINQ extension method scanning
                 cfg.ShouldMapMethod = method =>
-                    !method.DeclaringType.Namespace!.StartsWith("System.Linq");
+                    method.DeclaringType.Namespace == null ||
+                    !method.DeclaringType.Namespace.StartsWith("System.Linq");
             });
-
-#endif
 
 
             // ------------------------
