@@ -1,15 +1,18 @@
-﻿namespace JiraLike.Application.Abstraction.Query
+﻿/// <summary>
+/// Query to generate a new access token using a refresh token.
+/// </summary>
+namespace JiraLike.Application.Abstraction.Query
 {
-    using JiraLike.Application.Dtos;
+    using JiraLike.Application.Dto;
     using MediatR;
 
-    public class GetRefreshTokenQuery : IRequest<AuthResponseDto>
+    public sealed class GetRefreshTokenQuery : IRequest<AuthResponseDto>
     {
-        public string RefreshToken { get; init; }
+        public string RefreshToken { get; }
 
         public GetRefreshTokenQuery(string refreshToken)
         {
-            RefreshToken = refreshToken;
+            RefreshToken = refreshToken ?? throw new ArgumentNullException(nameof(refreshToken));
         }
     }
 }

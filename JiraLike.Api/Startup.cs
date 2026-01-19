@@ -85,7 +85,7 @@
             });
 
             services.AddScoped<KnowledgeService>();
-            services.AddScoped<BotService>();
+            services.AddScoped<ChatService>();
             services.AddHttpClient<GroqService>();
 
 

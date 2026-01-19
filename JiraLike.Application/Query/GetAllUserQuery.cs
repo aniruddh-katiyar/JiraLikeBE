@@ -1,11 +1,13 @@
-﻿using JiraLike.Application.Dtos;
-using MediatR;
-
+﻿/// <summary>
+/// Query to fetch all users.
+/// </summary>
 namespace JiraLike.Application.Abstraction.Query
 {
-    public class GetAllUserQuery : IRequest<List<GetUserResponseDto>>
+    using JiraLike.Application.Dto;
+    using MediatR;
+    using System.Collections.Generic;
+
+    public sealed class GetAllUserQuery : IRequest<List<UserResponseDto>>
     {
-
-
     }
 }

@@ -41,11 +41,9 @@ namespace JiraLike.Infrastructure.Migrations
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("NewValue")
-                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<string>("OldValue")
-                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<Guid>("PerformedBy")
@@ -59,7 +57,7 @@ namespace JiraLike.Infrastructure.Migrations
                     b.ToTable("ActivityLogs", (string)null);
                 });
 
-            modelBuilder.Entity("JiraLike.Domain.Entities.CommentEntity", b =>
+            modelBuilder.Entity("JiraLike.Domain.Entities.ChatHistoryEntity", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -68,14 +66,21 @@ namespace JiraLike.Infrastructure.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("TEXT");
 
+                    b.Property<string>("DetectedIntent")
+                        .HasColumnType("TEXT");
+
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("INTEGER");
 
-                    b.Property<string>("Message")
+                    b.Property<Guid>("ProjectId")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Question")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<Guid>("TaskItemId")
+                    b.Property<string>("Response")
+                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<DateTime?>("UpdatedAt")
@@ -86,11 +91,111 @@ namespace JiraLike.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("TaskItemId");
+                    b.HasIndex("ProjectId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("ChatHistory", (string)null);
+                });
+
+            modelBuilder.Entity("JiraLike.Domain.Entities.CommentEntity", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Content")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("TEXT");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<Guid>("IssueId")
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("TEXT");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("IssueId");
 
                     b.HasIndex("UserId");
 
                     b.ToTable("Comments", (string)null);
+                });
+
+            modelBuilder.Entity("JiraLike.Domain.Entities.IssueEntity", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("TEXT");
+
+                    b.Property<Guid?>("AssigneeId")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("BlockedReason")
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("TEXT");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Key")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<Guid?>("ParentIssueId")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Priority")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<Guid>("ProjectId")
+                        .HasColumnType("TEXT");
+
+                    b.Property<Guid>("ReporterId")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Type")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AssigneeId");
+
+                    b.HasIndex("ParentIssueId");
+
+                    b.HasIndex("ProjectId");
+
+                    b.HasIndex("ReporterId");
+
+                    b.ToTable("Issues", (string)null);
                 });
 
             modelBuilder.Entity("JiraLike.Domain.Entities.ProjectEntity", b =>
@@ -105,8 +210,80 @@ namespace JiraLike.Infrastructure.Migrations
                     b.Property<Guid>("CreatedBy")
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("Description")
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Key")
                         .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Key")
+                        .IsUnique();
+
+                    b.ToTable("Projects", (string)null);
+                });
+
+            modelBuilder.Entity("JiraLike.Domain.Entities.ProjectUserEntity", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("TEXT");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<Guid>("ProjectId")
+                        .HasColumnType("TEXT");
+
+                    b.Property<Guid>("RoleId")
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("TEXT");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProjectId");
+
+                    b.HasIndex("RoleId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("ProjectUsers", (string)null);
+                });
+
+            modelBuilder.Entity("JiraLike.Domain.Entities.RoleEntity", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Description")
                         .HasColumnType("TEXT");
 
                     b.Property<bool>("IsDeleted")
@@ -121,66 +298,7 @@ namespace JiraLike.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Projects", (string)null);
-                });
-
-            modelBuilder.Entity("JiraLike.Domain.Entities.ProjectUserEntity", b =>
-                {
-                    b.Property<Guid>("ProjectId")
-                        .HasColumnType("TEXT");
-
-                    b.Property<Guid>("UserId")
-                        .HasColumnType("TEXT");
-
-                    b.HasKey("ProjectId", "UserId");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("ProjectUsers", (string)null);
-                });
-
-            modelBuilder.Entity("JiraLike.Domain.Entities.TaskItemEntity", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("TEXT");
-
-                    b.Property<Guid>("AssignedUserId")
-                        .HasColumnType("TEXT");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("Priority")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<Guid>("ProjectId")
-                        .HasColumnType("TEXT");
-
-                    b.Property<int>("Status")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<string>("Title")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<DateTime?>("UpdatedAt")
-                        .HasColumnType("TEXT");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("AssignedUserId");
-
-                    b.HasIndex("ProjectId");
-
-                    b.ToTable("TaskItem", (string)null);
+                    b.ToTable("Roles", (string)null);
                 });
 
             modelBuilder.Entity("JiraLike.Domain.Entities.UserEntity", b =>
@@ -194,22 +312,19 @@ namespace JiraLike.Infrastructure.Migrations
 
                     b.Property<string>("Email")
                         .IsRequired()
-                        .HasMaxLength(256)
                         .HasColumnType("TEXT");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("INTEGER");
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasMaxLength(100)
                         .HasColumnType("TEXT");
 
                     b.Property<string>("PasswordHash")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("Role")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
@@ -234,13 +349,10 @@ namespace JiraLike.Infrastructure.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<bool>("IsRevoked")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER")
-                        .HasDefaultValue(false);
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("TokenHash")
                         .IsRequired()
-                        .HasMaxLength(512)
                         .HasColumnType("TEXT");
 
                     b.Property<Guid>("UserId")
@@ -253,23 +365,75 @@ namespace JiraLike.Infrastructure.Migrations
                     b.ToTable("RefreshTokens", (string)null);
                 });
 
-            modelBuilder.Entity("JiraLike.Domain.Entities.CommentEntity", b =>
+            modelBuilder.Entity("JiraLike.Domain.Entities.ChatHistoryEntity", b =>
                 {
-                    b.HasOne("JiraLike.Domain.Entities.TaskItemEntity", "TaskItem")
-                        .WithMany("Comments")
-                        .HasForeignKey("TaskItemId")
+                    b.HasOne("JiraLike.Domain.Entities.ProjectEntity", "Project")
+                        .WithMany()
+                        .HasForeignKey("ProjectId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("JiraLike.Domain.Entities.UserEntity", "User")
-                        .WithMany("Comments")
+                        .WithMany()
                         .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Project");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("JiraLike.Domain.Entities.CommentEntity", b =>
+                {
+                    b.HasOne("JiraLike.Domain.Entities.IssueEntity", "Issue")
+                        .WithMany("Comments")
+                        .HasForeignKey("IssueId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("JiraLike.Domain.Entities.UserEntity", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Issue");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("JiraLike.Domain.Entities.IssueEntity", b =>
+                {
+                    b.HasOne("JiraLike.Domain.Entities.UserEntity", "Assignee")
+                        .WithMany()
+                        .HasForeignKey("AssigneeId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
+                    b.HasOne("JiraLike.Domain.Entities.IssueEntity", "ParentIssue")
+                        .WithMany()
+                        .HasForeignKey("ParentIssueId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("JiraLike.Domain.Entities.ProjectEntity", "Project")
+                        .WithMany("Issues")
+                        .HasForeignKey("ProjectId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("JiraLike.Domain.Entities.UserEntity", "Reporter")
+                        .WithMany()
+                        .HasForeignKey("ReporterId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.Navigation("TaskItem");
+                    b.Navigation("Assignee");
 
-                    b.Navigation("User");
+                    b.Navigation("ParentIssue");
+
+                    b.Navigation("Project");
+
+                    b.Navigation("Reporter");
                 });
 
             modelBuilder.Entity("JiraLike.Domain.Entities.ProjectUserEntity", b =>
@@ -280,6 +444,12 @@ namespace JiraLike.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("JiraLike.Domain.Entities.RoleEntity", "Role")
+                        .WithMany("ProjectUsers")
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("JiraLike.Domain.Entities.UserEntity", "User")
                         .WithMany("ProjectUsers")
                         .HasForeignKey("UserId")
@@ -288,26 +458,9 @@ namespace JiraLike.Infrastructure.Migrations
 
                     b.Navigation("Project");
 
+                    b.Navigation("Role");
+
                     b.Navigation("User");
-                });
-
-            modelBuilder.Entity("JiraLike.Domain.Entities.TaskItemEntity", b =>
-                {
-                    b.HasOne("JiraLike.Domain.Entities.UserEntity", "AssignedUser")
-                        .WithMany("AssignedTasks")
-                        .HasForeignKey("AssignedUserId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("JiraLike.Domain.Entities.ProjectEntity", "Project")
-                        .WithMany("Tasks")
-                        .HasForeignKey("ProjectId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("AssignedUser");
-
-                    b.Navigation("Project");
                 });
 
             modelBuilder.Entity("JiraLike.Domain.Token.RefreshTokenEntity", b =>
@@ -321,24 +474,25 @@ namespace JiraLike.Infrastructure.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("JiraLike.Domain.Entities.ProjectEntity", b =>
-                {
-                    b.Navigation("ProjectUsers");
-
-                    b.Navigation("Tasks");
-                });
-
-            modelBuilder.Entity("JiraLike.Domain.Entities.TaskItemEntity", b =>
+            modelBuilder.Entity("JiraLike.Domain.Entities.IssueEntity", b =>
                 {
                     b.Navigation("Comments");
+                });
+
+            modelBuilder.Entity("JiraLike.Domain.Entities.ProjectEntity", b =>
+                {
+                    b.Navigation("Issues");
+
+                    b.Navigation("ProjectUsers");
+                });
+
+            modelBuilder.Entity("JiraLike.Domain.Entities.RoleEntity", b =>
+                {
+                    b.Navigation("ProjectUsers");
                 });
 
             modelBuilder.Entity("JiraLike.Domain.Entities.UserEntity", b =>
                 {
-                    b.Navigation("AssignedTasks");
-
-                    b.Navigation("Comments");
-
                     b.Navigation("ProjectUsers");
 
                     b.Navigation("RefreshTokens");
