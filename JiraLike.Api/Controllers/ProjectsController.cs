@@ -8,7 +8,7 @@
     using Microsoft.AspNetCore.Mvc;
 
     [ApiController]
-    [Authorize]
+    [AllowAnonymous]
     [Route("api/projects")]
     public class ProjectsController : ControllerBase
     {
@@ -20,15 +20,24 @@
         }
 
         // POST /projects
-        [HttpPost]
-        public async Task<IActionResult> CreateProjectAsync(
-            [FromBody] CreateProjectRequestDto request,
-            CancellationToken cancellationToken)
-        {
-            var result = await _mediator.Send(
-                new CreateProjectCommand(request),
-                cancellationToken);
+        /// <summary>
+        /// Handles HTTP POST requests to create a new project.
+        /// </summary>
+        /// <param name="request">
+        /// The project creation details provided in the request body, encapsulated in a <see cref="CreateProjectRequestDto"/>.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// A token to monitor for cancellation requests.
+        /// </param>
+        /// <returns>
+        /// An <see cref="IActionResult"/> containing the result of the project creation wrapped in an HTTP 200 OK response.
+        /// </returns>
 
+        [HttpPost]
+        public async Task<IActionResult> CreateProjectAsync([FromBody] CreateProjectRequestDto request,
+                                                             CancellationToken cancellationToken)
+        {
+            var result = await _mediator.Send(new CreateProjectCommand(request), cancellationToken);
             return Ok(result);
         }
 

@@ -8,7 +8,7 @@
     using Microsoft.AspNetCore.Mvc;
 
     [ApiController]
-    [Authorize]
+    [AllowAnonymous]
     public class ProjectUsersController : ControllerBase
     {
         private readonly IMediator _mediator;

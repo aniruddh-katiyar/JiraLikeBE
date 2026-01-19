@@ -8,7 +8,7 @@ namespace JiraLike.Application.Abstraction.Command
 
     public sealed class CreateProjectCommand : IRequest<ProjectResponseDto>
     {
-        public CreateProjectRequestDto Request { get; }
+        public CreateProjectRequestDto Request { get; set; }
 
         public CreateProjectCommand(CreateProjectRequestDto request)
         {
