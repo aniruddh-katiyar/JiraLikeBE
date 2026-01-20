@@ -2,35 +2,27 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-
 namespace JiraLike.Infrastructure.Configurations
 {
     public class CommentEntityConfiguration : IEntityTypeConfiguration<CommentEntity>
     {
-   
         public void Configure(EntityTypeBuilder<CommentEntity> builder)
         {
-            //Set Table Name
             builder.ToTable("Comments");
 
-            //Set Primary Key
-            builder.HasKey(comment => comment.Id);
+            builder.HasKey(c => c.Id);
 
-            //Navigation
-            builder.HasOne(comment => comment.TaskItem)
-                .WithMany(taskItem => taskItem.Comments)
-                .HasForeignKey(comment => comment.TaskItemId)
-                .OnDelete(DeleteBehavior.Cascade); 
+            builder.Property(c => c.Content).IsRequired();
 
-            //Navigation
-            builder.HasOne(comment => comment.User)
-                .WithMany(user => user.Comments)
-                .HasForeignKey(comment => comment.UserId)
-                 .OnDelete(DeleteBehavior.Restrict);
+            builder.HasOne(c => c.Issue)
+                   .WithMany(i => i.Comments)
+                   .HasForeignKey(c => c.IssueId);
 
+            builder.HasOne(c => c.User)
+                   .WithMany()
+                   .HasForeignKey(c => c.UserId);
 
-            //Soft Delete
-            builder.HasQueryFilter(comment => !comment.IsDeleted);
+            builder.HasQueryFilter(c => !c.IsDeleted);
         }
     }
 }

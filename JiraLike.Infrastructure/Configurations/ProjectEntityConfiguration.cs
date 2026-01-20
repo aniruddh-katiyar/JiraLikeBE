@@ -8,14 +8,16 @@ namespace JiraLike.Infrastructure.Configurations
     {
         public void Configure(EntityTypeBuilder<ProjectEntity> builder)
         {
-            //Table Name 
             builder.ToTable("Projects");
 
-            //Primary Key
-            builder.HasKey(project => project.Id);
+            builder.HasKey(p => p.Id);
 
-            //Soft delete
-            builder.HasQueryFilter(project => !project.IsDeleted);
+            builder.HasIndex(p => p.Key).IsUnique();
+
+            builder.Property(p => p.Name).IsRequired();
+            builder.Property(p => p.Key).IsRequired();
+
+            builder.HasQueryFilter(p => !p.IsDeleted);
         }
     }
 }

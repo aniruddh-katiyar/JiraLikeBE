@@ -1,6 +1,6 @@
 ﻿namespace JiraLike.Api.Tests
 {
-    using JiraLike.Application.Dtos;
+    using JiraLike.Application.Dto;
     using System;
     using System.Collections.Generic;
     using System.Linq;
@@ -19,14 +19,12 @@
                 Success = true
             };
         }
-        public static AddUserRequestDto GetUserRequest()
+        public static UpdateUserRequestDto GetUserRequest()
         {
-            return new AddUserRequestDto
+            return new UpdateUserRequestDto
             {
                 Name = "Amit",
-                Email = "Amit@gmail.com",
-                Password = "Amit@123",
-                Role = "Admin"
+           
             };
         }
     }

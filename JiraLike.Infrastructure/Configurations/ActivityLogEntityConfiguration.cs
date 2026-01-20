@@ -2,19 +2,14 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-
-namespace JiraLike.Infrastructure.Configurations
+public class ActivityLogEntityConfiguration : IEntityTypeConfiguration<ActivityLogEntity>
 {
-    public class ActivityLogEntityConfiguration : IEntityTypeConfiguration<ActivityLogEntity>
+    public void Configure(EntityTypeBuilder<ActivityLogEntity> builder)
     {
-       public void Configure(EntityTypeBuilder<ActivityLogEntity> builder)
-        {
-            //Table
-            builder.ToTable("ActivityLogs");
+        builder.ToTable("ActivityLogs");
 
-            builder.HasKey(activityLog => activityLog.Id);
+        builder.HasKey(a => a.Id);
 
-            builder.HasQueryFilter(activityLog => !activityLog.IsDeleted);
-        }
+        builder.HasQueryFilter(a => !a.IsDeleted);
     }
 }
