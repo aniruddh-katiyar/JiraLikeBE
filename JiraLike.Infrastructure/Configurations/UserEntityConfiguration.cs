@@ -8,32 +8,16 @@ namespace JiraLike.Infrastructure.Configurations
     {
         public void Configure(EntityTypeBuilder<UserEntity> builder)
         {
-            // Table
             builder.ToTable("Users");
 
-            // Primary Key
             builder.HasKey(u => u.Id);
 
-            // Properties
-            builder.Property(u => u.Name)
-                   .IsRequired()
-                   .HasMaxLength(100);
+            builder.HasIndex(u => u.Email).IsUnique();
 
-            builder.Property(u => u.Email)
-                   .IsRequired()
-                   .HasMaxLength(256);
+            builder.Property(u => u.Name).IsRequired();
+            builder.Property(u => u.Email).IsRequired();
+            builder.Property(u => u.PasswordHash).IsRequired();
 
-            builder.Property(u => u.PasswordHash)
-                   .IsRequired();
-
-            builder.Property(u => u.Role)
-                  .IsRequired();
-
-            // Indexes
-            builder.HasIndex(u => u.Email)
-                   .IsUnique();
-
-            // Soft Delete 
             builder.HasQueryFilter(u => !u.IsDeleted);
         }
     }

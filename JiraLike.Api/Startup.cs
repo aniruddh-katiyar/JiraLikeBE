@@ -16,6 +16,7 @@
     using Microsoft.IdentityModel.Tokens;
     using Microsoft.OpenApi.Models;
     using Serilog;
+    using System.Reflection;
     using System.Text;
 
     public sealed class Startup
@@ -73,6 +74,9 @@
                         Array.Empty<string>()
                     }
                 });
+                var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+                var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+                c.IncludeXmlComments(xmlPath);
             });
 
             services.AddDbContext<JiraLikeDbContext>(options =>
@@ -85,7 +89,7 @@
             });
 
             services.AddScoped<KnowledgeService>();
-            services.AddScoped<BotService>();
+            services.AddScoped<ChatService>();
             services.AddHttpClient<GroqService>();
 
 

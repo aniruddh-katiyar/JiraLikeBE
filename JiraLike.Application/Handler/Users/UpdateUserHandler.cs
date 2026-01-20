@@ -8,14 +8,14 @@ namespace JiraLike.Application.Handler.Users
     using AutoMapper;
     using JiraLike.Application.Abstraction.Command;
     using JiraLike.Application.Abstraction.Exceptions;
-    using JiraLike.Application.Dtos;
+    using JiraLike.Application.Dto;
     using JiraLike.Application.Interfaces;
     using JiraLike.Domain.Entities;
     using MediatR;
     using System.Threading;
     using System.Threading.Tasks;
 
-    public class UpdateUserHandler : IRequestHandler<UpdateUserCommand, GetUserResponseDto>
+    public class UpdateUserHandler : IRequestHandler<UpdateUserCommand, UserResponseDto>
     {
         private readonly IRepository<UserEntity> _repository;
 
@@ -25,7 +25,7 @@ namespace JiraLike.Application.Handler.Users
             _repository = repository;
             _mapper = mapper;
         }
-        public async Task<GetUserResponseDto> Handle(UpdateUserCommand command, CancellationToken cancellationToken)
+        public async Task<UserResponseDto> Handle(UpdateUserCommand command, CancellationToken cancellationToken)
         {
             //Fetch entity
             var user = await _repository.FirstOrDefaultAsync(u => u.Id == command.UserId,
@@ -34,15 +34,15 @@ namespace JiraLike.Application.Handler.Users
             if (user is null)
                 throw new EntityNotFoundException<UserEntity>(command.UserId);
 
-            //Partial Update
-            if (command.UserRequest.Name is not null)
-                user.ChangeUserName(command.UserRequest.Name);
+            ////Partial Update
+            //if (command.UserRequest.Name is not null)
+            //    user.ChangeUserName(command.UserRequest.Name);
 
-            if (command.UserRequest.Email is not null)
-                user.ChangeEmail(command.UserRequest.Email);
+            //if (command.UserRequest.Email is not null)
+            //    user.ChangeEmail(command.UserRequest.Email);
 
-            if (command.UserRequest.Role is not null)
-                user.ChangeRole(command.UserRequest.Role);
+            //if (command.UserRequest.Role is not null)
+            //    user.ChangeRole(command.UserRequest.Role);
 
 
             // Persist changes
@@ -50,7 +50,7 @@ namespace JiraLike.Application.Handler.Users
 
             // Return response
             var result = _mapper.Map<GetUserResponseDto>(user);
-            return result;
+            return new UserResponseDto();
         }
     }
 }

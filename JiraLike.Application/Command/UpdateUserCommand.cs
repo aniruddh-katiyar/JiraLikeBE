@@ -1,19 +1,20 @@
 ﻿/// <summary>
-/// Represents a command to update a existing user.
+/// Command to update user profile details.
 /// </summary>
-/// 
 namespace JiraLike.Application.Abstraction.Command
 {
-    using JiraLike.Application.Dtos;
+    using JiraLike.Application.Dto;
     using MediatR;
-    public sealed class UpdateUserCommand : IRequest<GetUserResponseDto>
+
+    public sealed class UpdateUserCommand : IRequest<UserResponseDto>
     {
-        public UpdateUserRequestDto UserRequest { get; }
         public Guid UserId { get; }
-        public UpdateUserCommand(UpdateUserRequestDto userRequestDto, Guid userId)
+        public UpdateUserRequestDto Request { get; }
+
+        public UpdateUserCommand(UpdateUserRequestDto request, Guid userId)
         {
-            UserRequest = userRequestDto;
             UserId = userId;
+            Request = request ?? throw new ArgumentNullException(nameof(request));
         }
     }
 }

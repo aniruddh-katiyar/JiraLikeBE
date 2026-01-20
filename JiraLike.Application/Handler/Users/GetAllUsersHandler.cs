@@ -2,7 +2,7 @@
 {
     using AutoMapper;
     using JiraLike.Application.Abstraction.Query;
-    using JiraLike.Application.Dtos;
+    using JiraLike.Application.Dto;
     using JiraLike.Application.Interfaces;
     using JiraLike.Domain.Entities;
     using MediatR;
@@ -10,7 +10,7 @@
     using System.Threading;
     using System.Threading.Tasks;
 
-    public class GetAllUsersHandler : IRequestHandler<GetAllUserQuery, List<GetUserResponseDto>>
+    public class GetAllUsersHandler : IRequestHandler<GetAllUserQuery, List<UserResponseDto>>
     {
         private readonly IRepository<UserEntity> _repository;
         private readonly IMapper _mapper;
@@ -21,12 +21,12 @@
             _mapper = mapper;
             _logger = logger;
         }
-        public async Task<List<GetUserResponseDto>> Handle(GetAllUserQuery request, CancellationToken cancellationToken)
+        public async Task<List<UserResponseDto>> Handle(GetAllUserQuery request, CancellationToken cancellationToken)
         {
             var users = await _repository.GetAllAsync(cancellationToken);
             var result = _mapper.Map<List<GetUserResponseDto>>(users);
             _logger.LogInformation("This is handler");
-            return result;
+            return new List<UserResponseDto>();
 
         }
     }

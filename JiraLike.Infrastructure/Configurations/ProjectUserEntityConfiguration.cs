@@ -6,26 +6,25 @@ namespace JiraLike.Infrastructure.Configurations
 {
     public class ProjectUserEntityConfiguration : IEntityTypeConfiguration<ProjectUserEntity>
     {
-       
-       public void Configure(EntityTypeBuilder<ProjectUserEntity> builder)
+        public void Configure(EntityTypeBuilder<ProjectUserEntity> builder)
         {
             builder.ToTable("ProjectUsers");
 
-            // Composite Primary Key
-            builder.HasKey(pu => new { pu.ProjectId, pu.UserId });
+            builder.HasKey(pu => pu.Id);
 
-            // FK → Project
             builder.HasOne(pu => pu.Project)
-                .WithMany(p => p.ProjectUsers)
-                .HasForeignKey(pu => pu.ProjectId);
+                   .WithMany(p => p.ProjectUsers)
+                   .HasForeignKey(pu => pu.ProjectId);
 
-            // FK → User
             builder.HasOne(pu => pu.User)
-                .WithMany(u => u.ProjectUsers)
-                .HasForeignKey(pu => pu.UserId);
+                   .WithMany(u => u.ProjectUsers)
+                   .HasForeignKey(pu => pu.UserId);
 
-           builder.HasQueryFilter(pu => !pu.Project.IsDeleted);
+            builder.HasOne(pu => pu.Role)
+                   .WithMany(r => r.ProjectUsers)
+                   .HasForeignKey(pu => pu.RoleId);
 
+            builder.HasQueryFilter(pu => !pu.IsDeleted);
         }
     }
 }

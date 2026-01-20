@@ -2,7 +2,7 @@
 {
     using JiraLike.Application.Abstraction.Command;
     using JiraLike.Application.Abstraction.Exceptions;
-    using JiraLike.Application.Dtos;
+    using JiraLike.Application.Dto;
     using JiraLike.Application.Interfaces;
     using JiraLike.Domain.Entities;
     using JiraLike.Domain.Token;
@@ -32,35 +32,35 @@
         }
         public async Task<AuthResponseDto> Handle(LoginUserCommand request, CancellationToken cancellationToken)
         {
-            var user = await _repository.FirstOrDefaultAsync(user => user.Email == request.LoginRequestDto.Email, cancellationToken)
-                 ?? throw new EntityNotFoundException<UserEntity>(request);
+            //var user = await _repository.FirstOrDefaultAsync(user => user.Email == request.LoginRequestDto.Email, cancellationToken)
+            //     ?? throw new EntityNotFoundException<UserEntity>(request);
 
-            var verifyPassword = _passwordHasher.VerifyHashedPassword(user, user.PasswordHash, request.LoginRequestDto.Password);
-            if (verifyPassword == PasswordVerificationResult.Success)
-            {
-                var accessToken = _tokenGeneratorService.GenerateAccessToken(request.LoginRequestDto.Email,
-                    user.Role, user.Id);
-                var refreshToken = _tokenGeneratorService.GenerateRefreshToken();
-                var encrptedRefreshToken = _tokenGeneratorService.GenerateEncryptedRefreshToken(refreshToken);
+            //var verifyPassword = _passwordHasher.VerifyHashedPassword(user, user.PasswordHash, request.LoginRequestDto.Password);
+            //if (verifyPassword == PasswordVerificationResult.Success)
+            //{
+            //    var accessToken = _tokenGeneratorService.GenerateAccessToken(request.LoginRequestDto.Email,
+            //        user.Role, user.Id);
+            //    var refreshToken = _tokenGeneratorService.GenerateRefreshToken();
+            //    var encrptedRefreshToken = _tokenGeneratorService.GenerateEncryptedRefreshToken(refreshToken);
 
-                // 4. Hash and store refresh token in DB
-                var refreshTokenEntity = new RefreshTokenEntity
-                {
-                    UserId = user.Id,
-                    TokenHash = encrptedRefreshToken,
-                    ExpiresAt = DateTime.UtcNow.AddDays(_configuration.GetValue<int>("RefreshTokens:ExpireDays")),
-                    IsRevoked = false
-                };
+            //    // 4. Hash and store refresh token in DB
+            //    var refreshTokenEntity = new RefreshTokenEntity
+            //    {
+            //        UserId = user.Id,
+            //        TokenHash = encrptedRefreshToken,
+            //        ExpiresAt = DateTime.UtcNow.AddDays(_configuration.GetValue<int>("RefreshTokens:ExpireDays")),
+            //        IsRevoked = false
+            //    };
 
-                await _refereshTokenRepository.AddAsync(refreshTokenEntity, cancellationToken);
-                await _refereshTokenRepository.SaveChangesAsync(cancellationToken);
+            //    await _refereshTokenRepository.AddAsync(refreshTokenEntity, cancellationToken);
+            //    await _refereshTokenRepository.SaveChangesAsync(cancellationToken);
 
-                return new AuthResponseDto
-                {
-                    AccessToken = accessToken,
-                    RefreshToken = refreshToken
-                };
-            }
+            //    return new AuthResponseDto
+            //    {
+            //        AccessToken = accessToken,
+            //        RefreshToken = refreshToken
+            //    };
+            //}
             throw new Exception();
         }
 
