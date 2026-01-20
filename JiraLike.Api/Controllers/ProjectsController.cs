@@ -7,6 +7,9 @@
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
 
+    /// <summary>
+    /// Projects Controller
+    /// </summary>
     [ApiController]
     [AllowAnonymous]
     [Route("api/projects")]
@@ -14,6 +17,9 @@
     {
         private readonly IMediator _mediator;
 
+        /// <summary>
+        /// Projects Controller Constructor
+        /// </summary>
         public ProjectsController(IMediator mediator)
         {
             _mediator = mediator;
@@ -42,6 +48,9 @@
         }
 
         // GET /projects
+        /// <summary>
+        /// Handles HTTP GET requests to get all projects.
+        /// </summary>
         [HttpGet]
         public async Task<IActionResult> GetProjectsAsync(CancellationToken cancellationToken)
         {
