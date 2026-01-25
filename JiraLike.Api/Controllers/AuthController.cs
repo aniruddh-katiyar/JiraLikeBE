@@ -2,21 +2,35 @@
 {
     using JiraLike.Application.Abstraction.Command;
     using JiraLike.Application.Abstraction.Query;
+    using JiraLike.Application.Command;
     using JiraLike.Application.Dto;
     using MediatR;
     using Microsoft.AspNetCore.Mvc;
 
+    /// <summary>
+    /// Auth Controller
+    /// </summary>
     [ApiController]
     [Route("api/auth")]
     public class AuthController : ControllerBase
     {
         private readonly IMediator _mediator;
 
+        /// <summary>
+        /// AuthController constructor
+        /// </summary>
+        /// <param name="mediator"></param>
         public AuthController(IMediator mediator)
         {
             _mediator = mediator;
         }
 
+        /// <summary>
+        /// Register User 
+        /// </summary>
+        /// <param name="request"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
         // POST /auth/register
         [HttpPost("register")]
         public async Task<IActionResult> RegisterAsync(
@@ -30,6 +44,12 @@
             return Ok(result);
         }
 
+        /// <summary>
+        /// User Login
+        /// </summary>
+        /// <param name="request"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
         // POST /auth/login
         [HttpPost("login")]
         public async Task<IActionResult> LoginAsync(
