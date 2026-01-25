@@ -1,18 +1,19 @@
 ﻿/// <summary>
 /// Command to authenticate a user.
 /// </summary>
-namespace JiraLike.Application.Abstraction.Command
+namespace JiraLike.Application.Command
 {
     using JiraLike.Application.Dto;
     using MediatR;
 
     public sealed class LoginUserCommand : IRequest<AuthResponseDto>
     {
-        public LoginRequestDto Request { get; }
+        public LoginRequestDto LoginRequest { get; }
 
-        public LoginUserCommand(LoginRequestDto request)
+        public LoginUserCommand(LoginRequestDto loginRequest)
         {
-            Request = request ?? throw new ArgumentNullException(nameof(request));
+            LoginRequest = loginRequest ?? throw new ArgumentNullException(nameof(loginRequest));
+            LoginRequest.Email = loginRequest.Email.ToLower();
         }
     }
 }

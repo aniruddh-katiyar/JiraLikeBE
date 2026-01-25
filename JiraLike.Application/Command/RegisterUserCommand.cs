@@ -1,18 +1,20 @@
 ﻿/// <summary>
 /// Command to register a new user in the system.
 /// </summary>
-namespace JiraLike.Application.Abstraction.Command
+namespace JiraLike.Application.Command
 {
     using JiraLike.Application.Dto;
     using MediatR;
 
     public sealed class RegisterUserCommand : IRequest<AuthResponseDto>
     {
-        public RegisterUserRequestDto Request { get; }
+        public RegisterUserRequestDto RegisterUser { get; }
 
-        public RegisterUserCommand(RegisterUserRequestDto request)
+        public RegisterUserCommand(RegisterUserRequestDto registerUser)
         {
-            Request = request ?? throw new ArgumentNullException(nameof(request));
+           
+            RegisterUser = registerUser ?? throw new ArgumentNullException(nameof(RegisterUser));
+            RegisterUser.Email = registerUser.Email.ToLower();
         }
     }
 }

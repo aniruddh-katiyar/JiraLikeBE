@@ -25,4 +25,8 @@
 		<ProjectReference Include="..\JiraLike.Domain\JiraLike.Domain.csproj" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <Folder Include="Handler\Login\" />
+	</ItemGroup>
+
 </Project>
