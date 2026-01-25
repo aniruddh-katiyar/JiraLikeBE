@@ -19,13 +19,13 @@
         }
 
         // Access Token will be generated.
-        public string GenerateAccessToken(string email, string role, Guid userId)
+        public string GenerateAccessToken(string email, bool IsActive, Guid userId)
         {
             var claims = new List<Claim>
             {
               new Claim(JwtRegisteredClaimNames.Sub, userId.ToString()),
               new Claim(JwtRegisteredClaimNames.Email, email),
-              new Claim(ClaimTypes.Role, role),
+              new Claim("IsActive",IsActive.ToString()),
               new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
             };
 

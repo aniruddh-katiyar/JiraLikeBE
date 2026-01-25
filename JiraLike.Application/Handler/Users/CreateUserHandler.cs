@@ -6,7 +6,7 @@
 namespace JiraLike.Application.Handler.Users
 {
     using AutoMapper;
-    using JiraLike.Application.Abstraction.Command;
+    using JiraLike.Application.Command;
     using JiraLike.Application.Dto;
     using JiraLike.Application.Interfaces;
     using JiraLike.Domain.Entities;
@@ -36,21 +36,23 @@ namespace JiraLike.Application.Handler.Users
         /// <returns>Returns created user identifier</returns>
         public async Task<AuthResponseDto> Handle(RegisterUserCommand command, CancellationToken cancellationToken)
         {
-            //var userRequestDto = command.U
-            //    ?? throw new ArgumentNullException(nameof(command.UserRequestDto));
+            var userRequestDto = command.RegisterUser
+                ?? throw new ArgumentNullException(nameof(command.RegisterUser));
 
-            //var existingUser = await _repository.FirstOrDefaultAsync(
-            //   u => u.Email == userRequestDto.Email, cancellationToken);
+            var existingUser = await _repository.FirstOrDefaultAsync(
+               u => u.Email == userRequestDto.Email, cancellationToken);
 
-            //if (existingUser != null)
-            //    throw new InvalidOperationException("User already exists");
+            if (existingUser != null)
+                throw new InvalidOperationException("User already exists");
 
-            //var user = new UserEntity(userRequestDto.Name, userRequestDto.Email, userRequestDto.Role);
-            //var passwordHash = _passwordHasher.HashPassword(user, userRequestDto.Password);
-            //user.SetPasswordHash(passwordHash);
-            //await _repository.AddAsync(user, cancellationToken);
-            //await _repository.SaveChangesAsync(cancellationToken);
-            //var response = _mapper.Map<GetUserResponseDto>(user);
+            var user = new UserEntity();
+            user.Name = userRequestDto.Name;
+            user.Email = userRequestDto.Email;
+            var passwordHash = _passwordHasher.HashPassword(user, userRequestDto.Password);
+            user.PasswordHash = passwordHash;
+            await _repository.AddAsync(user, cancellationToken);
+            await _repository.SaveChangesAsync(cancellationToken);
+            var response = _mapper.Map<GetUserResponseDto>(user);
             return new AuthResponseDto();
         }
     }

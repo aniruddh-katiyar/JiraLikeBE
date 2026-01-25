@@ -5,7 +5,7 @@
 
     public interface ITokenGenerator
     {
-        string GenerateAccessToken(string email, string role, Guid userId);
+        string GenerateAccessToken(string email, bool IsActive, Guid userId);
         string GenerateRefreshToken();
         string GenerateEncryptedRefreshToken(string refreshToken);
         bool VerifyRefreshToken(string incomingToken, RefreshTokenEntity refreshTokenEnity);
