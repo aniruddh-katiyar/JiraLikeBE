@@ -15,9 +15,13 @@
     public class GetAllProjectsHandler : IRequestHandler<GetProjectsQuery, List<ProjectResponseDto>>
     {
         private IRepository<ProjectEntity> _projectRepo;
-        public GetAllProjectsHandler(IRepository<ProjectEntity> projectRepo)
+        private IRepository<UserEntity> _userEntity;
+     
+        public GetAllProjectsHandler(IRepository<ProjectEntity> projectRepo, IRepository<UserEntity> userEntity)
         {
             _projectRepo = projectRepo;
+            _userEntity = userEntity;
+
         }
         public async Task<List<ProjectResponseDto>> Handle(GetProjectsQuery request, CancellationToken cancellationToken)
         {
@@ -25,12 +29,19 @@
             var projectResponses = new List<ProjectResponseDto>();
             foreach (var project in projects)
             {
+              
+               var user = await _userEntity.FirstOrDefaultAsync(x => x.Id == project.CreatedBy, cancellationToken) ??  throw new NullReferenceException();
+              
                 projectResponses.Add(new ProjectResponseDto
                 {
                     Id = project.Id,
                     Key = project.Key,
                     Name = project.Name,
-                    Status = project.Status
+                    Status = project.Status,
+                    CreatedAt = project.CreatedAt,
+                    CreatedBy = project.CreatedBy,
+                    CreatedbyUserName = user.Name
+                    
                 });
             }
 

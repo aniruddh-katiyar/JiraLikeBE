@@ -20,6 +20,25 @@ namespace JiraLike.Infrastructure.Repository
             await _dbContext.Set<T>().AddAsync(entity, token);
         }
 
+
+        public async Task DeleteAsync(Guid id, CancellationToken cancellationToken)
+        {
+            var entity = await _dbContext
+                .Set<T>()
+                .FindAsync(new object[] { id }, cancellationToken);
+
+            if (entity == null)
+            {
+                throw new KeyNotFoundException(
+                    $"{typeof(T).Name} with Id '{id}' was not found."
+                );
+            }
+
+            _dbContext.Set<T>().Remove(entity);
+
+            await _dbContext.SaveChangesAsync(cancellationToken);
+        }
+
         public async Task SaveChangesAsync(CancellationToken token)
         {
             await _dbContext.SaveChangesAsync(token);

@@ -1,37 +1,37 @@
-﻿namespace JiraLike.Api.Services
-{
-    using JiraLike.Api.services;
+﻿//namespace JiraLike.Api.Services
+//{
+//    using JiraLike.Api.services;
 
-    public class ChatService
-    {
-        private readonly KnowledgeService _knowledge;
-        private readonly GroqService _groq;
+//    public class ChatService
+//    {
+//        private readonly KnowledgeService _knowledge;
+//        private readonly GroqService _groq;
 
-        public ChatService(KnowledgeService knowledge, GroqService groq)
-        {
-            _knowledge = knowledge;
-            _groq = groq;
-        }
+//        public ChatService(KnowledgeService knowledge, GroqService groq)
+//        {
+//            _knowledge = knowledge;
+//            _groq = groq;
+//        }
 
-        public async Task<string> HandleAsync(string question)
-        {
-            var context = _knowledge.LoadAll();
+//        public async Task<string> HandleAsync(string question)
+//        {
+//            var context = _knowledge.LoadAll();
 
-            var prompt = $"""
-Answer the QUESTION using the CONTEXT.
-Be concise and factual.
+//            var prompt = $"""
+//Answer the QUESTION using the CONTEXT.
+//Be concise and factual.
 
-CONTEXT:
-{context}
+//CONTEXT:
+//{context}
 
-QUESTION:
-{question}
-""";
+//QUESTION:
+//{question}
+//""";
 
-            return await _groq.Generate(prompt);
-        }
+//            return await _groq.Generate(prompt);
+//        }
 
-    }
+//    }
 
 
-}
+//}

@@ -23,8 +23,8 @@
         {
             var user = await _repository.FirstOrDefaultAsync(x => x.Id == request.UserId, cancellationToken)
                 ?? throw new EntityNotFoundException<UserEntity>(request.UserId);
-            var result = _mapper.Map<GetUserResponseDto>(user);
-            return new UserResponseDto();
+            var result = _mapper.Map<UserResponseDto>(user);
+            return result;
         }
     }
 }

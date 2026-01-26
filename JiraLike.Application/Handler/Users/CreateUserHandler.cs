@@ -48,11 +48,12 @@ namespace JiraLike.Application.Handler.Users
             var user = new UserEntity();
             user.Name = userRequestDto.Name;
             user.Email = userRequestDto.Email;
+            user.IsActive = true;
             var passwordHash = _passwordHasher.HashPassword(user, userRequestDto.Password);
             user.PasswordHash = passwordHash;
             await _repository.AddAsync(user, cancellationToken);
             await _repository.SaveChangesAsync(cancellationToken);
-            var response = _mapper.Map<GetUserResponseDto>(user);
+            var response = _mapper.Map<UserResponseDto>(user);
             return new AuthResponseDto();
         }
     }

@@ -24,9 +24,9 @@
         public async Task<List<UserResponseDto>> Handle(GetAllUserQuery request, CancellationToken cancellationToken)
         {
             var users = await _repository.GetAllAsync(cancellationToken);
-            var result = _mapper.Map<List<GetUserResponseDto>>(users);
+            var result = _mapper.Map<List<UserResponseDto>>(users) ?? throw new ArgumentNullException();
             _logger.LogInformation("This is handler");
-            return new List<UserResponseDto>();
+            return result;
 
         }
     }

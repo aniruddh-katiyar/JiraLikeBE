@@ -1,0 +1,154 @@
+[33m58c92ff[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mfeature/BE-008[m[33m, [m[1;31morigin/feature/BE-008[m[33m, [m[1;31morigin/develop[m[33m, [m[1;32mdevelop[m[33m)[m HEAD@{0}: checkout: moving from develop to feature/BE-008
+[33m58c92ff[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mfeature/BE-008[m[33m, [m[1;31morigin/feature/BE-008[m[33m, [m[1;31morigin/develop[m[33m, [m[1;32mdevelop[m[33m)[m HEAD@{1}: checkout: moving from feature/BE-008 to develop
+[33md40dc21[m HEAD@{2}: commit: APi Key is removed
+[33mc560c63[m HEAD@{3}: commit: Ai Services is added
+[33mf85b473[m HEAD@{4}: merge develop: Merge made by the 'ort' strategy.
+[33m0f17633[m HEAD@{5}: checkout: moving from develop to feature/BE-008
+[33m58c92ff[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mfeature/BE-008[m[33m, [m[1;31morigin/feature/BE-008[m[33m, [m[1;31morigin/develop[m[33m, [m[1;32mdevelop[m[33m)[m HEAD@{6}: pull --progress --no-edit --no-stat --recurse-submodules=no origin: Fast-forward
+[33ma1b9e20[m HEAD@{7}: checkout: moving from feature/BE-008 to develop
+[33m0f17633[m HEAD@{8}: commit: Enhance project handling and user management features
+[33mfb21166[m HEAD@{9}: commit: Enhance authorization and user management features
+[33mf7e0b40[m HEAD@{10}: commit: Refactor authentication code and improve structure
+[33m3772234[m HEAD@{11}: commit: .
+[33m42102ff[m HEAD@{12}: commit: Feature : Project Added in JiraLike
+[33ma7e8826[m HEAD@{13}: commit: JiraLikeSkleton added :
+[33ma1b9e20[m HEAD@{14}: checkout: moving from develop to feature/BE-008
+[33ma1b9e20[m HEAD@{15}: pull --progress --no-edit --no-stat --recurse-submodules=no origin: Fast-forward
+[33m475a39b[m HEAD@{16}: checkout: moving from feature/AiBot to develop
+[33m4fe84ea[m[33m ([m[1;31morigin/feature/AiBot[m[33m, [m[1;32mfeature/AiBot[m[33m)[m HEAD@{17}: commit: model added
+[33m9c77392[m HEAD@{18}: commit: Dockerignore update
+[33m7b7652f[m HEAD@{19}: commit: Ai enabled Bot Api is Added to which gives information about project
+[33m475a39b[m HEAD@{20}: checkout: moving from Feature/AiBot to feature/AiBot
+[33m475a39b[m HEAD@{21}: checkout: moving from develop to Feature/AiBot
+[33m475a39b[m HEAD@{22}: commit: Only Single Db used
+[33mcf7934a[m[33m ([m[1;32mmain[m[33m)[m HEAD@{23}: merge main: Fast-forward
+[33m3ba4386[m HEAD@{24}: checkout: moving from main to develop
+[33mcf7934a[m[33m ([m[1;32mmain[m[33m)[m HEAD@{25}: commit: .
+[33me7d7f99[m HEAD@{26}: pull --progress --no-edit --no-stat --recurse-submodules=no origin: Fast-forward
+[33m2b5eb4b[m HEAD@{27}: checkout: moving from develop to main
+[33m3ba4386[m HEAD@{28}: pull --progress --no-edit --no-stat --recurse-submodules=no origin: Merge made by the 'ort' strategy.
+[33mb697374[m HEAD@{29}: commit: Fix:AutomApper
+[33m4e0c279[m HEAD@{30}: commit: #
+[33mee42c5b[m[33m ([m[1;31morigin/Fetaure/BEJL-008[m[33m)[m HEAD@{31}: pull --progress --no-edit --no-stat --recurse-submodules=no origin: Merge made by the 'ort' strategy.
+[33m6da5962[m HEAD@{32}: commit: Refactor user property update methods
+[33m9635227[m HEAD@{33}: commit: Refactor namespaces and DTO organization
+[33m1e8ce94[m HEAD@{34}: checkout: moving from main to develop
+[33m2b5eb4b[m HEAD@{35}: pull --progress --no-edit --no-stat --recurse-submodules=no origin: Fast-forward
+[33mdd91231[m HEAD@{36}: pull --progress --no-edit --no-stat --recurse-submodules=no origin: Fast-forward
+[33m2f8f95e[m HEAD@{37}: checkout: moving from develop to main
+[33m1e8ce94[m HEAD@{38}: pull --progress --no-edit --no-stat --recurse-submodules=no origin: Merge made by the 'ort' strategy.
+[33m4dbd1c8[m HEAD@{39}: commit: Git user Check
+[33m493f174[m HEAD@{40}: commit: Add architecture section to README and diagram file
+[33m7bd4b50[m HEAD@{41}: checkout: moving from feature/JL-006 to develop
+[33me51fa20[m[33m ([m[1;31morigin/feature/JL-006[m[33m, [m[1;32mfeature/JL-006[m[33m)[m HEAD@{42}: checkout: moving from feature/Jl-007_unitTest to feature/JL-006
+[33m818c134[m[33m ([m[1;31morigin/feature/Jl-007_unitTest[m[33m, [m[1;32mfeature/Jl-007_unitTest[m[33m)[m HEAD@{43}: checkout: moving from develop to feature/Jl-007_unitTest
+[33m7bd4b50[m HEAD@{44}: commit: Fix
+[33m41d56d7[m HEAD@{45}: commit: Check
+[33m51de6c1[m HEAD@{46}: commit: Document Folder Added
+[33m17aba51[m HEAD@{47}: commit: Add unit tests for GetAllUsersAsync and simplify logging
+[33meb4b921[m HEAD@{48}: pull --progress --no-edit --no-stat --recurse-submodules=no origin: Fast-forward
+[33ma82e514[m HEAD@{49}: checkout: moving from feature/Jl-007_unitTest to develop
+[33m818c134[m[33m ([m[1;31morigin/feature/Jl-007_unitTest[m[33m, [m[1;32mfeature/Jl-007_unitTest[m[33m)[m HEAD@{50}: commit: Refactor user DTOs and update related handlers
+[33m0e7344c[m HEAD@{51}: commit: .
+[33mcb5f5c0[m HEAD@{52}: commit: .
+[33m77d481a[m HEAD@{53}: commit: .
+[33m5e2235f[m HEAD@{54}: commit: .
+[33m366dfea[m HEAD@{55}: commit: PipeLine Chnage: Ci pipline change
+[33m8da7672[m HEAD@{56}: commit: Builde fixed In Application.Test project
+[33m2fd48ca[m HEAD@{57}: commit: Build Failed Fixed
+[33me70ac65[m HEAD@{58}: commit: Testing: Unit Test project added
+[33ma82e514[m HEAD@{59}: checkout: moving from develop to feature/Jl-007_unitTest
+[33ma82e514[m HEAD@{60}: pull --progress --no-edit --no-stat --recurse-submodules=no origin: Fast-forward
+[33mc0d8a63[m HEAD@{61}: checkout: moving from feature/JL-006 to develop
+[33me51fa20[m[33m ([m[1;31morigin/feature/JL-006[m[33m, [m[1;32mfeature/JL-006[m[33m)[m HEAD@{62}: commit: Refactor authentication handling and update routes
+[33m72df718[m HEAD@{63}: checkout: moving from develop to feature/JL-006
+[33mc0d8a63[m HEAD@{64}: pull --progress --no-edit --no-stat --recurse-submodules=no origin: Fast-forward
+[33m2bd6dd4[m HEAD@{65}: checkout: moving from FEATURE/JL-005_v1 to develop
+[33m1d9d782[m[33m ([m[1;31morigin/feature/JL-005_v1[m[33m, [m[1;32mfeature/JL-005_v1[m[33m)[m HEAD@{66}: commit: Add authorization and global exception handling
+[33m2bd6dd4[m HEAD@{67}: checkout: moving from develop to FEATURE/JL-005_v1
+[33m2bd6dd4[m HEAD@{68}: checkout: moving from feature/JL-006 to develop
+[33m72df718[m HEAD@{69}: checkout: moving from develop to feature/JL-006
+[33m2bd6dd4[m HEAD@{70}: pull --progress --no-edit --no-stat --recurse-submodules=no origin: Fast-forward
+[33md74e201[m HEAD@{71}: checkout: moving from feature/JL-005_logging to develop
+[33m74c85cb[m[33m ([m[1;31morigin/feature/JL-005_logging[m[33m, [m[1;31morigin/feature/JL-005[m[33m, [m[1;32mfeature/JL-005_logging[m[33m, [m[1;32mfeature/JL-005[m[33m)[m HEAD@{72}: merge feature/JL-005: Fast-forward
+[33md74e201[m HEAD@{73}: checkout: moving from feature/JL-005 to feature/JL-005_logging
+[33m74c85cb[m[33m ([m[1;31morigin/feature/JL-005_logging[m[33m, [m[1;31morigin/feature/JL-005[m[33m, [m[1;32mfeature/JL-005_logging[m[33m, [m[1;32mfeature/JL-005[m[33m)[m HEAD@{74}: checkout: moving from develop to feature/JL-005
+[33md74e201[m HEAD@{75}: checkout: moving from feature/JL-006 to develop
+[33m72df718[m HEAD@{76}: commit: .
+[33m74c85cb[m[33m ([m[1;31morigin/feature/JL-005_logging[m[33m, [m[1;31morigin/feature/JL-005[m[33m, [m[1;32mfeature/JL-005_logging[m[33m, [m[1;32mfeature/JL-005[m[33m)[m HEAD@{77}: merge feature/JL-005: Fast-forward
+[33md74e201[m HEAD@{78}: checkout: moving from feature/JL-005 to feature/JL-006
+[33m74c85cb[m[33m ([m[1;31morigin/feature/JL-005_logging[m[33m, [m[1;31morigin/feature/JL-005[m[33m, [m[1;32mfeature/JL-005_logging[m[33m, [m[1;32mfeature/JL-005[m[33m)[m HEAD@{79}: checkout: moving from feature/JL-002 to feature/JL-005
+[33ma8f5e45[m[33m ([m[1;31morigin/feature/JL-002[m[33m, [m[1;32mfeature/JL-002[m[33m)[m HEAD@{80}: checkout: moving from feature/JL-005 to feature/JL-002
+[33m74c85cb[m[33m ([m[1;31morigin/feature/JL-005_logging[m[33m, [m[1;31morigin/feature/JL-005[m[33m, [m[1;32mfeature/JL-005_logging[m[33m, [m[1;32mfeature/JL-005[m[33m)[m HEAD@{81}: checkout: moving from develop to feature/JL-005
+[33md74e201[m HEAD@{82}: checkout: moving from feature/JL-005 to develop
+[33m74c85cb[m[33m ([m[1;31morigin/feature/JL-005_logging[m[33m, [m[1;31morigin/feature/JL-005[m[33m, [m[1;32mfeature/JL-005_logging[m[33m, [m[1;32mfeature/JL-005[m[33m)[m HEAD@{83}: checkout: moving from FEATURE/JL-006 to feature/JL-005
+[33md74e201[m HEAD@{84}: checkout: moving from develop to FEATURE/JL-006
+[33md74e201[m HEAD@{85}: checkout: moving from feature/JL-005 to develop
+[33m74c85cb[m[33m ([m[1;31morigin/feature/JL-005_logging[m[33m, [m[1;31morigin/feature/JL-005[m[33m, [m[1;32mfeature/JL-005_logging[m[33m, [m[1;32mfeature/JL-005[m[33m)[m HEAD@{86}: rebase (finish): returning to refs/heads/feature/JL-005
+[33m74c85cb[m[33m ([m[1;31morigin/feature/JL-005_logging[m[33m, [m[1;31morigin/feature/JL-005[m[33m, [m[1;32mfeature/JL-005_logging[m[33m, [m[1;32mfeature/JL-005[m[33m)[m HEAD@{87}: rebase (pick): .
+[33m3215a19[m HEAD@{88}: rebase (pick): Add Serilog logging and correlation ID middleware
+[33md74e201[m HEAD@{89}: rebase (start): checkout refs/heads/develop
+[33me95a956[m HEAD@{90}: checkout: moving from feature/JL-005_logging to feature/JL-005
+[33md74e201[m HEAD@{91}: checkout: moving from feature/JL-005 to feature/JL-005_logging
+[33me95a956[m HEAD@{92}: checkout: moving from feature/JL-005_logging to feature/JL-005
+[33md74e201[m HEAD@{93}: checkout: moving from feature/JL-005 to feature/JL-005_logging
+[33me95a956[m HEAD@{94}: checkout: moving from develop to feature/JL-005
+[33md74e201[m HEAD@{95}: checkout: moving from feature/JL-005 to develop
+[33me95a956[m HEAD@{96}: commit: .
+[33m6133a83[m HEAD@{97}: checkout: moving from feature/JL-005_logging to feature/JL-005
+[33md74e201[m HEAD@{98}: checkout: moving from develop to feature/JL-005_logging
+[33md74e201[m HEAD@{99}: checkout: moving from FEATURE/JL-005 to develop
+[33m6133a83[m HEAD@{100}: commit: Add Serilog logging and correlation ID middleware
+[33m0149599[m HEAD@{101}: commit (initial): .
+[33md74e201[m HEAD@{102}: checkout: moving from develop to FEATURE/JL-005
+[33md74e201[m HEAD@{103}: pull --progress --no-edit --no-stat --recurse-submodules=no origin: Fast-forward
+[33m9112ea8[m HEAD@{104}: checkout: moving from feature/JL-002 to develop
+[33ma8f5e45[m[33m ([m[1;31morigin/feature/JL-002[m[33m, [m[1;32mfeature/JL-002[m[33m)[m HEAD@{105}: commit: Refactor application structure and service configuration
+[33m0ce9a46[m HEAD@{106}: checkout: moving from develop to feature/JL-002
+[33m9112ea8[m HEAD@{107}: pull --progress --no-edit --no-stat --recurse-submodules=no origin: Fast-forward
+[33mcfc7782[m HEAD@{108}: checkout: moving from feature/JL-002 to develop
+[33m0ce9a46[m HEAD@{109}: commit: Add initial migration for Jira-like application schema
+[33m352845e[m HEAD@{110}: checkout: moving from develop to feature/JL-002
+[33mcfc7782[m HEAD@{111}: pull --progress --no-edit --no-stat --recurse-submodules=no origin: Fast-forward
+[33m548b3a8[m HEAD@{112}: checkout: moving from feature/JL-002 to develop
+[33m352845e[m HEAD@{113}: commit (merge): .
+[33m3787802[m HEAD@{114}: checkout: moving from develop to feature/JL-002
+[33m548b3a8[m HEAD@{115}: commit: Remove migration files and related configurations
+[33m8a09d4e[m HEAD@{116}: checkout: moving from feature/JL-002 to develop
+[33m3787802[m HEAD@{117}: commit: Add migration for new project management tables
+[33m7c54c3d[m HEAD@{118}: merge develop: Merge made by the 'ort' strategy.
+[33m2678e76[m HEAD@{119}: checkout: moving from develop to feature/JL-002
+[33m8a09d4e[m HEAD@{120}: checkout: moving from feature/JL-002 to develop
+[33m2678e76[m HEAD@{121}: checkout: moving from develop to feature/JL-002
+[33m8a09d4e[m HEAD@{122}: pull --progress --no-edit --no-stat --recurse-submodules=no origin: Fast-forward
+[33m0a030d5[m[33m ([m[1;31morigin/feature/JL-001[m[33m, [m[1;32mfeature/JL-001[m[33m)[m HEAD@{123}: checkout: moving from feature/JL-002 to develop
+[33m2678e76[m HEAD@{124}: commit: Add refresh token functionality and update user model
+[33ma8123aa[m HEAD@{125}: commit: Add JWT authentication and login functionality
+[33madefc18[m HEAD@{126}: commit: Mapper Implemented
+[33m73694be[m HEAD@{127}: commit: Add SaveChangesAsync after soft delete in DeleteUserHandler
+[33meea2d08[m HEAD@{128}: commit: Enhance user management API and repository structure
+[33m0a7de4f[m HEAD@{129}: commit: Refactor user management and enhance documentation
+[33m0a030d5[m[33m ([m[1;31morigin/feature/JL-001[m[33m, [m[1;32mfeature/JL-001[m[33m)[m HEAD@{130}: checkout: moving from develop to feature/JL-002
+[33m0a030d5[m[33m ([m[1;31morigin/feature/JL-001[m[33m, [m[1;32mfeature/JL-001[m[33m)[m HEAD@{131}: checkout: moving from feature/JL-001 to develop
+[33m0a030d5[m[33m ([m[1;31morigin/feature/JL-001[m[33m, [m[1;32mfeature/JL-001[m[33m)[m HEAD@{132}: merge develop: Fast-forward
+[33m6c6eab2[m HEAD@{133}: checkout: moving from develop to feature/JL-001
+[33m0a030d5[m[33m ([m[1;31morigin/feature/JL-001[m[33m, [m[1;32mfeature/JL-001[m[33m)[m HEAD@{134}: checkout: moving from feature/JL-001 to develop
+[33m6c6eab2[m HEAD@{135}: checkout: moving from develop to feature/JL-001
+[33m0a030d5[m[33m ([m[1;31morigin/feature/JL-001[m[33m, [m[1;32mfeature/JL-001[m[33m)[m HEAD@{136}: pull --progress --no-edit --no-stat --recurse-submodules=no origin: Fast-forward
+[33m850757c[m HEAD@{137}: checkout: moving from feature/JL-001 to develop
+[33m6c6eab2[m HEAD@{138}: commit: chore: initial setup for user management : add user
+[33mb1f9a26[m HEAD@{139}: commit: CQRS pattern Setup
+[33m71318b3[m HEAD@{140}: commit: Entity Configurations Setup
+[33mc6759f4[m HEAD@{141}: checkout: moving from develop to feature/JL-001
+[33m850757c[m HEAD@{142}: checkout: moving from feature/JL-001 to develop
+[33mc6759f4[m HEAD@{143}: commit: Entity Configuration Added
+[33m850757c[m HEAD@{144}: checkout: moving from main to feature/JL-001
+[33m2f8f95e[m HEAD@{145}: pull --progress --no-edit --no-stat --recurse-submodules=no origin: Fast-forward
+[33m850757c[m HEAD@{146}: checkout: moving from feature/JL-001 to main
+[33m850757c[m HEAD@{147}: checkout: moving from develop to feature/JL-001
+[33m850757c[m HEAD@{148}: checkout: moving from main to develop
+[33m850757c[m HEAD@{149}: commit: Final Project
+[33m92d6322[m HEAD@{150}: commit (merge): Merge remote README
+[33m242c8cd[m HEAD@{151}: commit: Fix: remove embedded git repo
+[33ma285f9e[m HEAD@{152}: Branch: renamed refs/heads/master to refs/heads/main
+[33ma285f9e[m HEAD@{154}: commit (initial): Initital clean Archececture

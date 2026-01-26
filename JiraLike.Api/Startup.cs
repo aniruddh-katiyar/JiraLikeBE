@@ -1,12 +1,12 @@
 ﻿namespace JiraLike.Api
 {
     using JiraLike.Api.Middlewares;
-    using JiraLike.Api.services;
-    using JiraLike.Api.Services;
     using JiraLike.Application.Handler.Users;
     using JiraLike.Application.Interfaces;
     using JiraLike.Application.Mapper;
+    using JiraLike.Application.Resolvers;
     using JiraLike.Domain.Entities;
+    using JiraLike.Infrastructure.Ai;
     using JiraLike.Infrastructure.DbContexts;
     using JiraLike.Infrastructure.Repository;
     using JiraLike.Infrastructure.TokenGenerator;
@@ -88,9 +88,10 @@
                 options.UseSqlite($"Data Source={dbPath}");
             });
 
-            services.AddScoped<KnowledgeService>();
-            services.AddScoped<ChatService>();
-            services.AddHttpClient<GroqService>();
+            // services.AddScoped<KnowledgeService>();
+            // services.AddScoped<ChatService>();
+            services.AddScoped<ImproveDescriptionService>();
+            services.AddHttpClient<IAiService, AiService>();
 
 
             // ------------------------
@@ -99,6 +100,9 @@
             services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
             services.AddScoped<ITokenGenerator, TokenGenerator>();
             services.AddScoped<IPasswordHasher<UserEntity>, PasswordHasher<UserEntity>>();
+            services.AddHttpContextAccessor();
+
+            services.AddScoped<IUserInformationResolver, UserInformationResolver>();
 
             services.AddAutoMapper(typeof(UserMapper));
 

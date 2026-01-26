@@ -1,45 +1,89 @@
 ﻿namespace JiraLike.Application.Handler.Project
 {
-    using JiraLike.Application.Abstraction.Command;
+    using JiraLike.Application.Command;
     using JiraLike.Application.Dto;
     using JiraLike.Application.Interfaces;
+    using JiraLike.Application.Models.Enums;
+    using JiraLike.Application.Resolvers;
     using JiraLike.Domain.Entities;
     using MediatR;
-    using Microsoft.AspNetCore.Http.HttpResults;
+    using Microsoft.VisualBasic;
     using System.Threading;
     using System.Threading.Tasks;
 
     public class CreateProjectHandler : IRequestHandler<CreateProjectCommand, ProjectResponseDto>
     {
         private readonly IRepository<ProjectEntity> _projectRepository;
-        public CreateProjectHandler(IRepository<ProjectEntity> projectRepository)
+        private readonly IRepository<ProjectUserEntity> _projectUserEntity;
+        private readonly IRepository<RoleEntity> _roleEntity;
+        private readonly IUserInformationResolver _userInformationResolver;
+
+        public CreateProjectHandler(IRepository<ProjectEntity> projectRepository, IRepository<ProjectUserEntity> projectUserEntity,
+             IRepository<RoleEntity> roleEntity,
+             IUserInformationResolver userInformationResolver)
         {
             _projectRepository = projectRepository;
+            _projectUserEntity = projectUserEntity;
+            _roleEntity = roleEntity;
+            _userInformationResolver = userInformationResolver;
         }
-        public async Task<ProjectResponseDto> Handle(CreateProjectCommand request, CancellationToken cancellationToken)
+        public async Task<ProjectResponseDto> Handle(
+        CreateProjectCommand request,
+        CancellationToken cancellationToken)
         {
             if (request == null)
-                return new ProjectResponseDto();
+                throw new ArgumentNullException(nameof(request));
 
+            var user = await _userInformationResolver.GetUserInformation();
+
+            if (!Guid.TryParse(user.Id, out var userId))
+                throw new ApplicationException("Invalid user id");
+
+            var role = await _roleEntity.FirstOrDefaultAsync(x => x.Name == "Owner", cancellationToken);
+            if (role == null)
+            {
+                throw new Exception();
+            }
+            // 1. Create Project
             var projectEntity = new ProjectEntity
             {
                 Name = request.Request.Name,
                 Key = request.Request.Key,
+                Status = "Active",
                 CreatedAt = DateTime.UtcNow,
-                Status = "Active"
-            }; 
-
-               await _projectRepository.AddAsync(projectEntity, cancellationToken);
-               await _projectRepository.SaveChangesAsync(cancellationToken);
-            var projectResponseDto = new ProjectResponseDto
-            {
-                Id = projectEntity.Id,
-                Key = request.Request.Key,
-                Name = request.Request.Name,
-                Status = "ACtive"
+                CreatedBy = Guid.Parse(user.Id),
+                Description = request.Request.ProjectDescription
+                
             };
 
-            return projectResponseDto;
+            await _projectRepository.AddAsync(projectEntity, cancellationToken);
+            await _projectRepository.SaveChangesAsync(cancellationToken);
+            // 👆 ID is generated here
+           
+            // 2. Assign creator as OWNER
+            var projectUserEntity = new ProjectUserEntity
+            {
+                ProjectId = projectEntity.Id,
+                UserId = userId,
+                RoleId = role.Id, // IMPORTANT
+                IsActive = true,
+                CreatedAt = DateTime.UtcNow
+            };
+
+            await _projectUserEntity.AddAsync(projectUserEntity, cancellationToken);
+            await _projectUserEntity.SaveChangesAsync(cancellationToken);
+
+            // 3. Response
+            return new ProjectResponseDto
+            {
+                Id = projectEntity.Id,
+                Name = projectEntity.Name,
+                Key = projectEntity.Key,
+                Status = projectEntity.Status,
+                CreatedAt = projectEntity.CreatedAt,
+                CreatedBy = userId
+            };
         }
+
     }
 }
