@@ -1,7 +1,7 @@
-﻿using Serilog;
+using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
-
+builder.Configuration.AddEnvironmentVariables();
 //  Correct Serilog integration (Docker-safe)
 builder.Host.UseSerilog((context, services, configuration) =>
 {
