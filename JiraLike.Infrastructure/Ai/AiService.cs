@@ -35,7 +35,7 @@ Console.WriteLine("=======================");
 
             var body = new
             {
-                model = _config["Groq:Model"],
+                model = _config["Groq:Model"]?.Trim(),
                 messages = new[]
                 {
             new { role = "user", content = prompt }
