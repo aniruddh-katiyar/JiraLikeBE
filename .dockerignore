@@ -1,0 +1,19 @@
+# Ignore build outputs
+**/bin
+**/obj
+
+# Ignore frontend dependencies
+**/node_modules
+
+# Ignore IDE / tooling
+.vs
+.vscode
+.idea
+
+# Ignore git metadata
+.git
+.gitignore
+
+# Ignore local env files
+.env
+.env.*

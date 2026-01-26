@@ -1,0 +1,30 @@
+version: "3.9"
+
+services:
+  api:
+    container_name: jiralike-api-dev
+    image: jiralike-api
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+      ConnectionStrings__SqlServer: "Server=sqlserver;Database=JiraLikeDb;User=sa;Password=YourStrong@Password;TrustServerCertificate=True"
+    depends_on:
+      - sqlserver
+
+  sqlserver:
+    container_name: jiralike-sqlserver
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    ports:
+      - "1433:1433"
+    environment:
+      ACCEPT_EULA: "Y"
+      SA_PASSWORD: "YourStrong@Password"
+    volumes:
+      - sqlserver-data:/var/opt/mssql
+
+volumes:
+  sqlserver-data:
