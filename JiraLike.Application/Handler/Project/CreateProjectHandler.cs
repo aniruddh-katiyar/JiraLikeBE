@@ -42,7 +42,7 @@
             var role = await _roleEntity.FirstOrDefaultAsync(x => x.Name == "Owner", cancellationToken);
             if (role == null)
             {
-                throw new Exception();
+                new RoleEntity { Id = new Guid("CFE5D9FE-B636-4726-B203-286B1836C312"), Name = "Owner" };
             }
             // 1. Create Project
             var projectEntity = new ProjectEntity
