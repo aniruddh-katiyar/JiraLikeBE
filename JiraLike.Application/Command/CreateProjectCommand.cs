@@ -1,7 +1,7 @@
 ﻿/// <summary>
 /// Command to create a new project.
 /// </summary>
-namespace JiraLike.Application.Abstraction.Command
+namespace JiraLike.Application.Command
 {
     using JiraLike.Application.Dto;
     using MediatR;

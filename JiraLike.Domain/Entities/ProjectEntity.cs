@@ -8,6 +8,7 @@
         public string Name { get; set; } = null!;
         public string Status { get; set; } = "Active";
 
+        public string Description { get; set; } = null!;
         public Guid CreatedBy { get; set; }
 
         public ICollection<ProjectUserEntity> ProjectUsers { get; set; } = new List<ProjectUserEntity>();

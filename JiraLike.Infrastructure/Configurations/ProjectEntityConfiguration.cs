@@ -16,7 +16,7 @@ namespace JiraLike.Infrastructure.Configurations
 
             builder.Property(p => p.Name).IsRequired();
             builder.Property(p => p.Key).IsRequired();
-
+            
             builder.HasQueryFilter(p => !p.IsDeleted);
         }
     }

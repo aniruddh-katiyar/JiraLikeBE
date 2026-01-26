@@ -10,6 +10,7 @@
         public UserMapper()
         {
            
+           
             CreateMap<UpdateUserRequestDto, UserEntity>()
                 // Explicit mappings
                 .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name))
@@ -22,18 +23,15 @@
                 .ForMember(dest => dest.RefreshTokens, opt => opt.Ignore());
 
 
-           
-            // Entity ➜ Response Dto
-           
-            CreateMap<UserEntity, GetUserResponseDto>()
-                .ForMember(dest => dest.UserId, opt => opt.MapFrom(src => src.Id))
-                .ForMember(dest => dest.Username, opt => opt.MapFrom(src => src.Name))
-                .ForMember(dest => dest.Email, opt => opt.MapFrom(src => src.Email))
-                .ForMember(dest => dest.CreatedAt, opt => opt.MapFrom(src => src.CreatedAt))
 
-                // API response fields
-                .ForMember(dest => dest.Success, opt => opt.Ignore())
-                .ForMember(dest => dest.Message, opt => opt.Ignore());
+            // Entity ➜ Response Dto
+
+            CreateMap<UserEntity, UserResponseDto>()
+                .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
+                .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name))
+                .ForMember(dest => dest.Email, opt => opt.MapFrom(src => src.Email))
+                .ForMember(dest => dest.IsActive, opt => opt.MapFrom(src => src.IsActive));
+                
         }
     }
 }

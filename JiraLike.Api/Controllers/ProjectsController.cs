@@ -2,6 +2,7 @@
 {
     using JiraLike.Application.Abstraction.Command;
     using JiraLike.Application.Abstraction.Query;
+    using JiraLike.Application.Command;
     using JiraLike.Application.Dto;
     using MediatR;
     using Microsoft.AspNetCore.Authorization;
@@ -11,8 +12,8 @@
     /// Projects Controller
     /// </summary>
     [ApiController]
-    [AllowAnonymous]
     [Route("api/projects")]
+    [Authorize]
     public class ProjectsController : ControllerBase
     {
         private readonly IMediator _mediator;
@@ -40,6 +41,7 @@
         /// </returns>
 
         [HttpPost]
+        [Authorize]
         public async Task<IActionResult> CreateProjectAsync([FromBody] CreateProjectRequestDto request,
                                                              CancellationToken cancellationToken)
         {

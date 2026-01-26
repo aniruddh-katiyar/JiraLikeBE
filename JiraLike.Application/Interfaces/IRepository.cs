@@ -14,6 +14,7 @@
         Task<T?> FirstOrDefaultAsync(Expression<Func<T, bool>> predicate, CancellationToken token);
 
         IQueryable<T> Query(bool asNoTracking = true);
+        Task DeleteAsync(Guid id, CancellationToken cancellationToken);
 
     }
 }
