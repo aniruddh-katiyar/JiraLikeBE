@@ -13,7 +13,7 @@ namespace JiraLike.Application.Handler.Users
     using MediatR;
     using Microsoft.AspNetCore.Identity;
 
-    public class CreateUserHandler : IRequestHandler<RegisterUserCommand, AuthResponseDto>
+    public class CreateUserHandler : IRequestHandler<RegisterUserCommand, UserResponseDto>
     {
         private readonly IRepository<UserEntity> _repository;
 
@@ -34,7 +34,7 @@ namespace JiraLike.Application.Handler.Users
         /// <param name="command">User creation command</param>
         /// <param name="cancellationToken">Request cancellation token</param>
         /// <returns>Returns created user identifier</returns>
-        public async Task<AuthResponseDto> Handle(RegisterUserCommand command, CancellationToken cancellationToken)
+        public async Task<UserResponseDto> Handle(RegisterUserCommand command, CancellationToken cancellationToken)
         {
             var userRequestDto = command.RegisterUser
                 ?? throw new ArgumentNullException(nameof(command.RegisterUser));
@@ -54,7 +54,7 @@ namespace JiraLike.Application.Handler.Users
             await _repository.AddAsync(user, cancellationToken);
             await _repository.SaveChangesAsync(cancellationToken);
             var response = _mapper.Map<UserResponseDto>(user);
-            return new AuthResponseDto();
+            return response;
         }
     }
 }
