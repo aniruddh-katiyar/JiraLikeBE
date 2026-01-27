@@ -79,14 +79,16 @@
                 c.IncludeXmlComments(xmlPath);
             });
 
-            services.AddDbContext<JiraLikeDbContext>(options =>
-            {
-                var dbPath = _environment.IsEnvironment("Docker")
-                    ? "/app/data/jiralike.db"
-                    : Path.Combine(AppContext.BaseDirectory, "jiralike.db");
+            //services.AddDbContext<JiraLikeDbContext>(options =>
+            //{
+            //    var dbPath = _environment.IsEnvironment("Docker")
+            //        ? "/app/data/jiralike.db"
+            //        : Path.Combine(AppContext.BaseDirectory, "jiralike.db");
 
-                options.UseSqlite($"Data Source={dbPath}");
-            });
+            //    options.UseSqlite($"Data Source={dbPath}");
+            //});
+            services.AddDbContext<JiraLikeDbContext>(options =>
+    options.UseNpgsql(_configuration.GetConnectionString("PostgresDb")));
 
             // services.AddScoped<KnowledgeService>();
             // services.AddScoped<ChatService>();
@@ -169,9 +171,12 @@
             using (var scope = app.ApplicationServices.CreateScope())
             {
                 var dbContext = scope.ServiceProvider.GetRequiredService<JiraLikeDbContext>();
-                dbContext.Database.Migrate();
-            }
 
+                if (_environment.IsDevelopment())
+                {
+                    dbContext.Database.Migrate();
+                }
+            }
             app.UseRouting();
 
             // ------------------------

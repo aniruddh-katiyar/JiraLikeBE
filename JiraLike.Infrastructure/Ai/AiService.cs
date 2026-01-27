@@ -1,4 +1,4 @@
-﻿namespace JiraLike.Infrastructure.Ai
+namespace JiraLike.Infrastructure.Ai
 {
     using JiraLike.Application.Interfaces;
     using Microsoft.Extensions.Configuration;
@@ -19,6 +19,12 @@
 
         public async Task<string> Generate(string prompt)
         {
+Console.WriteLine("=== AI CONFIG DEBUG ===");
+Console.WriteLine($"RAW ENV Groq__ApiKey = {Environment.GetEnvironmentVariable("Groq__ApiKey")}");
+Console.WriteLine($"RAW ENV Groq__Model  = {Environment.GetEnvironmentVariable("Groq__Model")}");
+Console.WriteLine($"CONFIG Groq:ApiKey  = {_config["Groq:ApiKey"]}");
+Console.WriteLine($"CONFIG Groq:Model   = {_config["Groq:Model"]}");
+Console.WriteLine("=======================");
             var apiKey = _config["Groq:ApiKey"];
             if (string.IsNullOrWhiteSpace(apiKey))
                 return "LLM is not configured.";
@@ -29,7 +35,7 @@
 
             var body = new
             {
-                model = _config["Groq:Model"],
+                model = _config["Groq:Model"]?.Trim(),
                 messages = new[]
                 {
             new { role = "user", content = prompt }
