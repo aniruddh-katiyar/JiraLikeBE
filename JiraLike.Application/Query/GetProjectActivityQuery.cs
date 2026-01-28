@@ -4,7 +4,6 @@
 namespace JiraLike.Application.Abstraction.Query
 {
     using JiraLike.Application.Dto;
-    using JiraLike.Application.Dto;
     using MediatR;
     using System.Collections.Generic;
 

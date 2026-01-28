@@ -2,7 +2,7 @@
 
 namespace JiraLike.Domain.Enums
 {
-    public enum TaskStatus
+    public enum IssueStatus
     {
         ToDo = 1,
         InProgress = 2,

@@ -1,6 +1,8 @@
 ﻿namespace JiraLike.Api
 {
+    using JiraLike.Api.Hubs;
     using JiraLike.Api.Middlewares;
+    using JiraLike.Api.Notifier;
     using JiraLike.Application.Handler.Users;
     using JiraLike.Application.Interfaces;
     using JiraLike.Application.Mapper;
@@ -39,6 +41,7 @@
             // ------------------------
             services.AddLogging(lb => lb.AddSerilog(dispose: true));
 
+            services.AddSignalR();
             // ------------------------
             // Swagger
             // ------------------------
@@ -103,6 +106,8 @@
             services.AddScoped<ITokenGenerator, TokenGenerator>();
             services.AddScoped<IPasswordHasher<UserEntity>, PasswordHasher<UserEntity>>();
             services.AddHttpContextAccessor();
+            services.AddScoped<IActivityNotifier, ActivityNotifier>();
+
 
             services.AddScoped<IUserInformationResolver, UserInformationResolver>();
 
@@ -156,11 +161,14 @@
             {
                 options.AddPolicy("AllowAngular", policy =>
                 {
-                    policy.AllowAnyOrigin()
-                          .AllowAnyHeader()
-                          .AllowAnyMethod();
+                    policy
+                        .WithOrigins("http://localhost:4200") // 👈 Angular URL
+                        .AllowAnyHeader()
+                        .AllowAnyMethod()
+                        .AllowCredentials(); // REQUIRED for SignalR
                 });
             });
+
         }
 
         public void Configure(IApplicationBuilder app)
@@ -197,11 +205,14 @@
 
             app.UseAuthentication();
             app.UseAuthorization();
+            
 
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+                endpoints.MapHub<ActivityHub>("/api/activityHub");
             });
+            
         }
     }
 }

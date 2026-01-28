@@ -40,9 +40,11 @@
                 throw new ApplicationException("Invalid user id");
 
             var role = await _roleEntity.FirstOrDefaultAsync(x => x.Name == "Owner", cancellationToken);
+
+            //It is fallback it removed lated :  TC
             if (role == null)
             {
-                new RoleEntity { Id = new Guid("CFE5D9FE-B636-4726-B203-286B1836C312"), Name = "Owner" };
+               role = new RoleEntity { Id = new Guid("CFE5D9FE-B636-4726-B203-286B1836C312"), Name = "Owner" };
             }
             // 1. Create Project
             var projectEntity = new ProjectEntity

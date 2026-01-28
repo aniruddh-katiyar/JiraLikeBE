@@ -1,8 +1,6 @@
-﻿
-
-namespace JiraLike.Domain.Enums
+﻿namespace JiraLike.Domain.Enums
 {
-    public enum TaskPriority
+    public enum IssuePriority
     {
         Low = 1,
         Medium = 2,
