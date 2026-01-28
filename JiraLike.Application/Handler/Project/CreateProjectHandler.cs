@@ -1,7 +1,7 @@
 ﻿namespace JiraLike.Application.Handler.Project
 {
-    using JiraLike.Application.Command;
-    using JiraLike.Application.Dto;
+    using JiraLike.Application.Command.Project;
+    using JiraLike.Application.Dto.Project;
     using JiraLike.Application.Interfaces;
     using JiraLike.Application.Models.Enums;
     using JiraLike.Application.Resolvers;

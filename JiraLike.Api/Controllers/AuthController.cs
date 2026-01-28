@@ -1,9 +1,7 @@
 ﻿namespace JiraLike.Api.Controllers
 {
-    using JiraLike.Application.Abstraction.Command;
-    using JiraLike.Application.Abstraction.Query;
-    using JiraLike.Application.Command;
-    using JiraLike.Application.Dto;
+    using JiraLike.Application.Command.Auth;
+    using JiraLike.Application.Dto.Auth;
     using MediatR;
     using Microsoft.AspNetCore.Mvc;
 
@@ -37,10 +35,7 @@
             [FromBody] RegisterUserRequestDto request,
             CancellationToken cancellationToken)
         {
-            var result = await _mediator.Send(
-                new RegisterUserCommand(request),
-                cancellationToken);
-
+            var result = await _mediator.Send(new RegisterUserCommand(request), cancellationToken);
             return Ok(result);
         }
 
@@ -52,40 +47,39 @@
         /// <returns></returns>
         // POST /auth/login
         [HttpPost("login")]
-        public async Task<IActionResult> LoginAsync(
-            [FromBody] LoginRequestDto request,
-            CancellationToken cancellationToken)
+        public async Task<IActionResult> LoginAsync([FromBody] LoginRequestDto request, CancellationToken cancellationToken)
         {
-            var result = await _mediator.Send(
-                new LoginUserCommand(request),
-                cancellationToken);
-
+            var result = await _mediator.Send(new LoginUserCommand(request), cancellationToken);
             return Ok(result);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="request"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
         // POST /auth/refresh
         [HttpPost("refresh")]
         public async Task<IActionResult> RefreshTokenAsync(
             [FromBody] RefreshTokenRequestDto request,
             CancellationToken cancellationToken)
         {
-            var result = await _mediator.Send(
-                new GetRefreshTokenQuery(request.RefreshToken),
-                cancellationToken);
-
+            var result = await _mediator.Send(new GetRefreshTokenQuery(request.RefreshToken), cancellationToken);
             return Ok(result);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="request"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
         // POST /auth/logout
         [HttpPost("logout")]
-        public async Task<IActionResult> LogoutAsync(
-            [FromBody] LogoutRequestDto request,
-            CancellationToken cancellationToken)
+        public async Task<IActionResult> LogoutAsync([FromBody] LogoutRequestDto request, CancellationToken cancellationToken)
         {
-            await _mediator.Send(
-                new LogoutUserCommand(request.RefreshToken),
-                cancellationToken);
-
+            await _mediator.Send(new LogoutUserCommand(request.RefreshToken), cancellationToken);
             return NoContent();
         }
     }

@@ -1,7 +1,7 @@
 ﻿namespace JiraLike.Api.Notifier
 {
     using JiraLike.Api.Hubs;
-    using JiraLike.Application.Dto;
+    using JiraLike.Application.Dto.ActivityLog;
     using JiraLike.Application.Interfaces;
     using Microsoft.AspNetCore.SignalR;
 

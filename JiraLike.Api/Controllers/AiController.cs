@@ -5,7 +5,7 @@
 //--
 namespace JiraLike.Api.Controllers
 {
-    using JiraLike.Application.Query;
+    using JiraLike.Application.Command.Ai;
     using MediatR;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
@@ -29,24 +29,6 @@ namespace JiraLike.Api.Controllers
         {
             _mediator = mediator;
         }
-
-        //// POST /api/chat/query
-        //[HttpPost("query")]
-        //public async Task<IActionResult> QueryAsync(
-        //    [FromBody] ChatRequestDto request,
-        //    CancellationToken cancellationToken)
-        //{
-        //    //var response = await _chatService.HandleAsync(
-        //    //    request.ProjectId,
-        //    //    request.Question,
-        //    //    cancellationToken);
-        //    var response = await _chatService.HandleAsync(
-
-        //        request.Question
-        //        );
-
-        //    return Ok(response);
-        //}
 
         /// <summary>
         /// Improve Project Summary With AI 

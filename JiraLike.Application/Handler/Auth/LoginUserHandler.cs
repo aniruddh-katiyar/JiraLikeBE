@@ -1,8 +1,8 @@
 ﻿namespace JiraLike.Application.Handler.Auth
 {
     using JiraLike.Application.Abstraction.Exceptions;
-    using JiraLike.Application.Command;
-    using JiraLike.Application.Dto;
+    using JiraLike.Application.Command.Auth;
+    using JiraLike.Application.Dto.Auth;
     using JiraLike.Application.Interfaces;
     using JiraLike.Domain.Entities;
     using JiraLike.Domain.Token;

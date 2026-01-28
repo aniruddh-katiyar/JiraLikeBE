@@ -1,5 +1,5 @@
-﻿using JiraLike.Application.Abstraction.Query;
-using JiraLike.Application.Dto;
+﻿using JiraLike.Application.Command.Auth;
+using JiraLike.Application.Dto.Auth;
 using JiraLike.Application.Interfaces;
 using JiraLike.Domain.Token;
 using MediatR;

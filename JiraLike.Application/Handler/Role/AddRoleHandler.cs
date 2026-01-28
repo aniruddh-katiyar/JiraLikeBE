@@ -1,6 +1,6 @@
 ﻿namespace JiraLike.Application.Handler.Role
 {
-    using JiraLike.Application.Command;
+    using JiraLike.Application.Command.Role;
     using JiraLike.Application.Interfaces;
     using JiraLike.Domain.Entities;
     using MediatR;

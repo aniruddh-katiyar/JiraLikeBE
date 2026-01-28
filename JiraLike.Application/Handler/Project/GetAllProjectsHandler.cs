@@ -1,7 +1,8 @@
 ﻿namespace JiraLike.Application.Handler.Project
 {
     using JiraLike.Application.Abstraction.Query;
-    using JiraLike.Application.Dto;
+    using JiraLike.Application.Command.Project;
+    using JiraLike.Application.Dto.Project;
     using JiraLike.Application.Interfaces;
     using JiraLike.Domain.Entities;
     using MediatR;

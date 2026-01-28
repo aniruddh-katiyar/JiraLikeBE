@@ -1,7 +1,7 @@
 ﻿namespace JiraLike.Application.Handler.Users
 {
-    using JiraLike.Application.Abstraction.Command;
     using JiraLike.Application.Abstraction.Exceptions;
+    using JiraLike.Application.Command.Users;
     using JiraLike.Application.Interfaces;
     using JiraLike.Domain.Entities;
     using MediatR;

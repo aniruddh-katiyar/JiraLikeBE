@@ -31,4 +31,9 @@
 		<ProjectReference Include="..\JiraLike.Domain\JiraLike.Domain.csproj" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <Folder Include="Dtos\Ai\" />
+	  <Folder Include="Handler\ProjectUser\" />
+	</ItemGroup>
+
 </Project>

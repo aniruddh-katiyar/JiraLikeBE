@@ -19,12 +19,7 @@ namespace JiraLike.Infrastructure.Ai
 
         public async Task<string> Generate(string prompt)
         {
-Console.WriteLine("=== AI CONFIG DEBUG ===");
-Console.WriteLine($"RAW ENV Groq__ApiKey = {Environment.GetEnvironmentVariable("Groq__ApiKey")}");
-Console.WriteLine($"RAW ENV Groq__Model  = {Environment.GetEnvironmentVariable("Groq__Model")}");
-Console.WriteLine($"CONFIG Groq:ApiKey  = {_config["Groq:ApiKey"]}");
-Console.WriteLine($"CONFIG Groq:Model   = {_config["Groq:Model"]}");
-Console.WriteLine("=======================");
+
             var apiKey = _config["Groq:ApiKey"];
             if (string.IsNullOrWhiteSpace(apiKey))
                 return "LLM is not configured.";
