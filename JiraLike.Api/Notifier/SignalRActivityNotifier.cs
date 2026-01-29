@@ -8,7 +8,7 @@
     /// <summary>
     /// 
     /// </summary>
-    public class ActivityNotifier : IActivityNotifier
+    public class SignalRActivityNotifier : ISignalRActivityNotifier
     {
         private readonly IHubContext<ActivityHub> _hub;
 
@@ -16,7 +16,7 @@
         /// 
         /// </summary>
         /// <param name="hub"></param>
-        public ActivityNotifier(IHubContext<ActivityHub> hub)
+        public SignalRActivityNotifier(IHubContext<ActivityHub> hub)
         {
             _hub = hub;
         }

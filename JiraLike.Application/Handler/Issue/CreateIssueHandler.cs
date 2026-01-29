@@ -16,13 +16,13 @@ namespace JiraLike.Application.Handler.Issue
     public class CreateIssueHandler : IRequestHandler<CreateIssueCommand, IssueResponseDto>
     {
         public IRepository<IssueEntity> _issueRepository;
-        private readonly IActivityNotifier _activityNotifier;
+        private readonly ISignalRActivityNotifier _activityNotifier;
         public IRepository<ActivityLogEntity> _activityLogEntity;
         private IUserInformationResolver _userInformationResolver;
         /// 
         /// </summary>
         /// <param name="activityNotifier"></param>
-        public CreateIssueHandler(IActivityNotifier activityNotifier, IRepository<IssueEntity> issueRepository,
+        public CreateIssueHandler(ISignalRActivityNotifier activityNotifier, IRepository<IssueEntity> issueRepository,
             IRepository<ActivityLogEntity> activityLogEntity, IUserInformationResolver userInformationResolver)
         {
             _activityNotifier = activityNotifier;

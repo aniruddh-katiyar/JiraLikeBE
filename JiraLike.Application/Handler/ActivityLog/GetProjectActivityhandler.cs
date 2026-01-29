@@ -5,7 +5,6 @@
     using JiraLike.Application.Interfaces;
     using JiraLike.Domain.Entities;
     using MediatR;
-    using Microsoft.EntityFrameworkCore;
 
     public class GetProjectActivityHandler
         : IRequestHandler<GetProjectActivityQuery, List<ActivityLogResponseDto>>
@@ -33,7 +32,7 @@
                     EntityType = x.EntityType,
                     EntityId = x.EntityId,
                     Action = x.Action,
-                    
+
                     CreatedAt = x.CreatedAt
                 });
             }
@@ -44,5 +43,5 @@
                 .ToList();
         }
     }
-    }
+}
 

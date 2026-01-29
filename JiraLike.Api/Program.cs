@@ -1,12 +1,13 @@
 using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
+
 builder.Configuration.AddEnvironmentVariables();
-//  Correct Serilog integration (Docker-safe)
+
+//  Correct Serilog integration 
 builder.Host.UseSerilog((context, services, configuration) =>
 {
-    configuration
-        .ReadFrom.Configuration(context.Configuration)
+    configuration.ReadFrom.Configuration(context.Configuration)
         .Enrich.FromLogContext();
 });
 
@@ -17,15 +18,13 @@ builder.WebHost.ConfigureKestrel(options =>
 });
 
 // Register Startup (PASS ENVIRONMENT)
-var startup = new JiraLike.Api.Startup(
-    builder.Configuration,
-    builder.Environment);
+var startup = new JiraLike.Api.Startup(builder.Configuration, builder.Environment);
 
 startup.ConfigureServices(builder.Services);
 
 var app = builder.Build();
 
 //  Configure middleware pipeline
-startup.Configure(app);
+startup.Configure(app, builder.Environment);
 
 app.Run();

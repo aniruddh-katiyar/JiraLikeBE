@@ -1,4 +1,4 @@
-﻿namespace JiraLike.Infrastructure.TokenGenerator
+﻿namespace JiraLike.Infrastructure.Token
 {
     using JiraLike.Application.Interfaces;
     using JiraLike.Domain.Token;
