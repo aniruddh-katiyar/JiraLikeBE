@@ -1,6 +1,7 @@
 ﻿namespace JiraLike.Domain.Entities
 {
     using JiraLike.Domain.Base;
+    using JiraLike.Domain.Enums;
 
     public class IssueEntity : BaseEntity
     {
@@ -10,13 +11,13 @@
         public Guid? ParentIssueId { get; set; }
         public IssueEntity? ParentIssue { get; set; }
 
-        public string Type { get; set; } = null!;     // Epic, Story, Task, Bug
+        public IssueType Type { get; set; }     // Epic, Story, Task,Subtask, Bug
         public string Key { get; set; } = null!;      // PROJ-123
         public string Title { get; set; } = null!;
         public string? Description { get; set; }
 
-        public string Status { get; set; } = "ToDo";
-        public string Priority { get; set; } = "Medium";
+        public IssueStatus Status { get; set; } 
+        public IssuePriority Priority { get; set; } 
 
         public Guid? AssigneeId { get; set; }
         public UserEntity? Assignee { get; set; }

@@ -4,8 +4,10 @@
 
     public class UserInfo
     {
-        public string? Id { get; set; }
+        public Guid UserId{ get; set; }
         public bool IsActive { get; set; }
         public Dictionary<string, string?> Claims { get; set; } = new();
+
+        public string UserName { get; set; } = null!;
     }
 }

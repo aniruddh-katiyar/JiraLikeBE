@@ -2,8 +2,8 @@
 {
     using AutoMapper;
     using JiraLike.Application.Abstraction.Exceptions;
-    using JiraLike.Application.Abstraction.Query;
-    using JiraLike.Application.Dto;
+    using JiraLike.Application.Command.Users;
+    using JiraLike.Application.Dto.User;
     using JiraLike.Application.Interfaces;
     using JiraLike.Domain.Entities;
     using MediatR;

@@ -1,9 +1,9 @@
 ﻿namespace JiraLike.Api.Controllers
 {
-    using JiraLike.Application.Abstraction.Command;
     using JiraLike.Application.Abstraction.Query;
     using JiraLike.Application.Command;
-    using JiraLike.Application.Dto;
+    using JiraLike.Application.Command.Project;
+    using JiraLike.Application.Dto.Project;
     using MediatR;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
@@ -56,51 +56,42 @@
         [HttpGet]
         public async Task<IActionResult> GetProjectsAsync(CancellationToken cancellationToken)
         {
-            var result = await _mediator.Send(
-                new GetProjectsQuery(),
-                cancellationToken);
-
+            var result = await _mediator.Send( new GetProjectsQuery(), cancellationToken);
             return Ok(result);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="projectId"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
         // GET /projects/{projectId}
         [HttpGet("{projectId:guid}")]
         public async Task<IActionResult> GetProjectByIdAsync(
             Guid projectId,
             CancellationToken cancellationToken)
         {
-            var result = await _mediator.Send(
-                new GetProjectByIdQuery(projectId),
-                cancellationToken);
-
+            var result = await _mediator.Send(new GetProjectByIdQuery(projectId), cancellationToken);
             return Ok(result);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="projectId"></param>
+        /// <param name="request"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
         // PUT /projects/{projectId}
         [HttpPut("{projectId:guid}")]
-        public async Task<IActionResult> UpdateProjectAsync(
-            Guid projectId,
-            [FromBody] UpdateProjectRequestDto request,
+        public async Task<IActionResult> UpdateProjectAsync(Guid projectId, [FromBody] UpdateProjectRequestDto request,
             CancellationToken cancellationToken)
         {
-            var result = await _mediator.Send(
-                new UpdateProjectCommand(projectId, request),
-                cancellationToken);
-
+            var result = await _mediator.Send(new UpdateProjectCommand(projectId, request), cancellationToken);
             return Ok(result);
         }
 
-        // PATCH /projects/{projectId}/archive
-        [HttpPatch("{projectId:guid}/archive")]
-        public async Task<IActionResult> ArchiveProjectAsync(
-            Guid projectId,
-            CancellationToken cancellationToken)
-        {
-            await _mediator.Send(
-                new ArchiveProjectCommand(projectId),
-                cancellationToken);
 
-            return NoContent();
-        }
     }
 }
