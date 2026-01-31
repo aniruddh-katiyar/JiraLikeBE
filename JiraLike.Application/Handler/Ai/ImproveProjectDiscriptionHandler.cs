@@ -1,10 +1,10 @@
 ﻿namespace JiraLike.Application.Handler.Ai
 {
-    using JiraLike.Application.Query;
     using MediatR;
     using System.Threading;
     using System.Threading.Tasks;
     using JiraLike.Application.Interfaces;
+    using JiraLike.Application.Command.Ai;
 
     public class ImproveProjectDiscriptionHandler : IRequestHandler<ImproveProjectDiscriptionRequestQuery, string>
     {

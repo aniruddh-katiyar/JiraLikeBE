@@ -10,7 +10,7 @@ namespace JiraLike.Infrastructure.DbContexts
         public DbSet<UserEntity> Users { get; set; }
         public DbSet<ActivityLogEntity> ActivityLogs { get; set; }
         public DbSet<ProjectEntity> Projects { get; set; }
-        public DbSet<IssueEntity> Tasks { get; set; }
+        public DbSet<IssueEntity> Issues { get; set; }
         public DbSet<CommentEntity> Comments { get; set; }
         public DbSet<RefreshTokenEntity> RefreshTokens { get; set; }   
         public DbSet<ProjectUserEntity> ProjectUsers { get; set; }

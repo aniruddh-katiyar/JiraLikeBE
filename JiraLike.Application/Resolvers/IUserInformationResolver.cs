@@ -1,14 +1,10 @@
 ﻿namespace JiraLike.Application.Resolvers
 {
     using JiraLike.Application.Models;
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
     using System.Threading.Tasks;
 
     public interface IUserInformationResolver
     {
-        Task<UserInfo> GetUserInformation();
+        Task<UserInfo> GetUserInformation(CancellationToken token);
     }
 }

@@ -7,6 +7,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Handler\Login\**" />
+    <EmbeddedResource Remove="Handler\Login\**" />
+    <None Remove="Handler\Login\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="AutoMapper" Version="11.0.0" />
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="11.0.0" />
     <PackageReference Include="MediatR" Version="14.0.0" />
@@ -26,7 +32,8 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Folder Include="Handler\Login\" />
+	  <Folder Include="Dtos\Ai\" />
+	  <Folder Include="Handler\ProjectUser\" />
 	</ItemGroup>
 
 </Project>

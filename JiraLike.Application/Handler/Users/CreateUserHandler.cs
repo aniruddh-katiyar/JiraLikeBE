@@ -6,8 +6,8 @@
 namespace JiraLike.Application.Handler.Users
 {
     using AutoMapper;
-    using JiraLike.Application.Command;
-    using JiraLike.Application.Dto;
+    using JiraLike.Application.Command.Auth;
+    using JiraLike.Application.Dto.User;
     using JiraLike.Application.Interfaces;
     using JiraLike.Domain.Entities;
     using MediatR;
