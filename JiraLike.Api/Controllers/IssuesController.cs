@@ -1,5 +1,5 @@
 ﻿//--
-//This is used to create issur  || Epic || Story || Task || Subtask ||Bug
+//This is used to create issue  || Epic || Story || Task || Subtask ||Bug
 //This  is Center controller.
 //
 namespace JiraLike.Api.Controllers
@@ -7,6 +7,7 @@ namespace JiraLike.Api.Controllers
     using JiraLike.Application.Command.Issue;
     using JiraLike.Application.Dto.Isssue;
     using JiraLike.Application.Dto.Issue;
+    using JiraLike.Application.Requests.Issue;
     using MediatR;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
@@ -127,6 +128,20 @@ namespace JiraLike.Api.Controllers
             await _mediator.Send(new AssignIssueCommand(projectId, issueId, request.AssigneeId),
                 cancellationToken);
             return NoContent();
+        }
+
+        /// <summary>
+        /// Remove Issue Bt IssueID
+        /// </summary>
+        /// <param name="issueId"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        [HttpDelete("/api/issues/{issueId : guid}/delete")]
+        public async Task<IActionResult> RemoveIssueAsync([FromRoute] Guid issueId, CancellationToken cancellationToken)
+        {
+             var isSuccess = await _mediator.Send(new RemoveIssueCommand(issueId), cancellationToken);
+
+            return Ok(isSuccess);
         }
     }
 }

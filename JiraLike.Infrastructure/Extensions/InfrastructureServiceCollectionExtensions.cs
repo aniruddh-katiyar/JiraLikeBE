@@ -1,8 +1,10 @@
 ﻿namespace JiraLike.Infrastructure.Extension
 {
     using JiraLike.Application.Interfaces;
+    using JiraLike.Application.Interfaces.Repository;
     using JiraLike.Infrastructure.Ai;
     using JiraLike.Infrastructure.DbContexts;
+    using JiraLike.Infrastructure.Repositories;
     using JiraLike.Infrastructure.Repository;
     using JiraLike.Infrastructure.Token;
     using Microsoft.AspNetCore.Builder;
@@ -22,7 +24,12 @@
             services.AddHttpClient<IAiService, AiService>();
 
             services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
+
             services.AddScoped<ITokenGenerator, TokenGenerator>();
+
+            services.AddScoped<IReadDbContext, ReadDbContext>();
+
+            services.AddScoped<IIssueRepository, IssueRepository>();
 
             return services;
         }

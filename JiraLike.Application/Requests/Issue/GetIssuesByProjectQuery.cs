@@ -7,7 +7,7 @@ namespace JiraLike.Application.Command.Issue
     using MediatR;
     using System.Collections.Generic;
 
-    public sealed class GetIssuesByProjectQuery : IRequest<List<IssueResponseDto>>
+    public sealed class GetIssuesByProjectQuery : IRequest<IReadOnlyList<IssueResponseDto>>
     {
         public Guid ProjectId { get; }
 
