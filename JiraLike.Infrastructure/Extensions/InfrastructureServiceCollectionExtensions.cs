@@ -31,6 +31,10 @@
 
             services.AddScoped<IIssueRepository, IssueRepository>();
 
+            services.AddScoped<IProjectRepository, ProjectRepository>();
+
+            services.AddScoped<IUserRepository, UserRepository>();
+
             return services;
         }
 

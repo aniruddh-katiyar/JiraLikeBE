@@ -1,5 +1,5 @@
 ﻿using JiraLike.Application.Command.Auth;
-using JiraLike.Application.Dto.Auth;
+using JiraLike.Application.Dtos.Auth;
 using JiraLike.Application.Interfaces;
 using JiraLike.Domain.Token;
 using MediatR;
@@ -44,13 +44,13 @@ public class GetRefreshTokenHandler : IRequestHandler<GetRefreshTokenQuery, Auth
         // Generate new JWT + refresh token
         var jwtToken = _tokenGeneratorService.GenerateAccessToken(refreshTokenEntity.User.Email, refreshTokenEntity.User.IsActive, refreshTokenEntity.User.Id);
         var newRefreshToken = _tokenGeneratorService.GenerateRefreshToken();
-        var newEncyptedRefreshToke = _tokenGeneratorService.GenerateEncryptedRefreshToken(newRefreshToken);
+        var newEncyptedRefreshToken = _tokenGeneratorService.GenerateEncryptedRefreshToken(newRefreshToken);
 
         // Update DB with new refresh token hash
         var newRefreshTokenEntity = new RefreshTokenEntity
         {
             UserId = refreshTokenEntity.UserId,
-            TokenHash = newEncyptedRefreshToke,
+            TokenHash = newEncyptedRefreshToken,
             ExpiresAt = DateTime.UtcNow.AddDays(_configuration.GetValue<int>("RefreshTokens: ExpireDays")),
             IsRevoked = false
         };
@@ -61,8 +61,9 @@ public class GetRefreshTokenHandler : IRequestHandler<GetRefreshTokenQuery, Auth
 
         return new AuthResponseDto
         {
-            AccessToken = "",
-            RefreshToken = ""
+            AccessToken = jwtToken,
+            RefreshToken = newEncyptedRefreshToken,
+            UserId = newRefreshTokenEntity.UserId
         };
     }
 }

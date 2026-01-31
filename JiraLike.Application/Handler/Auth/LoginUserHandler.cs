@@ -2,7 +2,7 @@
 {
     using JiraLike.Application.Abstraction.Exceptions;
     using JiraLike.Application.Command.Auth;
-    using JiraLike.Application.Dto.Auth;
+    using JiraLike.Application.Dtos.Auth;
     using JiraLike.Application.Interfaces;
     using JiraLike.Domain.Entities;
     using JiraLike.Domain.Token;
@@ -58,7 +58,8 @@
                 return new AuthResponseDto
                 {
                     AccessToken = accessToken,
-                    RefreshToken = refreshToken
+                    RefreshToken = refreshToken,
+                    UserId = user.Id
                 };
             }
             throw new Exception();

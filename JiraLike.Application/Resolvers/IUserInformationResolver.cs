@@ -5,6 +5,6 @@
 
     public interface IUserInformationResolver
     {
-        Task<UserInfo> GetUserInformation();
+        Task<UserInfo> GetUserInformation(CancellationToken token);
     }
 }

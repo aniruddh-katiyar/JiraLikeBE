@@ -136,7 +136,7 @@ namespace JiraLike.Api.Controllers
         /// <param name="issueId"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        [HttpDelete("/api/issues/{issueId : guid}/delete")]
+        [HttpDelete("/api/issues/{issueId:guid}/delete")]
         public async Task<IActionResult> RemoveIssueAsync([FromRoute] Guid issueId, CancellationToken cancellationToken)
         {
              var isSuccess = await _mediator.Send(new RemoveIssueCommand(issueId), cancellationToken);

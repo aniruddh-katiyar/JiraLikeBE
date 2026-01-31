@@ -34,11 +34,8 @@
             if (request == null)
                 throw new ArgumentNullException(nameof(request));
 
-            var user = await _userInformationResolver.GetUserInformation();
-
-            if (!Guid.TryParse(user.Id, out var userId))
-                throw new ApplicationException("Invalid user id");
-
+            var user = await _userInformationResolver.GetUserInformation(cancellationToken);
+            
             var role = await _roleEntity.FirstOrDefaultAsync(x => x.Name == "Owner", cancellationToken);
 
             //It is fallback it removed lated :  TC
@@ -46,28 +43,29 @@
             {
                role = new RoleEntity { Id = new Guid("CFE5D9FE-B636-4726-B203-286B1836C312"), Name = "Owner" };
             }
-            // 1. Create Project
+           
+
             var projectEntity = new ProjectEntity
             {
                 Name = request.Request.Name,
                 Key = request.Request.Key,
                 Status = "Active",
                 CreatedAt = DateTime.UtcNow,
-                CreatedBy = Guid.Parse(user.Id),
+                CreatedBy = user.UserId,
                 Description = request.Request.ProjectDescription
                 
             };
 
             await _projectRepository.AddAsync(projectEntity, cancellationToken);
             await _projectRepository.SaveChangesAsync(cancellationToken);
-            // 👆 ID is generated here
+          
            
             // 2. Assign creator as OWNER
             var projectUserEntity = new ProjectUserEntity
             {
                 ProjectId = projectEntity.Id,
-                UserId = userId,
-                RoleId = role.Id, // IMPORTANT
+                UserId = user.UserId,
+                RoleId = role.Id, 
                 IsActive = true,
                 CreatedAt = DateTime.UtcNow
             };
@@ -83,7 +81,8 @@
                 Key = projectEntity.Key,
                 Status = projectEntity.Status,
                 CreatedAt = projectEntity.CreatedAt,
-                CreatedBy = userId
+                CreatedBy = user.UserId, 
+                CreatedbyUserName = user.UserName
             };
         }
 

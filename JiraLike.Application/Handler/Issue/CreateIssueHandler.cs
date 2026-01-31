@@ -32,33 +32,35 @@ namespace JiraLike.Application.Handler.Issue
         }
         public async Task<IssueResponseDto> Handle(CreateIssueCommand request, CancellationToken cancellationToken)
         {
-            var user = await _userInformationResolver.GetUserInformation();
+            var user = await _userInformationResolver.GetUserInformation(cancellationToken);
 
             var issueEntity = new IssueEntity
             {
                 Title = request.Request.Title,
                 Type = request.Request.Type,
                 CreatedAt = DateTime.UtcNow,
-                ReporterId = Guid.Parse(user.Id),
+                ReporterId = user.UserId,
                 Status = Domain.Enums.IssueStatus.ToDo,
                 Description = request.Request.Description,
                 Key = "",
 
                 Priority = request.Request.Priority,
                 ProjectId = request.ProjectId,
-
+                
 
             };
 
             await _issueRepository.AddAsync(issueEntity, cancellationToken);
+
             await _issueRepository.SaveChangesAsync(cancellationToken);
+
             var activity = new ActivityLogEntity
             {
                 EntityType = request.Request.Type.ToString(),
                 EntityId = issueEntity.Id,
                 Action = $"Issue {issueEntity.Title} created",
                 CreatedAt = DateTime.UtcNow,
-                PerformedBy = Guid.NewGuid()
+                PerformedBy = user.UserId
             };
             await _activityLogEntity.AddAsync(activity, cancellationToken);
             await _activityLogEntity.SaveChangesAsync(cancellationToken);
@@ -69,7 +71,7 @@ namespace JiraLike.Application.Handler.Issue
                 EntityId = issueEntity.Id,
                 Action = $"Issue {issueEntity.Title} created",
                 CreatedAt = DateTime.UtcNow,
-                PerformedBy = "Aniruddh"
+                PerformedBy = user.UserName
             };
             await _activityNotifier.IssueCreatedAsync(activitydto);
             return new IssueResponseDto
@@ -77,7 +79,7 @@ namespace JiraLike.Application.Handler.Issue
                 Title = issueEntity.Title,
                 Status = issueEntity.Status,
                 Type = issueEntity.Type,
-                AssigneeName = "Aniruddh",
+                AssigneeName = user.UserName,
                 Id = issueEntity.Id
             };
 

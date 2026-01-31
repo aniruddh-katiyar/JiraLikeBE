@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace JiraLike.Application.Dto.Project
+﻿namespace JiraLike.Application.Dto.Project
 {
     public class ProjectResponseDto
     {
@@ -15,7 +9,7 @@ namespace JiraLike.Application.Dto.Project
 
         public Guid CreatedBy { get; set; }
 
-        public string CreatedbyUserName { get; set; } = null;
+        public string CreatedbyUserName { get; set; } = null!;
 
         public DateTime CreatedAt { get; set; }
     }
