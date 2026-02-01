@@ -23,7 +23,7 @@
                 options.AddPolicy("AllowAngular", policy =>
                 {
                     policy
-                        .WithOrigins("http://localhost:4200") 
+                        .WithOrigins("http://localhost:4200", "https://jiralike.vercel.app/")
                         .AllowAnyHeader()
                         .AllowAnyMethod()
                         .AllowCredentials(); // REQUIRED for SignalR
