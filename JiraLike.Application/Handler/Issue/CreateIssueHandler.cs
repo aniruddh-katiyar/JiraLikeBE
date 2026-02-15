@@ -56,22 +56,25 @@ namespace JiraLike.Application.Handler.Issue
 
             var activity = new ActivityLogEntity
             {
-                EntityType = request.Request.Type.ToString(),
+                ProjectId = request.ProjectId,
+                EntityType = Domain.Enums.EntityType.Issue,
                 EntityId = issueEntity.Id,
                 Action = $"Issue {issueEntity.Title} created",
                 CreatedAt = DateTime.UtcNow,
-                PerformedBy = user.UserId
+                PerformedBy = user.UserId,
+                PerformedByName = user.UserName,
             };
             await _activityLogEntity.AddAsync(activity, cancellationToken);
             await _activityLogEntity.SaveChangesAsync(cancellationToken);
 
             var activitydto = new ActivityLogResponseDto
             {
-                EntityType = request.Request.Type.ToString(),
+                EntityType = activity.EntityType,
                 EntityId = issueEntity.Id,
-                Action = $"Issue {issueEntity.Title} created",
+                Action = $"Issue '{issueEntity.Title}' created.",
                 CreatedAt = DateTime.UtcNow,
-                PerformedBy = user.UserName
+                PerformByName = user.UserName,
+                PerformedBy = user.UserId
             };
             await _activityNotifier.IssueCreatedAsync(activitydto);
             return new IssueResponseDto

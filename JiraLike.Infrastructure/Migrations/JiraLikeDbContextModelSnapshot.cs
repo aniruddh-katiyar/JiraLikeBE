@@ -54,10 +54,24 @@ namespace JiraLike.Infrastructure.Migrations
                     b.Property<Guid>("PerformedBy")
                         .HasColumnType("uuid");
 
+                    b.Property<string>("PerformedByName")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<Guid?>("ProjectEntityId")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("ProjectId")
+                        .HasColumnType("uuid");
+
                     b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("timestamp with time zone");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("ProjectEntityId");
+
+                    b.HasIndex("ProjectId");
 
                     b.ToTable("ActivityLogs", (string)null);
                 });
@@ -122,6 +136,12 @@ namespace JiraLike.Infrastructure.Migrations
                     b.Property<Guid>("IssueId")
                         .HasColumnType("uuid");
 
+                    b.Property<Guid?>("ProjectEntityId")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("ProjectId")
+                        .HasColumnType("uuid");
+
                     b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("timestamp with time zone");
 
@@ -131,6 +151,10 @@ namespace JiraLike.Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("IssueId");
+
+                    b.HasIndex("ProjectEntityId");
+
+                    b.HasIndex("ProjectId");
 
                     b.HasIndex("UserId");
 
@@ -165,8 +189,9 @@ namespace JiraLike.Infrastructure.Migrations
                     b.Property<Guid?>("ParentIssueId")
                         .HasColumnType("uuid");
 
-                    b.Property<int>("Priority")
-                        .HasColumnType("integer");
+                    b.Property<string>("Priority")
+                        .IsRequired()
+                        .HasColumnType("text");
 
                     b.Property<Guid>("ProjectId")
                         .HasColumnType("uuid");
@@ -174,15 +199,17 @@ namespace JiraLike.Infrastructure.Migrations
                     b.Property<Guid>("ReporterId")
                         .HasColumnType("uuid");
 
-                    b.Property<int>("Status")
-                        .HasColumnType("integer");
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasColumnType("text");
 
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<int>("Type")
-                        .HasColumnType("integer");
+                    b.Property<string>("Type")
+                        .IsRequired()
+                        .HasColumnType("text");
 
                     b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("timestamp with time zone");
@@ -371,6 +398,21 @@ namespace JiraLike.Infrastructure.Migrations
                     b.ToTable("RefreshTokens", (string)null);
                 });
 
+            modelBuilder.Entity("JiraLike.Domain.Entities.ActivityLogEntity", b =>
+                {
+                    b.HasOne("JiraLike.Domain.Entities.ProjectEntity", null)
+                        .WithMany("ActivityLogs")
+                        .HasForeignKey("ProjectEntityId");
+
+                    b.HasOne("JiraLike.Domain.Entities.ProjectEntity", "Project")
+                        .WithMany()
+                        .HasForeignKey("ProjectId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Project");
+                });
+
             modelBuilder.Entity("JiraLike.Domain.Entities.ChatHistoryEntity", b =>
                 {
                     b.HasOne("JiraLike.Domain.Entities.ProjectEntity", "Project")
@@ -398,6 +440,16 @@ namespace JiraLike.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("JiraLike.Domain.Entities.ProjectEntity", null)
+                        .WithMany("Comments")
+                        .HasForeignKey("ProjectEntityId");
+
+                    b.HasOne("JiraLike.Domain.Entities.ProjectEntity", "Project")
+                        .WithMany()
+                        .HasForeignKey("ProjectId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("JiraLike.Domain.Entities.UserEntity", "User")
                         .WithMany()
                         .HasForeignKey("UserId")
@@ -405,6 +457,8 @@ namespace JiraLike.Infrastructure.Migrations
                         .IsRequired();
 
                     b.Navigation("Issue");
+
+                    b.Navigation("Project");
 
                     b.Navigation("User");
                 });
@@ -487,6 +541,10 @@ namespace JiraLike.Infrastructure.Migrations
 
             modelBuilder.Entity("JiraLike.Domain.Entities.ProjectEntity", b =>
                 {
+                    b.Navigation("ActivityLogs");
+
+                    b.Navigation("Comments");
+
                     b.Navigation("Issues");
 
                     b.Navigation("ProjectUsers");

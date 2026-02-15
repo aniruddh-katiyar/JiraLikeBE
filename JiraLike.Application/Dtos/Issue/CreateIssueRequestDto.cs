@@ -10,6 +10,9 @@
         public string? Description { get; set; }
         public Guid? ParentIssueId { get; set; }
         public IssuePriority Priority { get; set; }
+
+        public Guid? AssigneeId { get; set; }
+        
     }
 
 }

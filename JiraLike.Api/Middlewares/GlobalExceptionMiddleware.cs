@@ -1,6 +1,5 @@
 ﻿namespace JiraLike.Api.Middlewares
 {
-    using Microsoft.CodeAnalysis.Operations;
     using System.Net;
     using System.Text.Json;
 
@@ -10,7 +9,7 @@
         private readonly ILogger<GlobalExceptionMiddleware> _logger;
         public GlobalExceptionMiddleware(RequestDelegate next, ILogger<GlobalExceptionMiddleware> logger)
         {
-              _next = next;
+            _next = next;
             _logger = logger;
         }
         public async Task Invoke(HttpContext _context)
@@ -19,7 +18,7 @@
             {
                 await _next(_context);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 _logger.LogError(ex, "Unhandled Exception ocurred");
                 await HandlerExceptionAsync(_context, ex);
@@ -33,7 +32,7 @@
             string message = "An unexpected error occurred.";
 
             //Custom Exception Mapping
-            switch(exception)
+            switch (exception)
             {
                 case UnauthorizedAccessException:
                     statusCode = HttpStatusCode.Unauthorized;

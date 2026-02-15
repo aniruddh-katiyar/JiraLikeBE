@@ -7,6 +7,7 @@ namespace JiraLike.Api.Controllers
     using JiraLike.Application.Command.Issue;
     using JiraLike.Application.Dto.Isssue;
     using JiraLike.Application.Dto.Issue;
+    using JiraLike.Application.Dtos.Issue;
     using JiraLike.Application.Requests.Issue;
     using MediatR;
     using Microsoft.AspNetCore.Authorization;
@@ -17,6 +18,7 @@ namespace JiraLike.Api.Controllers
     /// </summary>
     [ApiController]
     [Authorize]
+
     public class IssuesController : ControllerBase
     {
         private readonly IMediator _mediator;
@@ -143,5 +145,27 @@ namespace JiraLike.Api.Controllers
 
             return Ok(isSuccess);
         }
+        #region Issue Edit
+
+        //Issue Editing Fields
+        /// <summary>
+        /// Add/Update Description
+        /// </summary>
+        /// <param name="projectId"></param>
+        /// <param name="issueId"></param>
+        /// <param name="request"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        /// 
+        [HttpPatch("api/projects/{projectId:guid}/issues/{issueId:guid}/description")]
+        public async Task<IActionResult> SaveIssueDiscriptionAsync(Guid projectId, Guid issueId,
+          [FromBody] SaveIssueDiscriptionDto request,
+          CancellationToken cancellationToken)
+        {
+            await _mediator.Send(new SaveIssueDiscriptionCommand(projectId, issueId, request),
+                cancellationToken);
+            return NoContent();
+        }
+        #endregion
     }
 }

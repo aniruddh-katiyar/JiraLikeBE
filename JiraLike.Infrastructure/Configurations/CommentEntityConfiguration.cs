@@ -22,6 +22,10 @@ namespace JiraLike.Infrastructure.Configurations
                    .WithMany()
                    .HasForeignKey(c => c.UserId);
 
+            builder.HasOne(c => c.Project)
+                  .WithMany()
+                  .HasForeignKey(c => c.ProjectId);
+
             builder.HasQueryFilter(c => !c.IsDeleted);
         }
     }

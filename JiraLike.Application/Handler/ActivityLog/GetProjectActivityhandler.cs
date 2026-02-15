@@ -3,44 +3,26 @@
     using JiraLike.Application.Command.Activitylog;
     using JiraLike.Application.Dto.ActivityLog;
     using JiraLike.Application.Interfaces;
+    using JiraLike.Application.Interfaces.Repository;
     using JiraLike.Domain.Entities;
     using MediatR;
 
     public class GetProjectActivityHandler
-        : IRequestHandler<GetProjectActivityQuery, List<ActivityLogResponseDto>>
+        : IRequestHandler<GetProjectActivityQuery, IReadOnlyList<ActivityLogResponseDto>>
     {
-        private readonly IRepository<ActivityLogEntity> _activityLogRepo;
+        private readonly IActivityLogRepository _activityLogRepo;
 
         public GetProjectActivityHandler(
-            IRepository<ActivityLogEntity> activityLogRepo)
+            IActivityLogRepository activityLogRepo)
         {
             _activityLogRepo = activityLogRepo;
         }
 
-        public async Task<List<ActivityLogResponseDto>> Handle(
+        public async Task<IReadOnlyList<ActivityLogResponseDto>> Handle(
             GetProjectActivityQuery request,
             CancellationToken cancellationToken)
         {
-            var entities = await _activityLogRepo.GetAllAsync(cancellationToken);
-
-            var result = new List<ActivityLogResponseDto>();
-
-            foreach (var x in entities)
-            {
-                result.Add(new ActivityLogResponseDto
-                {
-                    EntityType = x.EntityType,
-                    EntityId = x.EntityId,
-                    Action = x.Action,
-
-                    CreatedAt = x.CreatedAt
-                });
-            }
-
-            return result
-                .OrderByDescending(x => x.CreatedAt)
-                .Take(50)
-                .ToList();
+            return await _activityLogRepo.GetActivityLogHistoryByProjecIdAsync(request.ProjectId, cancellationToken);
         }
     }
 }

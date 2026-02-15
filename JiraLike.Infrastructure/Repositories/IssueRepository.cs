@@ -44,5 +44,15 @@
             await _jiraLikeDbContext.SaveChangesAsync(token);
             return true;
         }
+
+        public async Task SaveIssueDiscriptionAsync(Guid issueId, string description, CancellationToken token)
+        {
+            var issue = await _jiraLikeDbContext.Issues.FirstOrDefaultAsync(x => x.Id == issueId, token);
+            if (issue != null)
+            {
+                issue.Description = description;
+                await _jiraLikeDbContext.SaveChangesAsync(token);
+            }
+        }
     }
 }

@@ -4,6 +4,8 @@ namespace JiraLike.Domain.Entities
 {
     public class CommentEntity : BaseEntity
     {
+        public Guid ProjectId { get; set; }
+        public ProjectEntity Project { get; set; } = null!;
         public Guid IssueId { get; set; }
         public IssueEntity Issue { get; set; } = null!;
 
