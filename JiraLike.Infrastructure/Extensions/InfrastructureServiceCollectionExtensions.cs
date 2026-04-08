@@ -46,10 +46,10 @@
             {
                 var dbContext = scope.ServiceProvider.GetRequiredService<JiraLikeDbContext>();
 
-                //if (webHostEnvironment.IsDevelopment())
-                //{
+                if (webHostEnvironment.IsDevelopment())
+                {
                     dbContext.Database.Migrate();
-                //}
+                }
             }
             return applicationBuilder;
         }
