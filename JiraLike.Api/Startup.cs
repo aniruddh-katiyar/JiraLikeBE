@@ -79,6 +79,7 @@
             {
                 endpoints.MapControllers();
                 endpoints.MapHub<ActivityHub>("/api/activityHub");
+                endpoints.MapGet("/", () => "OK");
             });
 
         }
