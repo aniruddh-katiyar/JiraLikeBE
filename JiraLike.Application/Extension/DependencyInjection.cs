@@ -1,7 +1,6 @@
 ﻿namespace JiraLike.Application.Extension
 {
     using JiraLike.Application.Handler.Users;
-    using JiraLike.Application.Interfaces;
     using JiraLike.Application.Mapper;
     using JiraLike.Application.Resolvers;
     using JiraLike.Domain.Entities;
@@ -24,14 +23,14 @@
             });
 
 
-           
+
             services.AddMediatR(cfg =>
                 cfg.RegisterServicesFromAssembly(typeof(CreateUserHandler).Assembly));
-           
+
 
             services.AddScoped<IPasswordHasher<UserEntity>, PasswordHasher<UserEntity>>();
             services.AddHttpContextAccessor();
-          
+
 
             services.AddScoped<IUserInformationResolver, UserInformationResolver>();
             return services;

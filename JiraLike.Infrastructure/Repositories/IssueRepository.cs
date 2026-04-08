@@ -2,6 +2,7 @@
 {
     using JiraLike.Application.Dto.Issue;
     using JiraLike.Application.Interfaces.Repository;
+    using JiraLike.Domain.Entities;
     using JiraLike.Infrastructure.DbContexts;
     using Microsoft.EntityFrameworkCore;
 
@@ -15,6 +16,7 @@
 
         public async Task<IReadOnlyList<IssueResponseDto>> GetIssueByProjectAsync(Guid projectId, int page, int pageSize, CancellationToken ct)
         {
+           
             return await _jiraLikeDbContext.Issues
                 .AsNoTracking()
                 .Where(issue => issue.ProjectId == projectId)
@@ -30,11 +32,18 @@
                     Type = issue.Type
                 })
                 .ToListAsync(ct);
+
+            
         }
 
         public async Task<bool> RemoveIssueAsync(Guid issueId, CancellationToken token)
         {
             var issue = await _jiraLikeDbContext.Issues.FirstOrDefaultAsync(x => x.Id == issueId, token);
+            //if (issue is not null)
+            //{
+            //    var x = _jiraLikeDbContext.Entry<IssueEntity>(issue);
+            //    var state = x.State;
+            //}
             if (issue == null)
             {
                 return false;
@@ -43,6 +52,16 @@
             _jiraLikeDbContext.Issues.Remove(issue);
             await _jiraLikeDbContext.SaveChangesAsync(token);
             return true;
+        }
+
+        public async Task SaveIssueDiscriptionAsync(Guid issueId, string description, CancellationToken token)
+        {
+            var issue = await _jiraLikeDbContext.Issues.FirstOrDefaultAsync(x => x.Id == issueId, token);
+            if (issue != null)
+            {
+                issue.Description = description;
+                await _jiraLikeDbContext.SaveChangesAsync(token);
+            }
         }
     }
 }

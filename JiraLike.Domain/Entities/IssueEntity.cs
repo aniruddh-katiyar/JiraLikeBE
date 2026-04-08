@@ -11,17 +11,21 @@
         public Guid? ParentIssueId { get; set; }
         public IssueEntity? ParentIssue { get; set; }
 
-        public IssueType Type { get; set; }     // Epic, Story, Task,Subtask, Bug
+       
         public string Key { get; set; } = null!;      // PROJ-123
         public string Title { get; set; } = null!;
         public string? Description { get; set; }
 
         public IssueStatus Status { get; set; } 
-        public IssuePriority Priority { get; set; } 
+        public IssuePriority Priority { get; set; }
 
+        public IssueType Type { get; set; }     // Epic, Story, Task,Subtask, Bug
         public Guid? AssigneeId { get; set; }
         public UserEntity? Assignee { get; set; }
 
+        public DateTime? DueDate { get; set; }
+
+        public int StoryPoint { get; set;}
         public Guid ReporterId { get; set; }
         public UserEntity Reporter { get; set; } = null!;
 

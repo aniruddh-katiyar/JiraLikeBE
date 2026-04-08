@@ -11,5 +11,7 @@
 
         Task<bool> RemoveIssueAsync(Guid issueId, CancellationToken token);
 
+        Task SaveIssueDiscriptionAsync(Guid issueId, string description, CancellationToken token);
+
     }
 }

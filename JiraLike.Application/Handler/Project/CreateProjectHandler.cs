@@ -36,7 +36,7 @@
 
             var user = await _userInformationResolver.GetUserInformation(cancellationToken);
             
-            var role = await _roleEntity.FirstOrDefaultAsync(x => x.Name == "Owner", cancellationToken);
+            var role = await _roleEntity.FirstOrDefaultAsync(x => x.Name == "owner", cancellationToken);
 
             //It is fallback it removed lated :  TC
             if (role == null)
@@ -49,7 +49,7 @@
             {
                 Name = request.Request.Name,
                 Key = request.Request.Key,
-                Status = "Active",
+                Status = Domain.Enums.ProjectStatus.Active,
                 CreatedAt = DateTime.UtcNow,
                 CreatedBy = user.UserId,
                 Description = request.Request.ProjectDescription
