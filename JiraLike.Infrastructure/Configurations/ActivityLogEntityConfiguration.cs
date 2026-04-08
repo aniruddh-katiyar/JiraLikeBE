@@ -1,15 +1,24 @@
 ﻿using JiraLike.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-
-public class ActivityLogEntityConfiguration : IEntityTypeConfiguration<ActivityLogEntity>
+namespace JiraLike.Infrastructure.Configurations
 {
-    public void Configure(EntityTypeBuilder<ActivityLogEntity> builder)
+    public class ActivityLogEntityConfiguration : IEntityTypeConfiguration<ActivityLogEntity>
     {
-        builder.ToTable("ActivityLogs");
+        public void Configure(EntityTypeBuilder<ActivityLogEntity> builder)
+        {
+            builder.ToTable("ActivityLogs");
 
-        builder.HasKey(a => a.Id);
+            builder.HasKey(a => a.Id);
 
-        builder.HasQueryFilter(a => !a.IsDeleted);
+            builder.HasOne(c => c.Project)
+                 .WithMany()
+                 .HasForeignKey(c => c.ProjectId);
+
+            builder.Property(a => a.EntityType).HasConversion<string>();
+
+            builder.HasQueryFilter(a => !a.IsDeleted);
+        }
     }
+
 }

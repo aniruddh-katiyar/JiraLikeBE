@@ -6,8 +6,9 @@
 namespace JiraLike.Application.Handler.Users
 {
     using AutoMapper;
+    using AutoMapper.Configuration.Annotations;
     using JiraLike.Application.Command.Auth;
-    using JiraLike.Application.Dto.User;
+    using JiraLike.Application.Dtos.User;
     using JiraLike.Application.Interfaces;
     using JiraLike.Domain.Entities;
     using MediatR;
@@ -53,8 +54,21 @@ namespace JiraLike.Application.Handler.Users
             user.PasswordHash = passwordHash;
             await _repository.AddAsync(user, cancellationToken);
             await _repository.SaveChangesAsync(cancellationToken);
+
+
+            user.ShortCode = CreateShortCode(user.Name, user.UserSequence);
+            await _repository.SaveChangesAsync(cancellationToken);
             var response = _mapper.Map<UserResponseDto>(user);
+
             return response;
+        }
+
+    public string CreateShortCode(string name, int sequence)
+        {
+            var initials = string.Concat(name.Split(' ', StringSplitOptions.RemoveEmptyEntries)
+                .Select(x => char.ToUpper(x[0])));
+
+            return $"{initials}{sequence.ToString().PadLeft(3, '0')}";
         }
     }
 }

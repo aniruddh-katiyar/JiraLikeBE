@@ -14,12 +14,12 @@ namespace JiraLike.Infrastructure.Configurations
 
             builder.Property(i => i.Title).IsRequired();
 
-            builder.Property(i => i.Type).HasConversion<int>().
+            builder.Property(i => i.Type).HasConversion<string>().
                 IsRequired();
 
-            builder.Property(i => i.Status).HasConversion<int>().IsRequired();
+            builder.Property(i => i.Status).HasConversion<string>().IsRequired();
 
-            builder.Property(i => i.Priority).HasConversion<int>().IsRequired();
+            builder.Property(i => i.Priority).HasConversion<string>().IsRequired();
 
             builder.HasOne(i => i.Project)
                    .WithMany(p => p.Issues)

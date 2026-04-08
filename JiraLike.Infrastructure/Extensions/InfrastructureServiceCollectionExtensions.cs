@@ -35,6 +35,8 @@
 
             services.AddScoped<IUserRepository, UserRepository>();
 
+            services.AddScoped<IActivityLogRepository, ActivityLogRepository>();
+
             return services;
         }
 

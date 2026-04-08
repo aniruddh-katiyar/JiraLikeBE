@@ -3,7 +3,7 @@
 /// </summary>
 namespace JiraLike.Application.Command.Users
 {
-    using JiraLike.Application.Dto.User;
+    using JiraLike.Application.Dtos.User;
     using MediatR;
     using System.Collections.Generic;
 

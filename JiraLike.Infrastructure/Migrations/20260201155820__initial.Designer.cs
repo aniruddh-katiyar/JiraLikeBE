@@ -3,6 +3,7 @@ using System;
 using JiraLike.Infrastructure.DbContexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace JiraLike.Infrastructure.Migrations
 {
     [DbContext(typeof(JiraLikeDbContext))]
-    partial class JiraLikeDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260201155820__initial")]
+    partial class _initial
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -53,10 +56,6 @@ namespace JiraLike.Infrastructure.Migrations
 
                     b.Property<Guid>("PerformedBy")
                         .HasColumnType("uuid");
-
-                    b.Property<string>("PerformedByName")
-                        .IsRequired()
-                        .HasColumnType("text");
 
                     b.Property<Guid?>("ProjectEntityId")
                         .HasColumnType("uuid");
@@ -179,9 +178,6 @@ namespace JiraLike.Infrastructure.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("text");
 
-                    b.Property<DateTime?>("DueDate")
-                        .HasColumnType("timestamp with time zone");
-
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("boolean");
 
@@ -205,9 +201,6 @@ namespace JiraLike.Infrastructure.Migrations
                     b.Property<string>("Status")
                         .IsRequired()
                         .HasColumnType("text");
-
-                    b.Property<int>("StoryPoint")
-                        .HasColumnType("integer");
 
                     b.Property<string>("Title")
                         .IsRequired()
@@ -367,24 +360,12 @@ namespace JiraLike.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<string>("ShortCode")
-                        .HasColumnType("text");
-
                     b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("timestamp with time zone");
-
-                    b.Property<int>("UserSequence")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("UserSequence"));
 
                     b.HasKey("Id");
 
                     b.HasIndex("Email")
-                        .IsUnique();
-
-                    b.HasIndex("ShortCode")
                         .IsUnique();
 
                     b.ToTable("Users", (string)null);

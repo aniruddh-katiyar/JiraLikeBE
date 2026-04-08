@@ -15,8 +15,14 @@ namespace JiraLike.Infrastructure.Configurations
             builder.HasIndex(u => u.Email).IsUnique();
 
             builder.Property(u => u.Name).IsRequired();
+
             builder.Property(u => u.Email).IsRequired();
+
             builder.Property(u => u.PasswordHash).IsRequired();
+
+            builder.HasIndex(u => u.ShortCode).IsUnique();
+
+            builder.Property(x => x.UserSequence).UseIdentityColumn().ValueGeneratedOnAdd();
 
             builder.HasQueryFilter(u => !u.IsDeleted);
         }

@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace JiraLike.Infrastructure.Migrations
 {
     [DbContext(typeof(JiraLikeDbContext))]
-    [Migration("20260127124922_InitPostgres")]
-    partial class InitPostgres
+    [Migration("20260201165208__initial_v1")]
+    partial class _initial_v1
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -57,10 +57,24 @@ namespace JiraLike.Infrastructure.Migrations
                     b.Property<Guid>("PerformedBy")
                         .HasColumnType("uuid");
 
+                    b.Property<string>("PerformedByName")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<Guid?>("ProjectEntityId")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("ProjectId")
+                        .HasColumnType("uuid");
+
                     b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("timestamp with time zone");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("ProjectEntityId");
+
+                    b.HasIndex("ProjectId");
 
                     b.ToTable("ActivityLogs", (string)null);
                 });
@@ -125,6 +139,12 @@ namespace JiraLike.Infrastructure.Migrations
                     b.Property<Guid>("IssueId")
                         .HasColumnType("uuid");
 
+                    b.Property<Guid?>("ProjectEntityId")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("ProjectId")
+                        .HasColumnType("uuid");
+
                     b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("timestamp with time zone");
 
@@ -134,6 +154,10 @@ namespace JiraLike.Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("IssueId");
+
+                    b.HasIndex("ProjectEntityId");
+
+                    b.HasIndex("ProjectId");
 
                     b.HasIndex("UserId");
 
@@ -377,6 +401,21 @@ namespace JiraLike.Infrastructure.Migrations
                     b.ToTable("RefreshTokens", (string)null);
                 });
 
+            modelBuilder.Entity("JiraLike.Domain.Entities.ActivityLogEntity", b =>
+                {
+                    b.HasOne("JiraLike.Domain.Entities.ProjectEntity", null)
+                        .WithMany("ActivityLogs")
+                        .HasForeignKey("ProjectEntityId");
+
+                    b.HasOne("JiraLike.Domain.Entities.ProjectEntity", "Project")
+                        .WithMany()
+                        .HasForeignKey("ProjectId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Project");
+                });
+
             modelBuilder.Entity("JiraLike.Domain.Entities.ChatHistoryEntity", b =>
                 {
                     b.HasOne("JiraLike.Domain.Entities.ProjectEntity", "Project")
@@ -404,6 +443,16 @@ namespace JiraLike.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("JiraLike.Domain.Entities.ProjectEntity", null)
+                        .WithMany("Comments")
+                        .HasForeignKey("ProjectEntityId");
+
+                    b.HasOne("JiraLike.Domain.Entities.ProjectEntity", "Project")
+                        .WithMany()
+                        .HasForeignKey("ProjectId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("JiraLike.Domain.Entities.UserEntity", "User")
                         .WithMany()
                         .HasForeignKey("UserId")
@@ -411,6 +460,8 @@ namespace JiraLike.Infrastructure.Migrations
                         .IsRequired();
 
                     b.Navigation("Issue");
+
+                    b.Navigation("Project");
 
                     b.Navigation("User");
                 });
@@ -493,6 +544,10 @@ namespace JiraLike.Infrastructure.Migrations
 
             modelBuilder.Entity("JiraLike.Domain.Entities.ProjectEntity", b =>
                 {
+                    b.Navigation("ActivityLogs");
+
+                    b.Navigation("Comments");
+
                     b.Navigation("Issues");
 
                     b.Navigation("ProjectUsers");

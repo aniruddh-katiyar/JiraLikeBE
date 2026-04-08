@@ -10,6 +10,10 @@ namespace JiraLike.Domain.Entities
         public string PasswordHash { get; set; } = null!;
         public bool IsActive { get; set; }
 
+        public int UserSequence { get; set; }
+
+        public string? ShortCode { get; set; }
+
         public ICollection<ProjectUserEntity> ProjectUsers { get; set; } = new List<ProjectUserEntity>();
         public ICollection<RefreshTokenEntity> RefreshTokens { get; set; } = new List<RefreshTokenEntity>();
     }

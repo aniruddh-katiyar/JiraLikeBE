@@ -5,6 +5,7 @@
     using JiraLike.Api.Notifier;
     using JiraLike.Application.Extension;
     using JiraLike.Application.Interfaces;
+    using JiraLike.Infrastructure.Ai;
     using JiraLike.Infrastructure.Extension;
 
     /// <summary>
@@ -49,6 +50,12 @@
             services.AddSecurity(_configuration);
 
             services.AddInfrastructure(_configuration);
+
+            //services.AddHttpClient<IAgentService, AgentService>(client =>
+            //{
+            //    client.BaseAddress = new Uri("");
+            //    client.Timeout = TimeSpan.FromSeconds(5);
+            //});
         }
 
         /// <summary>
