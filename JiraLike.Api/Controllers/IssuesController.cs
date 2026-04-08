@@ -47,7 +47,7 @@ namespace JiraLike.Api.Controllers
         }
 
         /// <summary>
-        /// 
+        /// Get Single issue with porojectId and IssueId
         /// </summary>
         /// <param name="projectId"></param>
         /// <param name="issueId"></param>

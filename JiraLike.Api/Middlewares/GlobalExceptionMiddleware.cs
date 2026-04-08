@@ -2,16 +2,28 @@
 {
     using System.Net;
     using System.Text.Json;
-
+    /// <summary>
+    /// 
+    /// </summary>
     public class GlobalExceptionMiddleware
     {
         private readonly RequestDelegate _next;
         private readonly ILogger<GlobalExceptionMiddleware> _logger;
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="next"></param>
+        /// <param name="logger"></param>
         public GlobalExceptionMiddleware(RequestDelegate next, ILogger<GlobalExceptionMiddleware> logger)
         {
             _next = next;
             _logger = logger;
         }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="_context"></param>
+        /// <returns></returns>
         public async Task Invoke(HttpContext _context)
         {
             try

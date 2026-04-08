@@ -9,5 +9,6 @@ namespace JiraLike.Application.Abstraction.Query
 
     public sealed class GetProjectsQuery : IRequest<List<ProjectResponseDto>>
     {
+
     }
 }

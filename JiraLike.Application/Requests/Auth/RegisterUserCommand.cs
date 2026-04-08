@@ -4,7 +4,7 @@
 namespace JiraLike.Application.Command.Auth
 {
     using JiraLike.Application.Dto.Auth;
-    using JiraLike.Application.Dto.User;
+    using JiraLike.Application.Dtos.User;
     using MediatR;
 
     public sealed class RegisterUserCommand : IRequest<UserResponseDto>

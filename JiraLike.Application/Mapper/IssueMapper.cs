@@ -16,7 +16,9 @@ namespace JiraLike.Application.Mapper
                 .ForMember(dest => dest.Key, opt => opt.MapFrom(src => src.Key))
                 .ForMember(dest => dest.Type, opt => opt.MapFrom(src => src.Type))
                 .ForMember(dest => dest.Title, opt => opt.MapFrom(src => src.Title))
-                .ForMember(dest => dest.Status, opt => opt.MapFrom(src => src.Status));
+                .ForMember(dest => dest.Status, opt => opt.MapFrom(src => src.Status))
+                .ForMember(dest => dest.AssigneeName, opt => opt.MapFrom(src => src.Assignee.Name)).
+                ReverseMap();
         }
     }
 }

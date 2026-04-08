@@ -6,6 +6,9 @@ namespace JiraLike.Domain.Enums
     {
         ToDo,
         InProgress,
-        Done
+        CodingDone,
+        ReadyForTest,
+        TestDone,
+        Closed
     }
 }

@@ -19,16 +19,19 @@ namespace JiraLike.Application.Handler.Issue
         private readonly ISignalRActivityNotifier _activityNotifier;
         public IRepository<ActivityLogEntity> _activityLogEntity;
         private IUserInformationResolver _userInformationResolver;
+       // private IAgentService _agentService;
         /// 
         /// </summary>
         /// <param name="activityNotifier"></param>
         public CreateIssueHandler(ISignalRActivityNotifier activityNotifier, IRepository<IssueEntity> issueRepository,
-            IRepository<ActivityLogEntity> activityLogEntity, IUserInformationResolver userInformationResolver)
+            IRepository<ActivityLogEntity> activityLogEntity, IUserInformationResolver userInformationResolver
+           )
         {
             _activityNotifier = activityNotifier;
             _issueRepository = issueRepository;
             _activityLogEntity = activityLogEntity;
             _userInformationResolver = userInformationResolver;
+          //  _agentService = agentService;
         }
         public async Task<IssueResponseDto> Handle(CreateIssueCommand request, CancellationToken cancellationToken)
         {
@@ -40,20 +43,15 @@ namespace JiraLike.Application.Handler.Issue
                 Type = request.Request.Type,
                 CreatedAt = DateTime.UtcNow,
                 ReporterId = user.UserId,
-                Status = Domain.Enums.IssueStatus.ToDo,
+                Status = request.Request.IssueStatus,
+                Priority = request.Request.Priority,
                 Description = request.Request.Description,
                 Key = "",
-
-                Priority = request.Request.Priority,
                 ProjectId = request.ProjectId,
-                
-
             };
 
             await _issueRepository.AddAsync(issueEntity, cancellationToken);
-
             await _issueRepository.SaveChangesAsync(cancellationToken);
-
             var activity = new ActivityLogEntity
             {
                 ProjectId = request.ProjectId,
@@ -67,6 +65,18 @@ namespace JiraLike.Application.Handler.Issue
             await _activityLogEntity.AddAsync(activity, cancellationToken);
             await _activityLogEntity.SaveChangesAsync(cancellationToken);
 
+            //Add Ai Service here  
+            //var updateResponseFromAgent = await _agentService.AgentProcessingAsync(issueEntity.Id, issueEntity.Title, issueEntity.Description ?? "");
+            //if (Enum.TryParse<IssueType>(updateResponseFromAgent.IssueType, true, out var type))
+            //{
+            //    issueEntity.Type = type;
+            //}
+
+            //if (Enum.TryParse<IssuePriority>(updateResponseFromAgent.Priority, true, out var priority))
+            //    {
+            //    issueEntity.Priority = priority;
+            //    }
+            await _issueRepository.SaveChangesAsync(cancellationToken);
             var activitydto = new ActivityLogResponseDto
             {
                 EntityType = activity.EntityType,
