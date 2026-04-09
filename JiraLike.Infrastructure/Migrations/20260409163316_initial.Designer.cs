@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace JiraLike.Infrastructure.Migrations
 {
     [DbContext(typeof(JiraLikeDbContext))]
-    [Migration("20260407172733_dbupdate")]
-    partial class dbupdate
+    [Migration("20260409163316_initial")]
+    partial class initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
