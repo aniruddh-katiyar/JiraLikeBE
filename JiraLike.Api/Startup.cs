@@ -1,10 +1,12 @@
 ﻿namespace JiraLike.Api
 {
+    using FluentValidation;
     using JiraLike.Api.Extension;
     using JiraLike.Api.Hubs;
     using JiraLike.Api.Notifier;
     using JiraLike.Application.Extension;
     using JiraLike.Application.Interfaces;
+    using JiraLike.Application.Validators;
     using JiraLike.Infrastructure.Ai;
     using JiraLike.Infrastructure.Extension;
 
@@ -46,6 +48,8 @@
             services.AddScoped<ISignalRActivityNotifier, SignalRActivityNotifier>();
 
             services.AddApplication();
+
+            services.AddValidatorsFromAssemblyContaining<AddCommentValidator>();
 
             services.AddSecurity(_configuration);
 

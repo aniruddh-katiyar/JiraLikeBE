@@ -3,9 +3,12 @@
     using JiraLike.Application.Handler.Users;
     using JiraLike.Application.Mapper;
     using JiraLike.Application.Resolvers;
+    using JiraLike.Application.Validators;
     using JiraLike.Domain.Entities;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.Extensions.DependencyInjection;
+    using FluentValidation;
+
 
     public static class DependencyInjection
     {
@@ -31,6 +34,7 @@
             services.AddScoped<IPasswordHasher<UserEntity>, PasswordHasher<UserEntity>>();
             services.AddHttpContextAccessor();
 
+            //services.AddValidatorsFromAssembly<AddCommentValidator>();
 
             services.AddScoped<IUserInformationResolver, UserInformationResolver>();
             return services;
