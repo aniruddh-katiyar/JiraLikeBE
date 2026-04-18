@@ -45,7 +45,7 @@
                 throw new ArgumentException("User not found");
 
             var isIssueExists = await _readDbContext.Issues
-                .AnyAsync(x => x.Id == req.IssueId, cancellationToken);
+                .AnyAsync(x => x.Id == request.IssueId, cancellationToken);
 
             if (!isIssueExists)
             {
@@ -55,8 +55,8 @@
             var commentEntity = new CommentEntity
             {
                 UserId = user.UserId,
-                IssueId = req.IssueId,
-                ProjectId = req.ProjectId,
+                IssueId = request.IssueId,
+                ProjectId = request.ProjectId,
                 Content = req.Content,
                 CreatedAt = DateTime.UtcNow
             };

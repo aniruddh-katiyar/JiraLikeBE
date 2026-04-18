@@ -10,10 +10,10 @@
             RuleFor(x => x.CommentDto)
            .NotNull().WithMessage("Comment is required");
 
-            RuleFor(x => x.CommentDto.IssueId)
+            RuleFor(x => x.IssueId)
                 .NotEmpty().WithMessage("IssueId is required");
 
-            RuleFor(x => x.CommentDto.ProjectId)
+            RuleFor(x => x.ProjectId)
                 .NotEmpty().WithMessage("ProjectId is required");
 
             RuleFor(x => x.CommentDto.Content)

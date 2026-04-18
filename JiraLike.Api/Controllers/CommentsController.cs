@@ -1,43 +1,68 @@
-﻿namespace JiraLike.Api.Controllers
+﻿using JiraLike.Application.Dtos.Comment;
+using JiraLike.Application.Requests.Comment;
+using MediatR;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+
+[ApiController]
+[Authorize]
+public class CommentsController : ControllerBase
 {
-    using JiraLike.Application.Dtos.Comment;
-    using JiraLike.Application.Requests.Comment;
-    using MediatR;
-    using Microsoft.AspNetCore.Mvc;
-    using Microsoft.AspNetCore.Mvc.Infrastructure;
+    private readonly IMediator _mediator;
 
-    [ApiController]
-    [Route("api/auth")]
-    public class CommentsController : ControllerBase
+    public CommentsController(IMediator mediator)
     {
-        private IMediator _mediator;
-        /// <summary>
-        /// In Memory 
-        /// </summary>
-        /// <param name="mediator"></param>
-        public CommentsController(IMediator mediator)
-        {
-            _mediator = mediator;    
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="commentDto"></param>
-        /// <param name="token"></param>
-        /// <returns></returns>
-        [HttpPost]
-        public async Task<IActionResult> AddCommentByIssueIdAsync([FromBody]CommentDto commentDto, CancellationToken token)
-        {
-            var result = await _mediator.Send(new AddCommentCommand(commentDto), token);
-            return Ok(result);
-        }
-
-        [HttpGet]
-        public async void AddCommentAsync()
-        {
-
-        }
-        
+        _mediator = mediator;
     }
+
+    /// <summary>
+    /// Get all comments for an issue
+    /// </summary>
+    // GET /api/projects/{projectId}/issues/{issueId}/comments
+    [HttpGet("api/projects/{projectId:guid}/issues/{issueId:guid}/comments")]
+    public async Task<IActionResult> GetCommentsAsync(
+        Guid projectId,
+        Guid issueId,
+        CancellationToken cancellationToken)
+    {
+        var result = await _mediator.Send(
+            new GetAllCommentbyIssueIdQuery(projectId, issueId),
+            cancellationToken);
+
+        return Ok(result);
+    }
+
+    /// <summary>
+    /// Add comment to an issue
+    /// </summary>
+    // POST /api/projects/{projectId}/issues/{issueId}/comments
+    [HttpPost("api/projects/{projectId:guid}/issues/{issueId:guid}/comments")]
+    public async Task<IActionResult> AddCommentAsync(
+        Guid projectId,
+        Guid issueId,
+        [FromBody] CommentDto request,
+        CancellationToken cancellationToken)
+    {
+        var result = await _mediator.Send(
+            new AddCommentCommand(request, issueId, projectId),
+            cancellationToken);
+
+        return Ok(result);
+    }
+
+    ///// <summary>
+    ///// Delete comment
+    ///// </summary>
+    //// DELETE /api/comments/{commentId}
+    //[HttpDelete("api/comments/{commentId:guid}")]
+    //public async Task<IActionResult> DeleteCommentAsync(
+    //    Guid commentId,
+    //    CancellationToken cancellationToken)
+    //{
+    //    var result = await _mediator.Send(
+    //        new DeleteCommentCommand(commentId),
+    //        cancellationToken);
+
+    //    return Ok(result);
+    //}
 }
