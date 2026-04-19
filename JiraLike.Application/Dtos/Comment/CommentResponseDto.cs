@@ -14,5 +14,7 @@
 
         public string UserName = string.Empty;
 
+        public Guid CommentId { get; set; }
+
     }
 }

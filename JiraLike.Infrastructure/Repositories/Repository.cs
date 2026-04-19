@@ -36,7 +36,6 @@ namespace JiraLike.Infrastructure.Repository
 
             _dbContext.Set<T>().Remove(entity);
 
-            await _dbContext.SaveChangesAsync(cancellationToken);
         }
 
         public async Task SaveChangesAsync(CancellationToken token)

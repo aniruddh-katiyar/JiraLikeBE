@@ -32,6 +32,7 @@
                         Content = x.Content,
                         CommentDate = x.CreatedAt,
                         UserName = x.User.Name,
+                        CommentId = x.Id
                     }
                     ).OrderByDescending(x => x.CommentDate).ToListAsync(cancellationToken);
 

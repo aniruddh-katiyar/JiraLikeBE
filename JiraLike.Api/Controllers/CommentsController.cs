@@ -50,19 +50,19 @@ public class CommentsController : ControllerBase
         return Ok(result);
     }
 
-    ///// <summary>
-    ///// Delete comment
-    ///// </summary>
-    //// DELETE /api/comments/{commentId}
-    //[HttpDelete("api/comments/{commentId:guid}")]
-    //public async Task<IActionResult> DeleteCommentAsync(
-    //    Guid commentId,
-    //    CancellationToken cancellationToken)
-    //{
-    //    var result = await _mediator.Send(
-    //        new DeleteCommentCommand(commentId),
-    //        cancellationToken);
+    /// <summary>
+    /// Delete comment
+    /// </summary>
+    // DELETE /api/comments/{commentId}
+    [HttpDelete("api/comments/{commentId:guid}")]
+    public async Task<IActionResult> DeleteCommentAsync(
+        Guid commentId,
+        CancellationToken cancellationToken)
+    {
+        var result = await _mediator.Send(
+            new DeleteCommentCommand(commentId),
+            cancellationToken);
 
-    //    return Ok(result);
-    //}
+        return Ok(result);
+    }
 }
